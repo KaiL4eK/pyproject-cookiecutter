@@ -24,11 +24,18 @@ tools-install:
 	poetry run pre-commit install
 	poetry run nbdime config-git --enable
 
+COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
+TEST_PROJECT_NAME = test-project
+
 #* Create test project and test data
 .PHONY: test-project-creation
 test-project-creation:
-	poetry run cookiecutter . -f --config-file test-config.yaml --no-input
-	make -C test-project install
-	cd test-project; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
-	cd test-project; poetry run pytest
-	cd test-project; poetry run pre-commit run --all-files
+	poetry run cookiecutter . -f --config-file test-config.yaml --no-input -o ${COOKIECUTTER_TEST_DIR}
+	ln -sf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} .
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; git init && git add -A
+	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} install
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pytest
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run --files notebooks/* nbstripout || true
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run -a --show-diff-on-failure
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry build
