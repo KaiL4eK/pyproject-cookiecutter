@@ -31,4 +31,4 @@ test-project-creation:
 	make -C test-project install
 	cd test-project; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
 	cd test-project; poetry run pytest
-	cd test-project; poetry run pre-commit run -a
+	cd test-project; poetry run pre-commit run --all-files
