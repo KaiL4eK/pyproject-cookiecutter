@@ -1,0 +1,12 @@
+{
+  "project_name": "my-python-project",
+  "project_description": "Awesome `{{ cookiecutter.project_name.lower().replace(' ', '-') }}`",
+  "github_user": "user",
+  "project_repository": "https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.project_name }}",
+  "_all_python_minor_version": [8, 9],
+  "minimal_python_version": [3.8, 3.9],
+  "email": "{{ cookiecutter.github_user }}@example.com",
+  "version": "0.1.0",
+  "line_length": 88,
+  "create_example_template": ["cli", "none"]
+}

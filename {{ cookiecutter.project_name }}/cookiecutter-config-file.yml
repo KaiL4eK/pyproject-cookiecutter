@@ -1,0 +1,12 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "{{ cookiecutter.project_name }}"
+  project_description: "{{ cookiecutter.project_description }}"
+  github_user: "{{ cookiecutter.github_user }}"
+  project_repository: "{{ cookiecutter.project_repository }}"
+  minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
+  email: "{{ cookiecutter.email }}"
+  version: "{{ cookiecutter.version }}"
+  line_length: "{{ cookiecutter.line_length }}"
+  create_example_template: "{{ cookiecutter.create_example_template }}"
