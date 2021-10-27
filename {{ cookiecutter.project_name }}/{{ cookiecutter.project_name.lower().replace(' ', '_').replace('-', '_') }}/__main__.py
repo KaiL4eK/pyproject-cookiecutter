@@ -11,7 +11,9 @@ from {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
 from {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}.example import hello
 
 import logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
 logging.getLogger("{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}").setLevel(logging.DEBUG)
 
 
