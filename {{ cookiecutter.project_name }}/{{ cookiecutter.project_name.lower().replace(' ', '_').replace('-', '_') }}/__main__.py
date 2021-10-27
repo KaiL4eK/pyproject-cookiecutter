@@ -10,6 +10,10 @@ from rich.console import Console
 from {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} import __version__
 from {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}.example import hello
 
+import logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logging.getLogger("{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}").setLevel(logging.DEBUG)
+
 
 class Color(str, Enum):
     white = "white"
