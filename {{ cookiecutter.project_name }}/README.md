@@ -13,6 +13,50 @@
 
 ## Very first steps
 
+### Preparations
+
+1. Install make
+    - Windows:
+
+        Install [chocolatey](https://chocolatey.org/install) and install `make` with command:
+
+    ```powershell
+    choco install make
+    ```
+
+    - Linux:
+
+    ```bash
+    sudo apt-get install build-essential
+    ```
+
+1. Install python {{ cookiecutter.minimal_python_version }}
+    - Windows
+
+        Install with [official executable](https://www.python.org/downloads/)
+
+    - Linux
+
+    ```bash
+    sudo apt install python{{ cookiecutter.minimal_python_version }}-dev
+    ```
+
+1. Install poetry
+
+    - Windows
+
+        Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
+
+    ```powershell
+    (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+    ```
+
+    - Linux
+
+    ```bash
+    make poetry-download
+    ```
+
 ### Initialize your code
 
 1. Initialize `git` inside your repo:
@@ -21,26 +65,20 @@
 cd {{ cookiecutter.project_name }} && git init
 ```
 
-2. If you don't have `Poetry` installed run:
-
-```bash
-make poetry-download
-```
-
-3. Initialize poetry and install `pre-commit` hooks:
+2. Initialize poetry and install `pre-commit` hooks:
 
 ```bash
 make install
 make pre-commit-install
 ```
 
-4. Run the codestyle:
+3. Run the codestyle:
 
 ```bash
 make codestyle
 ```
 
-5. Upload initial code to GitHub:
+4. Upload initial code to GitHub:
 
 ```bash
 git add .
@@ -49,6 +87,19 @@ git branch -M main
 git remote add origin {{ cookiecutter.project_repository }}.git
 git push -u origin main
 ```
+
+### Some Issues
+
+- If you have issues with python version like:
+
+    ```bash
+    The currently activated Python version 3.9.7 is not supported by the project (~{{ cookiecutter.minimal_python_version }}.0)
+    ...
+    NoCompatiblePythonVersionFound
+    ...
+    ```
+
+    Check version of your `python3` binary and make sure you have python{{ cookiecutter.minimal_python_version }} installed.
 
 ### Set up bots
 
