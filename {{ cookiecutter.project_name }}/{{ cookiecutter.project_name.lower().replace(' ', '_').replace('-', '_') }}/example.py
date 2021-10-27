@@ -1,5 +1,9 @@
 """Example of code."""
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 def hello(name: str) -> str:
     """
@@ -30,3 +34,17 @@ def hello(name: str) -> str:
     Docstring reference: https://numpydoc.readthedocs.io/en/latest/format.html
     """
     return f"Hello {name}!"
+
+
+def show_message(msg: str) -> None:
+    """
+    Simple example to show how logger settings work
+
+    Args:
+        msg (str): Message to show through logger
+    """
+
+    logger.debug(f"Debug: {msg}")
+    logger.info(f"Info: {msg}")
+    logger.warning(f"Warning: {msg}")
+    logger.error(f"Error: {msg}")

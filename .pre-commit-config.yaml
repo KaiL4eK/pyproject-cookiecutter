@@ -9,6 +9,7 @@ repos:
     rev: v3.4.0
     hooks:
       - id: check-yaml
+        exclude: "{{ cookiecutter.project_name }}"
       - id: check-toml
         exclude: "{{ cookiecutter.project_name }}"
       - id: check-json
