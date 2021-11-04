@@ -17,7 +17,7 @@
 - Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html)
 - Create project from template
 ```bash
-cookiecutter git@github.com:KaiL4eK/pyproject-cookiecutter
+cookiecutter https://github.com/KaiL4eK/pyproject-cookiecutter.git
 ```
 - Answer some questions and get ready to code!
 
