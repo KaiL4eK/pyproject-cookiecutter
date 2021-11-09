@@ -11,8 +11,13 @@
 
 </div>
 
+## Table of Content <a id="toc"></a>
 
-## How to start
+* [How to start](#howto)
+* [Template testing](#template)
+
+
+## How to start <a id="howto"></a>
 
 - Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html)
 - Create project from template
@@ -21,7 +26,9 @@ cookiecutter https://github.com/KaiL4eK/pyproject-cookiecutter.git
 ```
 - Answer some questions and get ready to code!
 
-## Template testing
+[Table of Content](#toc)
+
+## Template testing <a id="template"></a>
 
 To test execution, build and other checks use command:
 
@@ -30,3 +37,5 @@ make test-project-creation
 ```
 
 > This command creates directory `/tmp/cookiecutter` and builds project from template there with local soft link in this directory
+
+[Table of Content](#toc)
