@@ -2,7 +2,7 @@
 
 Notes for template development
 
-## Template testing <a id="template"></a>
+## Template testing
 
 To test execution, build and other checks use command:
 
@@ -11,5 +11,3 @@ make test-project-creation
 ```
 
 > This command creates directory `/tmp/cookiecutter` and builds project from template there with local soft link in this directory
-
-[Table of Content](#toc)

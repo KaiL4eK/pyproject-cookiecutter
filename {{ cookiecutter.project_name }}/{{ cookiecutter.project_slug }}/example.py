@@ -12,12 +12,12 @@ def hello(name: str) -> str:
     Parameters
     ----------
     name : str
-        Name to greet.
+        Name to greet
 
     Returns
     -------
     str
-        greeting message
+        Greeting message
 
     Examples
     --------
@@ -40,8 +40,10 @@ def show_message(msg: str) -> None:
     """
     Simple example to show how logger settings work
 
-    Args:
-        msg (str): Message to show through logger
+    Parameters
+    ----------
+    msg : str
+        Message to show through logger
     """
 
     logger.debug(f"Debug: {msg}")

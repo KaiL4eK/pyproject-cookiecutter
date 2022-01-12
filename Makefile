@@ -40,6 +40,8 @@ test-project-creation:
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; git init && git add -A
 	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} install
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
+	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} nbextention-toc-install
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pytest
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run python scripts/config_sample.py --config configs/config_sample.yml
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run --files notebooks/* nbstripout || true

@@ -11,7 +11,7 @@
 
 </div>
 
-## Features
+## Features ##
 
 * Python 3.8 or 3.9 supported
 * [Poetry](https://python-poetry.org/) for package/dependency management
@@ -22,8 +22,9 @@
   * Notebooks cleaning via [nbstripout](https://github.com/kynan/nbstripout)
   * Security checks via [bandit](https://github.com/PyCQA/bandit) and [safety](https://github.com/pyupio/safety)
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
+* [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
 
-## How to start <a id="howto"></a>
+## How to start ##
 
 * Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html)
 * Create project from template
@@ -34,12 +35,12 @@ cookiecutter gh:KaiL4eK/pyproject-cookiecutter
 
 * Answer some questions and get ready to code!
 
-## Notes <a id="howto"></a>
+## Notes ##
 
 * Cookiecutter is not working properly (errors during project creation)
 
   Check that you've installed version for `python3`. You can call `python3 -m cookiecutter gh:KaiL4eK/pyproject-cookiecutter` to ensure that it is called with required python version.
 
-## Thanks to <a id="thanks"></a>
+## Thanks to ##
 
-* https://awesomeopensource.com/project/TezRomacH/python-package-template
+* <https://awesomeopensource.com/project/TezRomacH/python-package-template>
