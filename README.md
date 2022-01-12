@@ -23,6 +23,7 @@
   * Security checks via [bandit](https://github.com/PyCQA/bandit) and [safety](https://github.com/pyupio/safety)
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 * [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
+* Ready-to-go [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build image with package
 
 ## How to start ##
 

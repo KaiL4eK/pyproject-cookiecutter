@@ -1,13 +1,20 @@
 FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster
 
+# Prepare system environment
 ENV LANG=C.UTF-8 \
   LC_ALL=C.UTF-8
 
+# Prepare system packages
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
   curl make \
   && rm -rf /var/lib/apt/lists/*
 
+# Setup directory to work inside image
+RUN mkdir -p /workspace
+WORKDIR /workspace
+
+# Copy project dependencies list to setup first and cache
 COPY pyproject.toml poetry.lock Makefile ./
 
 # Install Poetry
@@ -18,9 +25,11 @@ RUN make poetry-download && \
     # Install all packages into system env
     poetry config virtualenvs.create false
 
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=false
-RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+# Install main packages without dev - only core dependencies
+RUN poetry install --no-dev --no-root
 
-CMD mkdir -p /workspace
-WORKDIR /workspace
+# Copy project sources into image
+COPY {{ cookiecutter.project_slug }} ./{{ cookiecutter.project_slug }}/
+
+# Install root as package
+RUN poetry install

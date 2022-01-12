@@ -16,6 +16,13 @@ docker-build:
 		-t $(IMAGE):$(VERSION) . \
 		-f ./docker/Dockerfile --no-cache
 
+.PHONY: docker-build-cached
+docker-build-cached:
+	@echo Building docker $(IMAGE):$(VERSION) ...
+	docker build \
+		-t $(IMAGE):$(VERSION) . \
+		-f ./docker/Dockerfile
+
 # Example: make docker-remove VERSION=latest
 # Example: make docker-remove IMAGE=some_name VERSION={{ cookiecutter.version }}
 .PHONY: docker-remove
