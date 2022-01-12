@@ -29,7 +29,7 @@
 * Create project from template
 
 ```bash
-cookiecutter https://github.com/KaiL4eK/pyproject-cookiecutter.git
+cookiecutter gh:KaiL4eK/pyproject-cookiecutter
 ```
 
 * Answer some questions and get ready to code!

@@ -25,7 +25,7 @@
 * [.dockerignore](.dockerignore) - the files/folders `docker` should ignore
 * [notebooks](notebooks) - directory for `jupyter` notebooks
 * [scripts](scripts) - repository service scripts
-  > These ones are not included into the pakckage if you build one - these scripts only for usage with repository
+  > These ones are not included into the pakckage if you build one - these scripts are only for usage with repository
 * [{{ cookiecutter.project_slug }}]({{ cookiecutter.project_slug }}) - source files of the project
 * [.editorconfig](.editorconfig) - configuration for [editorconfig](https://editorconfig.org/)
 * [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration
