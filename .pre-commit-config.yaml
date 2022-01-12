@@ -9,9 +9,9 @@ repos:
     rev: v3.4.0
     hooks:
       - id: check-yaml
-        exclude: "{{ cookiecutter.project_name }}"
+        exclude: ^{{ cookiecutter.project_name }}/
       - id: check-toml
-        exclude: "{{ cookiecutter.project_name }}"
+        exclude: ^{{ cookiecutter.project_name }}
       - id: check-json
       - id: end-of-file-fixer
         exclude: LICENSE
@@ -23,19 +23,20 @@ repos:
 
   - repo: local
     hooks:
-      - id: pyupgrade
-        name: pyupgrade
-        entry: poetry run pyupgrade --py38-plus
-        exclude: ^{{ cookiecutter.project_name }}/
-        types: [python]
-        language: system
-
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
         exclude: ^{{ cookiecutter.project_name }}/
         types: [python]
         language: system
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        exclude: ^{{ cookiecutter.project_name }}/
+        args:
+        - --py38-plus
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3

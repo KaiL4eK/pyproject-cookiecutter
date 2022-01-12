@@ -15,7 +15,7 @@ make docker-build VERSION=latest
 ```
 
 You may provide name and version for the image.
-Default name is `IMAGE := {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}`.
+Default name is `IMAGE := {{ cookiecutter.project_slug }}`.
 Default version is `VERSION := latest`.
 
 ```bash
@@ -27,7 +27,7 @@ make docker-build IMAGE=some_name VERSION={{ cookiecutter.version }}
 ```bash
 docker run -it --rm \
    -v $(pwd):/workspace \
-   {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} bash
+   {{ cookiecutter.project_slug }} bash
 ```
 
 ## How to clean up

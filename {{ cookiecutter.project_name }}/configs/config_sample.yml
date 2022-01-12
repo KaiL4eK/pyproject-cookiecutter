@@ -26,7 +26,7 @@ logger:
     handlers: []
 
   loggers:
-    {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}.example:
+    {{ cookiecutter.project_slug }}.example:
       level: INFO
       handlers: [console]
       propogate: false

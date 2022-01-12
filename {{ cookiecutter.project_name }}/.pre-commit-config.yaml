@@ -1,3 +1,4 @@
+{%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
 default_language_version:
   python: python{{ cookiecutter.minimal_python_version }}
 
@@ -22,29 +23,34 @@ repos:
       - id: debug-statements
       - id: check-added-large-files
         args: ["--maxkb=500"]
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: check-case-conflict
+
 
   - repo: local
     hooks:
-      - id: pyupgrade
-        name: pyupgrade
-        entry: poetry run pyupgrade --py{{ cookiecutter.minimal_python_version.replace('.', '') }}-plus
-        exclude: ^{{ cookiecutter.project_slug }}/
-        types: [python]
-        language: system
-
       - id: isort
         name: isort
         entry: poetry run isort --settings-path pyproject.toml
-        exclude: ^{{ cookiecutter.project_slug }}/
+        files: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
-        exclude: ^{{ cookiecutter.project_slug }}/
+        files: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        files: ^{{ cookiecutter.project_slug }}/
+        args:
+          - --py{{ merged_python_version }}-plus
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3
@@ -62,6 +68,8 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
+        # files: ^{{ cookiecutter.project_slug }}/
+        additional_dependencies: [flake8-docstrings, flake8-print]
 
   - repo: https://github.com/kynan/nbstripout
     rev: 0.5.0
@@ -76,13 +84,16 @@ repos:
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.0
     hooks:
-    - id: bandit
-      exclude: ^tests/
-      args:
-      - -s
-      - B311
+      - id: bandit
+        exclude: ^tests/
+        args:
+          - -s
+          - B311
 
-  - repo: https://github.com/pycqa/pydocstyle
-    rev: 4.0.0  # pick a git hash / tag to point to
-    hooks:
-    - id: pydocstyle
+  # - repo: https://github.com/pycqa/pydocstyle
+  #   rev: 4.0.0
+  #   hooks:
+  #     - id: pydocstyle
+  #       files: ^{{ cookiecutter.project_slug }}/
+  #       # args:
+  #       # - --ignore=D100,D203

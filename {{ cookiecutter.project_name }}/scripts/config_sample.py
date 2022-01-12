@@ -4,7 +4,7 @@ import sys
 
 from envyaml import EnvYAML
 
-from {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}.example import hello, show_message
+from {{ cookiecutter.project_slug }}.example import hello, show_message
 
 
 def get_args():

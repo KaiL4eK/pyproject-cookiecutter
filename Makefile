@@ -41,7 +41,7 @@ test-project-creation:
 	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} install
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pytest
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run python scripts/config_sample.py --config config/config_sample.yml
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run python scripts/config_sample.py --config configs/config_sample.yml
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run --files notebooks/* nbstripout || true
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run -a --show-diff-on-failure
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry build
