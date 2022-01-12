@@ -36,7 +36,7 @@ repos:
       - id: pyupgrade
         exclude: ^{{ cookiecutter.project_name }}/
         args:
-        - --py38-plus
+        - --py36-plus
 
   - repo: https://github.com/humitos/mirrors-autoflake
     rev: v1.3
