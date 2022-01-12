@@ -27,6 +27,11 @@ tools-install:
 COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
 TEST_PROJECT_NAME = test-project
 
+#* Linting
+.PHONY: lint
+lint:
+	poetry run pre-commit run -a
+
 #* Create test project and test data
 .PHONY: test-project-creation
 test-project-creation:

@@ -82,7 +82,7 @@ repos:
       - -s
       - B311
 
-  # - repo: https://github.com/asottile/reorder_python_imports
-  #   rev: v2.6.0
-  #   hooks:
-  #     - id: reorder-python-imports
+  - repo: https://github.com/pycqa/pydocstyle
+    rev: 4.0.0  # pick a git hash / tag to point to
+    hooks:
+    - id: pydocstyle
