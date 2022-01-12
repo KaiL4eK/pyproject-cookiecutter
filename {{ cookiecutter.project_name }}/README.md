@@ -14,8 +14,29 @@
 ## Table of contents <a id="content"></a>
 
 * [Development guide](DEVELOPMENT.md)
+* [Repository contents](#repo-contents)
 * [System requirements](#reqs)
 * [Other interesting info!](#other)
+
+## Repository contents <a id="repo-contents"></a>
+
+* [configs](configs) - configuration files directory
+* [Docker](Docker) - definition of "How to build image for Docker"
+* [.dockerignore](.dockerignore) - the files/folders `docker` should ignore
+* [notebooks](notebooks) - directory for `jupyter` notebooks
+* [scripts](scripts) - repository service scripts
+  > These ones are not included into the pakckage if you build one - these scripts only for usage with repository
+* [{{ cookiecutter.project_slug }}]({{ cookiecutter.project_slug }}) - source files of the project
+* [.editorconfig](.editorconfig) - configuration for [editorconfig](https://editorconfig.org/)
+* [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration
+* [.gitignore](.gitignore) - the files/folders `git` should ignore
+* [.pre-commit-config.yaml](.pre-commit-config.yaml) - Pre-Commit configuration file
+* [README.md](README.md) - the one you read =)
+* [DEVELOPMENT.md](DEVELOPMENT.md) - guide for development team
+* [Makefile](Makefile) - targets for `make` command
+* [cookiecutter-config-file.yml](cookiecutter-config-file.yml) - cookiecutter project config log
+* [poetry.toml](poetry.toml) - poetry local config
+* [pyproject.toml](pyproject.toml) - Python project configuration
 
 ## System requirements <a id="reqs"></a>
 
