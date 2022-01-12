@@ -15,31 +15,34 @@ repos:
         exclude: LICENSE
       - id: trailing-whitespace
       - id: mixed-line-ending
+        args: ["--fix=lf"]
       - id: check-merge-conflict
       - id: check-ast
       - id: check-executables-have-shebangs
       - id: debug-statements
+      - id: check-added-large-files
+        args: ["--maxkb=500"]
 
   - repo: local
     hooks:
       - id: pyupgrade
         name: pyupgrade
         entry: poetry run pyupgrade --py{{ cookiecutter.minimal_python_version.replace('.', '') }}-plus
-        exclude: ^{{ cookiecutter.project_name }}/
+        exclude: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
       - id: isort
         name: isort
         entry: poetry run isort --settings-path pyproject.toml
-        exclude: ^{{ cookiecutter.project_name }}/
+        exclude: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
-        exclude: ^{{ cookiecutter.project_name }}/
+        exclude: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
@@ -64,3 +67,22 @@ repos:
     rev: 0.5.0
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+      - id: python-safety-dependencies-check
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.0
+    hooks:
+    - id: bandit
+      exclude: ^tests/
+      args:
+      - -s
+      - B311
+
+  # - repo: https://github.com/asottile/reorder_python_imports
+  #   rev: v2.6.0
+  #   hooks:
+  #     - id: reorder-python-imports

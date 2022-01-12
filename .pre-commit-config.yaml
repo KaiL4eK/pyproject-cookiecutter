@@ -17,6 +17,7 @@ repos:
         exclude: LICENSE
       - id: trailing-whitespace
       - id: mixed-line-ending
+        args: ["--fix=lf"]
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
 
@@ -57,3 +58,14 @@ repos:
     rev: 0.5.0
     hooks:
       - id: nbstripout
+
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+      - id: python-safety-dependencies-check
+        exclude: "{{ cookiecutter.project_name }}"
+
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.0
+    hooks:
+      - id: bandit

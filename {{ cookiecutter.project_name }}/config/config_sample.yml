@@ -1,4 +1,4 @@
-username: "{{ cookiecutter.github_user }}"
+username: "{{ cookiecutter.username }}"
 
 # This is an example of logger configuration from file
 logger:

@@ -2,15 +2,16 @@
 
 default_context:
   project_name: "{{ cookiecutter.project_name }}"
+  project_slug: "{{ cookiecutter.project_slug }}"
   project_description: "{{ cookiecutter.project_description }}"
-  github_user: "{{ cookiecutter.github_user }}"
-  project_repository: "{{ cookiecutter.project_repository }}"
-  minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
+  username: "{{ cookiecutter.username }}"
   email: "{{ cookiecutter.email }}"
+  minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"
-  create_example_template: "{{ cookiecutter.create_example_template }}"
 
+  include_cli_example: "{{ cookiecutter.include_cli_example }}"
   include_docker_sample: "{{ cookiecutter.include_docker_sample }}"
   include_tests_sample: "{{ cookiecutter.include_tests_sample }}"
   include_notebooks_sample: "{{ cookiecutter.include_notebooks_sample }}"
+  include_mypy_linter: "{{ cookiecutter.include_mypy_linter }}"

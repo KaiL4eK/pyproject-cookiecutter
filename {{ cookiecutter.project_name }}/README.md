@@ -2,10 +2,7 @@
 
 <div align="center">
 
-[![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)]({{ cookiecutter.project_repository }}/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
-
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)]({{ cookiecutter.project_repository }}/blob/main/.pre-commit-config.yaml)
 
 {{ cookiecutter.project_description }}
 
@@ -89,7 +86,7 @@ make codestyle
 git add .
 git commit -m ":tada: Initial commit"
 git branch -M main
-git remote add origin {{ cookiecutter.project_repository }}.git
+git remote add origin <Version control system URL>.git
 git push -u origin main
 ```
 
@@ -189,7 +186,7 @@ or install with `Poetry`
 poetry add {{ cookiecutter.project_name }}
 ```
 
-{% if cookiecutter.create_example_template == 'cli' -%}Then you can run
+{% if cookiecutter.include_cli_example == 'y' -%}Then you can run
 
 ```bash
 {{ cookiecutter.project_name }} --help

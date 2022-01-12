@@ -2,9 +2,9 @@
 SHELL := /usr/bin/env bash
 PYTHON := python
 
-#* Docker variables
-IMAGE := {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}
-VERSION := latest
+{% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
+IMAGE := {{ cookiecutter.project_slug }}
+VERSION := latest{%- endif %}
 
 #* Poetry
 .PHONY: poetry-download
@@ -21,50 +21,33 @@ install: poetry-install tools-install
 
 .PHONY: poetry-install
 poetry-install:
-	poetry lock -n && poetry export --without-hashes > requirements.txt
 	poetry install -n
-	poetry run mypy --install-types --non-interactive ./
+	{% if cookiecutter.include_mypy_linter == 'y' -%}poetry run mypy --install-types --non-interactive ./{% endif %}
+
+.PHONY: poetry-export
+poetry-export:
+	poetry lock -n && poetry export --without-hashes > requirements.txt
+
+.PHONY: poetry-export-dev
+poetry-export-dev:
+	poetry lock -n && poetry export --dev --without-hashes > requirements.dev.txt
 
 .PHONY: tools-install
 tools-install:
 	poetry run pre-commit install
 	poetry run nbdime config-git --enable
 
+{% if cookiecutter.include_tests_sample == 'y' -%}#* Tests
+.PHONY: tests
+tests:
+	poetry run pytest -c pyproject.toml{%- endif %}
 
-#* Formatters
-.PHONY: codestyle
-codestyle:
-	poetry run pyupgrade --exit-zero-even-if-changed --py{{ cookiecutter.minimal_python_version.replace('.', '') }}-plus **/*.py
-	poetry run isort --settings-path pyproject.toml ./
-	poetry run black --config pyproject.toml ./
-
-.PHONY: formatting
-formatting: codestyle
-
-#* Linting
-.PHONY: test
-test:
-	poetry run pytest -c pyproject.toml
-
-.PHONY: check-codestyle
-check-codestyle:
-	poetry run isort --diff --check-only --settings-path pyproject.toml ./
-	poetry run black --diff --check --config pyproject.toml ./
-	poetry run darglint --verbosity 2 {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} tests
-
+{% if cookiecutter.include_mypy_linter == 'y' -%}#* Linting
 .PHONY: mypy
 mypy:
-	poetry run mypy --config-file pyproject.toml ./
+	poetry run mypy --config-file pyproject.toml ./{%- endif %}
 
-.PHONY: check-safety
-check-safety:
-	poetry check
-	poetry run safety check --full-report
-	poetry run bandit -ll --recursive {{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }} tests
-
-.PHONY: lint
-lint: test check-codestyle mypy check-safety
-
+{% if cookiecutter.include_docker_sample == 'y' %}
 #* Docker
 # Example: make docker VERSION=latest
 # Example: make docker IMAGE=some_name VERSION={{ cookiecutter.version }}
@@ -81,15 +64,17 @@ docker-build:
 docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
 	docker rmi -f $(IMAGE):$(VERSION)
+{% endif %}
 
 #* Cleaning
 .PHONY: pycache-remove
 pycache-remove:
 	find . | grep -E "(__pycache__|\.pyc|\.pyo$$)" | xargs rm -rf
+	find . | grep -E "(.ipynb_checkpoints$$)" | xargs rm -rf
 
 .PHONY: build-remove
 build-remove:
 	rm -rf build/
 
 .PHONY: clean-all
-clean-all: pycache-remove build-remove docker-remove
+clean-all: pycache-remove build-remove {% if cookiecutter.include_docker_sample == 'y' -%}docker-remove{% endif %}

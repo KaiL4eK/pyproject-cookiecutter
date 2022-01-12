@@ -40,3 +40,5 @@ test-project-creation:
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run --files notebooks/* nbstripout || true
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run -a --show-diff-on-failure
 	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry build
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; make docker-build
+	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; make docker-remove

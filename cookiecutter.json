@@ -1,8 +1,9 @@
 {
   "project_name": "my-python-project",
+  "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_').replace('.', '_') }}",
   "project_description": "Awesome `{{ cookiecutter.project_name.lower().replace(' ', '-') }}`",
-  "github_user": "user",
-  "project_repository": "https://github.com/{{ cookiecutter.github_user }}/{{ cookiecutter.project_name }}",
+  "username": "Awesome user",
+  "email": "awesome-user@example.com",
   "_all_python_minor_version": [
     8,
     9
@@ -11,14 +12,15 @@
     3.8,
     3.9
   ],
-  "email": "{{ cookiecutter.github_user }}@example.com",
   "version": "0.1.0",
   "line_length": 88,
   "create_example_template": [
     "cli",
     "none"
   ],
-  "include_docker_sample": ["no", "yes"],
-  "include_tests_sample": ["no", "yes"],
-  "include_notebooks_sample": ["yes", "no"]
+  "include_cli_example": "n",
+  "include_docker_sample": "n",
+  "include_tests_sample": "n",
+  "include_notebooks_sample": "y",
+  "include_mypy_linter": "n"
 }

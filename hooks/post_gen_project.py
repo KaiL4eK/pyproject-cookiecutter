@@ -2,9 +2,10 @@ import os
 import shutil
 
 REMOVE_PATHS = [
-    '{% if cookiecutter.include_docker_sample == "no" %} docker {% endif %}',
-    '{% if cookiecutter.include_tests_sample == "no" %} tests {% endif %}',
-    '{% if cookiecutter.include_notebooks_sample == "no" %} notebooks {% endif %}',
+    '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',
+    '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',
+    '{% if cookiecutter.include_notebooks_sample == "n" %} notebooks {% endif %}',
+    '{% if cookiecutter.include_cli_example == "n" %} {{ cookiecutter.project_slug }}/__main__.py {% endif %}',
 ]
 
 for path in REMOVE_PATHS:
@@ -18,4 +19,7 @@ for path in REMOVE_PATHS:
         print(f"Not found: {path}")
         continue
 
-    shutil.rmtree(path)
+    if os.path.isdir(path):
+        shutil.rmtree(path)
+    else:
+        os.remove(path)

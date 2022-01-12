@@ -1,4 +1,3 @@
 default_context:
   project_name: "test-project"
-  github_user: sample_user
-  project_repository: https://github.com/KaiL4eK/pyproject-cookiecutter
+  include_docker_sample: "y"

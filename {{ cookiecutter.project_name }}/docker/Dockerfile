@@ -1,18 +1,18 @@
 FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster
 
 ENV LANG=C.UTF-8 \
-  LC_ALL=C.UTF-8 \
-  PATH="${PATH}:/root/.poetry/bin"
+  LC_ALL=C.UTF-8
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
-  curl \
+  curl make \
   && rm -rf /var/lib/apt/lists/*
 
-COPY pyproject.toml ./
+COPY pyproject.toml Makefile ./
 
 # Install Poetry
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
+ENV POETRY_HOME=/opt/poetry"
+RUN make poetry-download && \
     cd /usr/local/bin && \
     ln -s /opt/poetry/bin/poetry && \
     poetry config virtualenvs.create false
