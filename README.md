@@ -1,41 +1,41 @@
 # Python project template for cookiecutter #
 
-> Based on https://github.com/TezRomacH/python-package-template and https://awesomeopensource.com/project/TezRomacH/python-package-template
-
 <div align="center">
 
+[![PythonSupported](https://img.shields.io/badge/python-3.8%20%7C%203.9-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/KaiL4eK/pyproject-cookiecutter/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/KaiL4eK/pyproject-cookiecutter/blob/main/.pre-commit-config.yaml)
+[![Bandit](https://img.shields.io/badge/security-bandit-informational.svg)](https://github.com/KaiL4eK/pyproject-cookiecutter/blob/main/.pre-commit-config.yaml)
 
 </div>
 
-## Table of Content <a id="toc"></a>
+## Features
 
-* [How to start](#howto)
-* [Template testing](#template)
-
+* Python 3.8 or 3.9 supported
+* [Poetry](https://python-poetry.org/) for package/dependency management
+* Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
+* Pre-commit hooks with [pre-commit](https://pre-commit.com/)
+  * Linting using [flake8](https://flake8.pycqa.org/en/latest/)
+  * Code style via [black](https://github.com/psf/black)
+  * Notebooks cleaning via [nbstripout](https://github.com/kynan/nbstripout)
+  * Security checks via [bandit](https://github.com/PyCQA/bandit) and [safety](https://github.com/pyupio/safety)
+* [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 
 ## How to start <a id="howto"></a>
 
-- Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html)
-- Create project from template
+* Install [cookiecutter](https://cookiecutter.readthedocs.io/en/latest/installation.html)
+* Create project from template
+
 ```bash
 cookiecutter https://github.com/KaiL4eK/pyproject-cookiecutter.git
 ```
-- Answer some questions and get ready to code!
+
+* Answer some questions and get ready to code!
 
 [Table of Content](#toc)
 
-## Template testing <a id="template"></a>
+## Thanks to <a id="thanks"></a>
 
-To test execution, build and other checks use command:
-
-```bash
-make test-project-creation
-```
-
-> This command creates directory `/tmp/cookiecutter` and builds project from template there with local soft link in this directory
-
-[Table of Content](#toc)
+* https://awesomeopensource.com/project/TezRomacH/python-package-template

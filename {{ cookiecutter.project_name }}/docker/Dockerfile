@@ -8,13 +8,14 @@ RUN apt-get update && \
   curl make \
   && rm -rf /var/lib/apt/lists/*
 
-COPY pyproject.toml Makefile ./
+COPY pyproject.toml poetry.lock Makefile ./
 
 # Install Poetry
-ENV POETRY_HOME=/opt/poetry"
+ENV POETRY_HOME=/opt/poetry
 RUN make poetry-download && \
     cd /usr/local/bin && \
     ln -s /opt/poetry/bin/poetry && \
+    # Install all packages into system env
     poetry config virtualenvs.create false
 
 # Allow installing dev dependencies to run tests

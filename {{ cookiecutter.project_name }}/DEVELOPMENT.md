@@ -2,7 +2,7 @@
 
 This is guide how to prepare development environment and use main tools
 
-## Table of contents <a id="content"></a>
+## Table of contents <a id="toc"></a>
 
 * [Preparations](#preps)
 * [Initialize your code](#code-init)
@@ -56,8 +56,9 @@ This is guide how to prepare development environment and use main tools
 
 1. Install VSCode Extensions
    * [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
-      Открываем панель управления (Ctrl+P) и вводим `ext install EditorConfig.EditorConfig`
+      Open control panel (Ctrl+P) and enter `ext install EditorConfig.EditorConfig`
 
+[Table of Contents](#toc)
 
 ## Initialize your code <a id="code-init"></a>
 
@@ -91,6 +92,8 @@ git remote add origin <Version control system URL>
 git push -u origin develop
 ```
 
+[Table of Contents](#toc)
+
 ### Cloned existing project <a id="repo-cloned"></a>
 
 1. Initialize poetry and install `pre-commit` hooks:
@@ -98,6 +101,8 @@ git push -u origin develop
 ```bash
 make install
 ```
+
+[Table of Contents](#toc)
 
 ## Some known issues <a id="issues"></a>
 
@@ -111,3 +116,5 @@ make install
     ```
 
     Check version of your `python3` binary and make sure you have python{{ cookiecutter.minimal_python_version }} installed.
+
+[Table of Contents](#toc)

@@ -68,7 +68,6 @@ repos:
     rev: 3.9.2
     hooks:
       - id: flake8
-        # files: ^{{ cookiecutter.project_slug }}/
         additional_dependencies: [flake8-docstrings, flake8-print]
 
   - repo: https://github.com/kynan/nbstripout
@@ -89,11 +88,3 @@ repos:
         args:
           - -s
           - B311
-
-  # - repo: https://github.com/pycqa/pydocstyle
-  #   rev: 4.0.0
-  #   hooks:
-  #     - id: pydocstyle
-  #       files: ^{{ cookiecutter.project_slug }}/
-  #       # args:
-  #       # - --ignore=D100,D203
