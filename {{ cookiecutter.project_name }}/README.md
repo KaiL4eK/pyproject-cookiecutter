@@ -57,6 +57,11 @@
     make poetry-download
     ```
 
+1. Install VSCode Extensions
+   - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
+      Открываем панель управления (Ctrl+P) и вводим `ext install EditorConfig.EditorConfig`
+
+
 ### Initialize your code
 
 1. Initialize `git` inside your repo:

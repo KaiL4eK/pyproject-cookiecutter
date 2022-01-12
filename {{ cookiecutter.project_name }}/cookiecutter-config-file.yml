@@ -10,3 +10,7 @@ default_context:
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"
   create_example_template: "{{ cookiecutter.create_example_template }}"
+
+  include_docker_sample: "{{ cookiecutter.include_docker_sample }}"
+  include_tests_sample: "{{ cookiecutter.include_tests_sample }}"
+  include_notebooks_sample: "{{ cookiecutter.include_notebooks_sample }}"
