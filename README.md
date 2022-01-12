@@ -34,7 +34,11 @@ cookiecutter gh:KaiL4eK/pyproject-cookiecutter
 
 * Answer some questions and get ready to code!
 
-[Table of Content](#toc)
+## Notes <a id="howto"></a>
+
+* Cookiecutter is not working properly (errors during project creation)
+
+  Check that you've installed version for `python3`. You can call `python3 -m cookiecutter gh:KaiL4eK/pyproject-cookiecutter` to ensure that it is called with required python version.
 
 ## Thanks to <a id="thanks"></a>
 
