@@ -3,6 +3,7 @@ import shutil
 
 REMOVE_PATHS = [
     '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',
+    '{% if cookiecutter.include_docker_sample == "n" %} .dockerignore {% endif %}',
     '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',
     '{% if cookiecutter.include_notebooks_sample == "n" %} notebooks {% endif %}',
     '{% if cookiecutter.include_cli_example == "n" %} {{ cookiecutter.project_slug }}/__main__.py {% endif %}',
