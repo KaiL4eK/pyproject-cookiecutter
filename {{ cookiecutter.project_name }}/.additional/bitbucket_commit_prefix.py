@@ -8,7 +8,7 @@ from typing import NoReturn
 
 
 def get_ticket_id_from_branch_name(branch):
-    matches = re.findall('[a-zA-Z]{1,10}-[0-9]{1,5}', branch)
+    matches = re.findall("[a-zA-Z]{1,10}-[0-9]{1,5}", branch)
     if len(matches) > 0:
         return matches[0]
 
@@ -17,8 +17,10 @@ def main() -> NoReturn:
     parser = argparse.ArgumentParser()
     parser.add_argument("commit_msg_filepath")
     parser.add_argument(
-        '-t', '--template', default="[{}]",
-        help='Template to render ticket id into',
+        "-t",
+        "--template",
+        default="[{}]",
+        help="Template to render ticket id into",
     )
     args = parser.parse_args()
     commit_msg_filepath = args.commit_msg_filepath
@@ -26,7 +28,9 @@ def main() -> NoReturn:
 
     branch = ""
     try:
-        branch = subprocess.check_output(["git", "symbolic-ref", "--short", "HEAD"], universal_newlines=True, shell=True).strip()  # nosec
+        branch = subprocess.check_output(  # nosec
+            ["git", "symbolic-ref", "--short", "HEAD"], universal_newlines=True, shell=True
+        ).strip()
     except Exception as e:
         print(e)
 
