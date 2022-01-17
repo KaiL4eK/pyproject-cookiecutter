@@ -14,10 +14,6 @@
   ],
   "version": "0.1.0",
   "line_length": 88,
-  "base_package_manager": [
-    "poetry",
-    "pip (not supported yet)"
-  ],
   "include_cli_example": "n",
   "include_docker_sample": "n",
   "include_tests_sample": "n",

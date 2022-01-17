@@ -9,7 +9,6 @@ default_context:
   minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"
-  base_package_manager: "{{ cookiecutter.base_package_manager }}"
 
   include_cli_example: "{{ cookiecutter.include_cli_example }}"
   include_docker_sample: "{{ cookiecutter.include_docker_sample }}"
