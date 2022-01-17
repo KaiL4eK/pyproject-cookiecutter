@@ -44,9 +44,8 @@ repos:
 
       - id: bitbucket-commit-prefix
         name: bitbucket-commit-prefix
-        entry: poetry run python .additional/ --config pyproject.toml
-        types: [python]
-        language: system
+        entry: poetry run python .additional/bitbucket_commit_prefix.py
+        language: python
         stages: [prepare-commit-msg]
         description: Searches the branch name for something looking like a jira issue name and prepends the commit message with it
 
