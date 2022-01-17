@@ -7,6 +7,8 @@ REMOVE_PATHS = [
     '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',
     '{% if cookiecutter.include_notebooks_sample == "n" %} notebooks {% endif %}',
     '{% if cookiecutter.include_cli_example == "n" %} {{ cookiecutter.project_slug }}/__main__.py {% endif %}',
+    '{% if cookiecutter.base_package_manager != "poetry" %} poetry.toml {% endif %}',
+    '{% if cookiecutter.base_package_manager != "poetry" %} pyproject.toml {% endif %}',
 ]
 
 for path in REMOVE_PATHS:
