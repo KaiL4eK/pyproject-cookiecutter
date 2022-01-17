@@ -17,6 +17,9 @@
 
 ## Repository contents
 
+- [docs](docs) - documentation of the project
+- [reports](reports) - reports generated (as generated from notebooks)
+  > Check if you need to ignore large reports or keep them in Git LFS
 - [configs](configs) - configuration files directory
 {% if cookiecutter.include_docker_sample == 'y' -%}- [Docker](Docker) - definition of "How to build image for Docker"
 - [.dockerignore](.dockerignore) - the files/folders `docker` should ignore{%- endif %}

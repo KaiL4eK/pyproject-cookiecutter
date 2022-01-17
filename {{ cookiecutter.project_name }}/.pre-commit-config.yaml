@@ -34,14 +34,12 @@ repos:
       - id: isort
         name: isort
         entry: poetry run isort --settings-path pyproject.toml
-        files: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
-        files: ^{{ cookiecutter.project_slug }}/
         types: [python]
         language: system
 
@@ -49,7 +47,6 @@ repos:
     rev: v2.31.0
     hooks:
       - id: pyupgrade
-        files: ^{{ cookiecutter.project_slug }}/
         args:
           - --py{{ merged_python_version }}-plus
 
