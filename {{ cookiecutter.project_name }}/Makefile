@@ -59,7 +59,7 @@ poetry-export-dev:
 
 .PHONY: tools-install
 tools-install:
-	poetry run pre-commit install
+	poetry run pre-commit install --hook-type prepare-commit-msg
 	poetry run nbdime config-git --enable
 
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks

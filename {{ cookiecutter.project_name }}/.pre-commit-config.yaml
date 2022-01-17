@@ -28,7 +28,6 @@ repos:
       - id: detect-private-key
       - id: check-case-conflict
 
-
   - repo: local
     hooks:
       - id: isort
@@ -42,6 +41,14 @@ repos:
         entry: poetry run black --config pyproject.toml
         types: [python]
         language: system
+
+      - id: bitbucket-commit-prefix
+        name: bitbucket-commit-prefix
+        entry: poetry run python .additional/ --config pyproject.toml
+        types: [python]
+        language: system
+        stages: [prepare-commit-msg]
+        description: Searches the branch name for something looking like a jira issue name and prepends the commit message with it
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v2.31.0
