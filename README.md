@@ -21,6 +21,7 @@
   * Code style via [black](https://github.com/psf/black)
   * Notebooks cleaning via [nbstripout](https://github.com/kynan/nbstripout)
   * Security checks via [bandit](https://github.com/PyCQA/bandit)
+  * Local hooks for issues number substitution into commit comment for [GitHub](https://github.com/) and [Bitbucket (JIRA)](https://bitbucket.org/)
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 * [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
 * Ready-to-go [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build image with package
