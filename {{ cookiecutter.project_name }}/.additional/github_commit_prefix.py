@@ -20,7 +20,7 @@ def main() -> NoReturn:
     parser.add_argument(
         "-t",
         "--template",
-        default="[#{}]",
+        default="[{}]",
         help="Template to render ticket id into",
     )
     args = parser.parse_args()
@@ -42,7 +42,7 @@ def main() -> NoReturn:
 
     if result:
         issue_number = result.upper()
-        prefix = template.format(issue_number)
+        prefix = template.format("#" + issue_number)
     else:
         prefix = template.format(branch)
 
