@@ -38,9 +38,13 @@ cookiecutter gh:KaiL4eK/pyproject-cookiecutter
 
 ## Notes ##
 
-* Cookiecutter is not working properly (errors during project creation)
+### Cookiecutter is not working properly (errors during project creation) ###
 
-  Check that you've installed version for `python3`. You can call `python3 -m cookiecutter gh:KaiL4eK/pyproject-cookiecutter` to ensure that it is called with required python version.
+Check that you've installed version for `python3`. You can call `python3 -m cookiecutter gh:KaiL4eK/pyproject-cookiecutter` to ensure that it is called with required python version.
+
+### [Windows] warning: LF will be replaced by CRLF in ...
+
+Check [this answer](https://stackoverflow.com/a/5834094). In short, setup `git config core.autocrlf false` to disable line-ending check. Or you can setup as you wish.
 
 ## Thanks to ##
 
