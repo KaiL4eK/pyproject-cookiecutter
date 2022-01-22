@@ -1,7 +1,6 @@
 """Tests for hello function."""
 import pytest
-
-from {{ cookiecutter.project_slug }}.example import hello
+from {{cookiecutter.project_slug}}.example import hello
 
 
 @pytest.mark.parametrize(

@@ -1,7 +1,6 @@
 import os
-import shutil
 import platform
-
+import shutil
 
 REMOVE_PATHS = [
     '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',

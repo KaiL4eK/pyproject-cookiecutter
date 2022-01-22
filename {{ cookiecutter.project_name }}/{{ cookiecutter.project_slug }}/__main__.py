@@ -7,9 +7,8 @@ from random import choice
 
 import typer
 from rich.console import Console
-
-from {{ cookiecutter.project_slug }} import __version__
-from {{ cookiecutter.project_slug }}.example import hello
+from {{cookiecutter.project_slug}} import __version__
+from {{cookiecutter.project_slug}}.example import hello
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"

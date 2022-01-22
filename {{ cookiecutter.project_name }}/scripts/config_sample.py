@@ -3,8 +3,7 @@ import logging.config
 import sys
 
 from envyaml import EnvYAML
-
-from {{ cookiecutter.project_slug }}.example import hello, show_message
+from {{cookiecutter.project_slug}}.example import hello, show_message
 
 
 def get_args():
