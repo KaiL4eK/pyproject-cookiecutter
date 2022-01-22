@@ -20,7 +20,7 @@
   * Linting using [flake8](https://flake8.pycqa.org/en/latest/)
   * Code style via [black](https://github.com/psf/black)
   * Notebooks cleaning via [nbstripout](https://github.com/kynan/nbstripout)
-  * Security checks via [bandit](https://github.com/PyCQA/bandit) and [safety](https://github.com/pyupio/safety)
+  * Security checks via [bandit](https://github.com/PyCQA/bandit)
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 * [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
 * Ready-to-go [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build image with package
@@ -45,6 +45,19 @@ Check that you've installed version for `python3`. You can call `python3 -m cook
 ### [Windows] warning: LF will be replaced by CRLF in ...
 
 Check [this answer](https://stackoverflow.com/a/5834094). In short, setup `git config core.autocrlf false` to disable line-ending check. Or you can setup as you wish.
+
+## How to improve project MORE ##
+
+### [Linux] Use [safety](https://github.com/pyupio/safety) as pre-commit hook
+
+```yaml
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+      - id: python-safety-dependencies-check
+```
+
+> This hook sometimes breaks on Windows, be careful!
 
 ## Thanks to ##
 

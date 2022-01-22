@@ -6,6 +6,7 @@ default_context:
   project_description: "{{ cookiecutter.project_description }}"
   username: "{{ cookiecutter.username }}"
   email: "{{ cookiecutter.email }}"
+  vcs_remote_type: "{{ cookiecutter.vcs_remote_type   }}"
   minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"

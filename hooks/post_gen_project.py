@@ -1,5 +1,7 @@
 import os
 import shutil
+import platform
+
 
 REMOVE_PATHS = [
     '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',
@@ -7,6 +9,8 @@ REMOVE_PATHS = [
     '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',
     '{% if cookiecutter.include_notebooks_sample == "n" %} notebooks {% endif %}',
     '{% if cookiecutter.include_cli_example == "n" %} {{ cookiecutter.project_slug }}/__main__.py {% endif %}',
+    '{% if cookiecutter.vcs_remote_type != "github" %} .additional/github_commit_prefix.py {% endif %}',
+    '{% if cookiecutter.vcs_remote_type != "bitbucket" %} .additional/bitbucket_commit_prefix.py {% endif %}',
 ]
 
 for path in REMOVE_PATHS:
@@ -24,3 +28,7 @@ for path in REMOVE_PATHS:
         shutil.rmtree(path)
     else:
         os.remove(path)
+
+
+# Linux / Windows / Darwin (Mac)
+DETECTED_OS = platform.system()
