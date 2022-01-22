@@ -14,7 +14,7 @@ for path in REMOVE_PATHS:
     if not path:
         continue
 
-    print("Removing {}".format(path))
+    # print("Removing {}".format(path))
 
     if not os.path.exists(path):
         print(f"Not found: {path}")
