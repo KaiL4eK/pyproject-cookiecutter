@@ -26,10 +26,11 @@ RUN make poetry-download && \
     poetry config virtualenvs.create false
 
 # Install main packages without dev - only core dependencies
-RUN poetry install --no-dev --no-root
+RUN poetry install --only main --no-root
 
 # Copy project sources into image
+COPY README.md ./
 COPY {{ cookiecutter.project_slug }} ./{{ cookiecutter.project_slug }}/
 
 # Install root as package
-RUN poetry install
+RUN poetry install --only-root

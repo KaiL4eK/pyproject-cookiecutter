@@ -1,6 +1,4 @@
 {%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
-default_language_version:
-  python: python{{ cookiecutter.minimal_python_version }}
 
 default_stages: [commit, push]
 

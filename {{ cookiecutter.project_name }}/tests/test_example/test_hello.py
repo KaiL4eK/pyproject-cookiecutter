@@ -1,5 +1,6 @@
 """Tests for hello function."""
 import pytest
+
 from {{cookiecutter.project_slug}}.example import hello
 
 

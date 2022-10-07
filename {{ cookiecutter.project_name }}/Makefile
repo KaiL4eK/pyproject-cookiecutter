@@ -1,6 +1,7 @@
 #* Variables
 SHELL := /usr/bin/env bash
-PYTHON := python
+PYTHON ?= python3
+POETRY_VERSION ?= 1.2.0
 
 {% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
 IMAGE := {{ cookiecutter.project_slug }}
@@ -34,20 +35,24 @@ docker-remove:
 #* Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | $(PYTHON) -
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version ${POETRY_VERSION}
 
 .PHONY: poetry-remove
 poetry-remove:
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | $(PYTHON) - --uninstall
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
 
 #* Installation
-.PHONY: install
-install: poetry-install tools-install
+.PHONY: project-init
+project-init: poetry-install tools-install
 
 .PHONY: poetry-install
 poetry-install:
 	poetry install -n{% if cookiecutter.include_mypy_linter == 'y' -%}
 	poetry run mypy --install-types --non-interactive ./{%- endif %}
+
+.PHONY: poetry-lock-update
+poetry-lock-update:
+	poetry lock --no-update
 
 .PHONY: poetry-export
 poetry-export:
@@ -55,7 +60,7 @@ poetry-export:
 
 .PHONY: poetry-export-dev
 poetry-export-dev:
-	poetry lock -n && poetry export --dev --without-hashes > requirements.dev.txt
+	poetry lock -n && poetry export --with dev --without-hashes > requirements.dev.txt
 
 .PHONY: tools-install
 tools-install:

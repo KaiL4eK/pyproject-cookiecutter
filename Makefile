@@ -1,23 +1,28 @@
 #* Variables
 SHELL := /usr/bin/env bash
-PYTHON := python
+PYTHON ?= python3
+POETRY_VERSION ?= 1.2.0
 
 #* Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | $(PYTHON) -
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version ${POETRY_VERSION}
 
 .PHONY: poetry-remove
 poetry-remove:
-	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | $(PYTHON) - --uninstall
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
 
 #* Installation
-.PHONY: install
-install: poetry-install tools-install
+.PHONY: project-init
+project-init: poetry-install tools-install
 
 .PHONY: poetry-install
 poetry-install:
 	poetry install -n
+
+.PHONY: poetry-lock-update
+poetry-lock-update:
+	poetry lock --no-update
 
 .PHONY: tools-install
 tools-install:
@@ -37,15 +42,8 @@ lint:
 test-project-creation:
 	poetry run cookiecutter . -f --config-file test-config.yaml --no-input -o ${COOKIECUTTER_TEST_DIR}
 	ln -sf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} .
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; git init && git add -A
-	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} install
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb
-	make -C ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} nbextention-toc-install
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pytest
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run python scripts/config_sample.py --config configs/config_sample.yml
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run --files notebooks/* nbstripout || true
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry run pre-commit run -a --show-diff-on-failure
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; poetry build
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; make docker-build-cached
-	cd ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}; make docker-remove
+	bash scripts/test_project.sh ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
+
+.PHONY: test-project-clean
+test-project-clean:
+	rm -rf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
