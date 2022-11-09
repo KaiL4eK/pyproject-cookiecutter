@@ -1,0 +1,33 @@
+name: Test poetry project
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build-firmware:
+    runs-on: ubuntu-latest
+    # container: python:3.8.15-slim-buster
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.2.0
+          virtualenvs-create: true
+          virtualenvs-in-project: false
+          installer-parallel: true
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.8"
+          cache: poetry
+
+      - name: Setup bsae project
+        run: make project-init
+
+      # Runs a single command using the runners shell
+      - name: Test create project
+        run: make test-project-creation
