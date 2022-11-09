@@ -95,3 +95,8 @@ build-remove:
 
 .PHONY: clean-all
 clean-all: pycache-remove build-remove {% if cookiecutter.include_docker_sample == 'y' -%}docker-remove{% endif %}
+
+#* Service targets
+.PHONY: grep-todos
+grep-todos:
+	git grep -EIn "TODO|FIXME|XXX"
