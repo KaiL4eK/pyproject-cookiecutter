@@ -1,13 +1,14 @@
-name: Test poetry project
+name: Test project creation
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  build-firmware:
+  test-project-poetry-docker-github:
     runs-on: ubuntu-latest
-    # container: python:3.8.15-slim-buster
+    env:
+      new_project_directory: /tmp/cookiecutter
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -25,9 +26,11 @@ jobs:
           python-version: "3.8"
           cache: poetry
 
-      - name: Setup bsae project
+      - name: Setup base project
         run: make project-init
 
-      # Runs a single command using the runners shell
-      - name: Test create project
-        run: make test-project-creation
+      - name: Create project from template
+        run: poetry run cookiecutter . -f --config-file test-configs/poetry-docker-github.yaml --no-input -o $new_project_directory
+
+      - name: Test project commands
+        run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
