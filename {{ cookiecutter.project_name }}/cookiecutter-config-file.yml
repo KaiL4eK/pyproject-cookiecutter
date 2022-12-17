@@ -8,6 +8,7 @@ default_context:
   email: "{{ cookiecutter.email }}"
   vcs_remote_type: "{{ cookiecutter.vcs_remote_type   }}"
   minimal_python_version: "{{ cookiecutter.minimal_python_version }}"
+  package_manager: "{{ cookiecutter.package_manager }}"
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"
 

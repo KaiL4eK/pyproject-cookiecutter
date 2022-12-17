@@ -1,6 +1,6 @@
 #* Variables
 SHELL := /usr/bin/env bash
-PYTHON ?= python3
+PYTHON ?= python{{ cookiecutter.minimal_python_version }}
 POETRY_VERSION ?= 1.2.0
 
 {% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
@@ -29,10 +29,9 @@ docker-build-cached:
 .PHONY: docker-remove
 docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
-	docker rmi -f $(IMAGE):$(VERSION)
-{%- endif %}
+	docker rmi -f $(IMAGE):$(VERSION){%- endif %}
 
-#* Poetry
+{% if cookiecutter.package_manager == 'poetry' -%}#* Poetry
 .PHONY: poetry-download
 poetry-download:
 	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version ${POETRY_VERSION}
@@ -40,15 +39,6 @@ poetry-download:
 .PHONY: poetry-remove
 poetry-remove:
 	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
-
-#* Installation
-.PHONY: project-init
-project-init: poetry-install tools-install
-
-.PHONY: poetry-install
-poetry-install:
-	poetry install -n{% if cookiecutter.include_mypy_linter == 'y' -%}
-	poetry run mypy --install-types --non-interactive ./{%- endif %}
 
 .PHONY: poetry-lock-update
 poetry-lock-update:
@@ -61,6 +51,35 @@ poetry-export:
 .PHONY: poetry-export-dev
 poetry-export-dev:
 	poetry lock -n && poetry export --with dev --without-hashes > requirements.dev.txt
+
+.PHONY: poetry-install
+poetry-install:
+	poetry install -n
+	{% if cookiecutter.include_mypy_linter == 'y' -%}
+	poetry run mypy --install-types --non-interactive ./{%- endif %}
+
+.PHONY: packages-install
+packages-install: poetry-install{%- endif %}
+
+{% if cookiecutter.package_manager == 'pip' -%}#* Pip
+VENV_DNAME := ".venv"
+
+pip-check-venv:
+	test -d ${VENV_DNAME} || $(PYTHON) -m venv ${VENV_DNAME}
+
+.PHONY: pip-install
+pip-install: pip-check-venv
+	( \
+	   source ${VENV_DNAME}/bin/activate; \
+	   pip install -r requirements.txt; \
+	)
+
+.PHONY: packages-install
+packages-install: pip-install{%- endif %}
+
+#* Installation
+.PHONY: project-init
+project-init: packages-install tools-install
 
 .PHONY: tools-install
 tools-install:

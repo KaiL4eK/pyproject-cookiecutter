@@ -47,3 +47,7 @@ test-project-creation:
 .PHONY: test-project-clean
 test-project-clean:
 	rm -rf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
+
+#* Debug targets
+test-project-pip:
+	poetry run cookiecutter . -o ../ --no-input --config-file test-configs/pip-docker-github-mypy-39.yaml -f

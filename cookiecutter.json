@@ -4,11 +4,6 @@
   "project_description": "Awesome `{{ cookiecutter.project_name.lower().replace(' ', '-') }}` project!",
   "username": "Awesome user",
   "email": "awesome-user@example.com",
-  "vcs_remote_type": [
-    "github",
-    "bitbucket",
-    "none"
-  ],
   "_all_python_minor_version": [
     8,
     9
@@ -16,6 +11,15 @@
   "minimal_python_version": [
     3.8,
     3.9
+  ],
+  "vcs_remote_type": [
+    "github",
+    "bitbucket",
+    "none"
+  ],
+  "package_manager": [
+    "poetry",
+    "pip"
   ],
   "version": "0.1.0",
   "line_length": 88,
