@@ -123,6 +123,12 @@ make project-init
       ```
 
       > For example, `poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb`
+
+      To use embedded images into HTML use option `html_embed`:
+      
+      ```bash
+      poetry run jupyter nbconvert --template toc2 --to html_embed --output-dir ./exports <путь до файла>
+      ```
 {%- endif %}
 
 [Table of contents](#table-of-contents)
