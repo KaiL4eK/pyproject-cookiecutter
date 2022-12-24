@@ -47,7 +47,7 @@ This is guide how to prepare development environment and use main tools
         Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
 
     ```powershell
-    (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
     ```
 
    - Linux
