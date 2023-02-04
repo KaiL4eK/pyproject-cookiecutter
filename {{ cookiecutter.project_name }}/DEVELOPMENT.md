@@ -52,8 +52,10 @@ This is guide how to prepare development environment and use main tools
 
    - Linux
 
+        Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer) or bash command:
+
     ```bash
-    make poetry-download
+    curl -sSL https://install.python-poetry.org | python3 -
     ```
 
 [Table of contents](#table-of-contents)
