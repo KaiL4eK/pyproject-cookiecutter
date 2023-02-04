@@ -1,10 +1,15 @@
 import argparse
 import logging.config
 import sys
+import os
 
 from envyaml import EnvYAML
+from dotenv import load_dotenv
 
 from {{cookiecutter.project_slug}}.example import hello, show_message
+
+# Load root .env file
+load_dotenv()
 
 
 def get_args():
@@ -19,6 +24,8 @@ def main():
     args = get_args()
     config = EnvYAML(args.config)
 
+    env_var_value = os.getenv("ENV_VARIABLE")
+
     try:
         logging.config.dictConfig(config["logger"])
     except Exception as e:
@@ -31,6 +38,8 @@ def main():
 
     greeting: str = hello(config["username"])
     show_message(greeting)
+
+    print(f"ENV_VARIABLE = {env_var_value}")
 
 
 if __name__ == "__main__":
