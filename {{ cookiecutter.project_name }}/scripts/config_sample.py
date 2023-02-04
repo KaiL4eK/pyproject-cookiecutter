@@ -1,10 +1,10 @@
 import argparse
 import logging.config
-import sys
 import os
+import sys
 
-from envyaml import EnvYAML
 from dotenv import load_dotenv
+from envyaml import EnvYAML
 
 from {{cookiecutter.project_slug}}.example import hello, show_message
 
