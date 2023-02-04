@@ -1,16 +1,6 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
-POETRY_VERSION ?= 1.2.0
-
-#* Poetry
-.PHONY: poetry-download
-poetry-download:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version ${POETRY_VERSION}
-
-.PHONY: poetry-remove
-poetry-remove:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
 
 #* Installation
 .PHONY: project-init

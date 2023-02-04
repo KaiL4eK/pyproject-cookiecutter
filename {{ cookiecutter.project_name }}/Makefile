@@ -1,7 +1,6 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
-POETRY_VERSION ?= 1.2.0
 
 {% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
 IMAGE := {{ cookiecutter.project_slug }}
@@ -31,15 +30,6 @@ docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
 	docker rmi -f $(IMAGE):$(VERSION)
 {%- endif %}
-
-#* Poetry
-.PHONY: poetry-download
-poetry-download:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --version ${POETRY_VERSION}
-
-.PHONY: poetry-remove
-poetry-remove:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
 
 #* Installation
 .PHONY: project-init
