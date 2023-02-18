@@ -38,6 +38,7 @@ classifiers = [  #! Update me
 python = "^{{ cookiecutter.minimal_python_version }}.0"
 typer = {extras = ["all"], version = "^0.3.2"}
 rich = "^10.7.0"
+python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
 black = {version = "^21.7", allow-prereleases = true}
