@@ -618,3 +618,6 @@ MigrationBackup/
 
 # Ignore data directory
 /data
+
+# Ignore .env file
+.env

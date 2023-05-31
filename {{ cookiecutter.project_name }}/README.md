@@ -43,6 +43,7 @@
 
 - Python version: {{ cookiecutter.minimal_python_version }}
 - Operating system: Ubuntu 20.04
+- Poetry version >= 1.2.0
 
 > We tested on this setup - you can try other versions or operation systems by yourself!
 

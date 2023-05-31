@@ -47,13 +47,15 @@ This is guide how to prepare development environment and use main tools
         Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
 
     ```powershell
-    (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
+    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
     ```
 
    - Linux
 
+        Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer) or bash command:
+
     ```bash
-    make poetry-download
+    curl -sSL https://install.python-poetry.org | python3 -
     ```
 
 [Table of contents](#table-of-contents)
@@ -123,6 +125,12 @@ make project-init
       ```
 
       > For example, `poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb`
+
+      To use embedded images into HTML use option `html_embed`:
+
+      ```bash
+      poetry run jupyter nbconvert --template toc2 --to html_embed --output-dir ./exports <путь до файла>
+      ```
 {%- endif %}
 
 [Table of contents](#table-of-contents)
