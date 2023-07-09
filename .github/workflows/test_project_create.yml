@@ -8,7 +8,7 @@ jobs:
   test-project-38-poetry-140-docker-github:
     runs-on: ubuntu-latest
     env:
-      new_project_directory: /tmp/cookiecutter
+      new_project_directory: /tmp/cookiecutter/py38
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -39,7 +39,7 @@ jobs:
   test-project-39-poetry-140-docker-github:
     runs-on: ubuntu-latest
     env:
-      new_project_directory: /tmp/cookiecutter
+      new_project_directory: /tmp/cookiecutter/py39
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -70,7 +70,7 @@ jobs:
   test-project-310-poetry-140-docker-github:
     runs-on: ubuntu-latest
     env:
-      new_project_directory: /tmp/cookiecutter
+      new_project_directory: /tmp/cookiecutter/py310
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
