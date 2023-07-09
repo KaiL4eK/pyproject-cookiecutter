@@ -19,7 +19,7 @@ COPY pyproject.toml poetry.lock Makefile ./
 
 # Install Poetry
 ENV POETRY_HOME=/opt/poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - && \
+RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.4.0 && \
     cd /usr/local/bin && \
     ln -s /opt/poetry/bin/poetry && \
     # Install all packages into system env
