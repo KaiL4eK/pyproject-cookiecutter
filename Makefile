@@ -1,10 +1,14 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
+COOKIECUTTER_VERSION ?= 2.2.0
 
 #* Installation
 .PHONY: project-init
 project-init: poetry-install tools-install
+
+project-init-ci:
+	pip install cookiecutter~=${COOKIECUTTER_VERSION}
 
 .PHONY: poetry-install
 poetry-install:

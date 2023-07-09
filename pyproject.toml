@@ -34,7 +34,7 @@ classifiers = []
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
-cookiecutter = "^1.7.3"
+cookiecutter = "^2.2.0"
 
 [tool.poetry.group.dev.dependencies]
 black = {version = "^23.3", allow-prereleases = true}
