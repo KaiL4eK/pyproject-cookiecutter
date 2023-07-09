@@ -28,7 +28,7 @@ jobs:
           cache: poetry
 
       - name: Setup base project
-        run: make project-init
+        run: make poetry-main-install
 
       - name: Create project from template
         run: poetry run cookiecutter . -f --config-file test-configs/py38-poetry-docker-github.yaml --no-input -o $new_project_directory
@@ -59,7 +59,7 @@ jobs:
           cache: poetry
 
       - name: Setup base project
-        run: make project-init
+        run: make poetry-main-install
 
       - name: Create project from template
         run: poetry run cookiecutter . -f --config-file test-configs/py39-poetry-docker-github.yaml --no-input -o $new_project_directory
@@ -90,7 +90,7 @@ jobs:
           cache: poetry
 
       - name: Setup base project
-        run: make project-init
+        run: make poetry-main-install
 
       - name: Create project from template
         run: poetry run cookiecutter . -f --config-file test-configs/py310-poetry-docker-github.yaml --no-input -o $new_project_directory
