@@ -11,11 +11,7 @@ repos:
         exclude: ^{{ cookiecutter.project_name }}
       - id: check-json
       - id: end-of-file-fixer
-        exclude: |
-          (?x)^(
-            LICENSE |
-            ^{{ cookiecutter.project_name }}/.*
-          )$
+        exclude: ^LICENSE
       - id: trailing-whitespace
       - id: mixed-line-ending
         args: ["--fix=lf"]
