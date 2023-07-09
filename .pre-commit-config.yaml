@@ -17,15 +17,11 @@ repos:
         args: ["--fix=lf"]
       - id: check-merge-conflict
       - id: check-executables-have-shebangs
+      - id: check-added-large-files
+        args: ["--maxkb=100"]
 
   - repo: local
     hooks:
-      # - id: isort
-      #   name: isort
-      #   entry: poetry run isort --settings-path pyproject.toml
-      #   types: [python]
-      #   language: system
-
       - id: black
         name: black
         entry: poetry run black --config pyproject.toml
@@ -53,20 +49,14 @@ repos:
           ]
 
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 6.0.0
     hooks:
       - id: flake8
 
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.5.0
+    rev: 0.6.0
     hooks:
       - id: nbstripout
-
-  # - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-  #   rev: v1.3.0
-  #   hooks:
-  #     - id: python-safety-dependencies-check
-  #       exclude: "{{ cookiecutter.project_name }}"
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.7.0

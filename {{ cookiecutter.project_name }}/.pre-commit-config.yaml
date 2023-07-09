@@ -21,7 +21,13 @@ repos:
       - id: check-executables-have-shebangs
       - id: debug-statements
       - id: check-added-large-files
-        args: ["--maxkb=500"]
+        args: ["--maxkb=100"]
+        exclude : '''
+        /(
+            exports/
+            | poetry.lock
+        )/
+        '''
       - id: check-docstring-first
       - id: detect-private-key
       - id: check-case-conflict
@@ -33,12 +39,6 @@ repos:
         entry: poetry run isort --settings-path pyproject.toml
         types: [python]
         language: system
-
-      - id: black
-        name: black
-        entry: poetry run black --config pyproject.toml
-        types: [python]
-        language: system
 {% if cookiecutter.vcs_remote_type != 'none' %}
       - id: git-commit-prefix
         name: git-commit-prefix{% if cookiecutter.vcs_remote_type == 'bitbucket' %}
@@ -48,41 +48,17 @@ repos:
         stages: [prepare-commit-msg]
         description: Searches the branch name for something looking like an issue name template and prepends the commit message with it{% endif %}
 
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
-    hooks:
-      - id: pyupgrade
-        args:
-          - --py{{ merged_python_version }}-plus
-
-  - repo: https://github.com/humitos/mirrors-autoflake
-    rev: v1.3
-    hooks:
-      - id: autoflake
-        args:
-          [
-            "--in-place",
-            "--remove-all-unused-imports",
-            "--remove-unused-variable",
-            "--remove-duplicate-keys",
-          ]
-
   - repo: https://github.com/PyCQA/flake8
-    rev: 3.9.2
+    rev: 6.0.0
     hooks:
       - id: flake8
-        additional_dependencies: [flake8-docstrings, flake8-print]
 
   - repo: https://github.com/kynan/nbstripout
-    rev: 0.5.0
+    rev: 0.6.0
     hooks:
       - id: nbstripout
-
-  - repo: https://github.com/PyCQA/bandit
-    rev: 1.7.0
+{% if cookiecutter.include_mypy_linter == 'y' %}
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.4.1
     hooks:
-      - id: bandit
-        exclude: ^tests/
-        args:
-          - -s
-          - B311
+      - id: mypy{% endif %}
