@@ -41,6 +41,7 @@ rich = "^10.7.0"
 python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
+wemake-python-styleguide = "^0.17.0"
 black = {version = "^23.3", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.10.1"}
 {% if cookiecutter.include_mypy_linter == 'y' -%}mypy = "^0.910"

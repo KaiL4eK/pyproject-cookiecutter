@@ -33,11 +33,11 @@ keywords = [
 classifiers = []
 
 [tool.poetry.dependencies]
-python = "~3.8.0"
-cookiecutter = "^1.7.3"
+python = ">=3.8,<3.11"
+cookiecutter = "^2.2.0"
 
 [tool.poetry.group.dev.dependencies]
-black = {version = "^21.7", allow-prereleases = true}
+black = {version = "^23.3", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.10.1"}
 pre-commit = "^2.14.0"
 ipykernel = "^6.4.2"

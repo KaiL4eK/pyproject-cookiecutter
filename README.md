@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![PythonSupported](https://img.shields.io/badge/python-3.8%20%7C%203.9-brightgreen.svg)](https://python3statement.org/#sections50-why)
+[![PythonSupported](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/KaiL4eK/pyproject-cookiecutter/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -13,8 +13,9 @@
 
 ## Features ##
 
-* Python 3.8 or 3.9 supported
+* Python 3.8, 3.9 or 3.10 supported
 * [Poetry](https://python-poetry.org/) for package/dependency management
+  * Version `>= 1.3.0` supported
 * Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
 * Pre-commit hooks with [pre-commit](https://pre-commit.com/)
   * Linting using [flake8](https://flake8.pycqa.org/en/latest/)
@@ -49,16 +50,90 @@ Check [this answer](https://stackoverflow.com/a/5834094). In short, setup `git c
 
 ## How to improve project MORE ##
 
-### [Linux] Use [safety](https://github.com/pyupio/safety) as pre-commit hook
+### [Linux] Use [safety](https://github.com/pyupio/safety) as pre-commit hook to check for security
 
 ```yaml
   - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
-    rev: v1.2.2
+    rev: v1.3.0
     hooks:
       - id: python-safety-dependencies-check
 ```
 
 > This hook sometimes breaks on Windows, be careful!
+
+### Use [bandit](https://bandit.readthedocs.io/en/latest/) as pre-commit hook to check for security
+
+```yaml
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.0
+    hooks:
+      - id: bandit
+        exclude: ^tests/
+        args:
+          - -s
+          - B311
+```
+
+### Use [black](https://github.com/psf/black) or other formatter as pre-commit hook or just setup in your IDE/Development Environment
+
+```yaml
+  - repo: local
+      # Requires to be installed in venv
+      - id: black
+        name: black
+        entry: poetry run black --config pyproject.toml
+        types: [python]
+        language: system
+```
+
+```toml
+# For pyptoject.toml
+
+[tool.black]
+# https://github.com/psf/black
+target-version = ["py38"]
+line-length = 100
+color = true
+
+exclude = '''
+/(
+    \.git
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+    | env
+    | venv
+)/
+'''
+```
+
+### Use other ways to update code via formatters just if you know what they do
+
+```yaml
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.31.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py3-plus
+
+  - repo: https://github.com/humitos/mirrors-autoflake
+    rev: v1.3
+    hooks:
+      - id: autoflake
+        args:
+          [
+            "--in-place",
+            "--remove-all-unused-imports",
+            "--remove-unused-variable",
+            "--remove-duplicate-keys",
+          ]
+```
 
 ## Thanks to ##
 
