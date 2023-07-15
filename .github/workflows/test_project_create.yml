@@ -35,10 +35,10 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
 
-  test-project-39-poetry-130-docker-github:
+  test-project-38-poetry-130-docker-github:
     runs-on: ubuntu-latest
     env:
-      new_project_directory: /tmp/cookiecutter/py39-130
+      new_project_directory: /tmp/cookiecutter/py38-130
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -53,14 +53,14 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: "3.8"
           cache: pip
 
       - name: Setup base project
         run: make project-init-ci
 
       - name: Create project from template
-        run: poetry run cookiecutter . -f --config-file test-configs/py39-poetry-docker-github.yaml --no-input -o $new_project_directory
+        run: poetry run cookiecutter . -f --config-file test-configs/py38-poetry-docker-github.yaml --no-input -o $new_project_directory
 
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
