@@ -54,7 +54,6 @@ poetry-export-dev:
 
 .PHONY: tools-install
 tools-install:
-	poetry env list
 	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 	poetry run nbdime config-git --enable
 
