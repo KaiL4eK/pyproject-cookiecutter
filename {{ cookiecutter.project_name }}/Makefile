@@ -37,7 +37,7 @@ project-init: poetry-install tools-install
 
 .PHONY: poetry-install
 poetry-install:
-	poetry install -n 
+	poetry install -n
 	{% if cookiecutter.include_mypy_linter == 'y' -%}
 	poetry run mypy --install-types --non-interactive ./{%- endif %}
 
