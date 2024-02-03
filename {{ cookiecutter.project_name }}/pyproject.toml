@@ -11,6 +11,8 @@ version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.project_description }}"
 readme = "README.md"
 authors = ["{{ cookiecutter.username }} <{{ cookiecutter.email }}>"]
+repository = ""
+homepage = ""
 
 # Keywords description https://python-poetry.org/docs/pyproject/#keywords
 keywords = []  #! Update me
