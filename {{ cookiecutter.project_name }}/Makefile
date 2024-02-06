@@ -33,13 +33,11 @@ docker-remove:
 
 #* Installation
 .PHONY: project-init
-project-init: poetry-install tools-install
+project-init: poetry-install tools-install {% if cookiecutter.include_mypy_linter == 'y' -%}mypy-install{%- endif %}
 
 .PHONY: poetry-install
 poetry-install:
 	poetry install -n
-	{% if cookiecutter.include_mypy_linter == 'y' -%} 
-	poetry run mypy --install-types --non-interactive ./{%- endif %}
 
 .PHONY: poetry-lock-update
 poetry-lock-update:
@@ -70,6 +68,10 @@ tests:
 	poetry run pytest -c pyproject.toml{%- endif %}
 
 {% if cookiecutter.include_mypy_linter == 'y' -%}#* Linting
+.PHONY: mypy-install
+mypy-install:
+	poetry run mypy --install-types --non-interactive ./
+
 .PHONY: mypy
 mypy:
 	poetry run mypy --config-file pyproject.toml ./{%- endif %}
