@@ -125,3 +125,33 @@ jobs:
 
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
+  
+  test-project-310-poetry-mypy-140-docker-github:
+    runs-on: ubuntu-latest
+    env:
+      new_project_directory: /tmp/cookiecutter/py310
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          version: 1.4.0
+          virtualenvs-create: true
+          virtualenvs-in-project: false
+          installer-parallel: true
+
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Setup base project
+        run: make project-init-ci
+
+      - name: Create project from template
+        run: poetry run cookiecutter . -f --config-file test-configs/py310-poetry-mypy-docker-github.yaml --no-input -o $new_project_directory
+
+      - name: Test project commands
+        run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
