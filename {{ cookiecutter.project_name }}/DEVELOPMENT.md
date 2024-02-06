@@ -79,7 +79,7 @@ cd {{ cookiecutter.project_name }} && git init
 2. Initialize poetry and install `pre-commit` hooks:
 
 ```bash
-make project-inits
+make project-init
 ```
 
 3. Upload initial code to GitHub:
