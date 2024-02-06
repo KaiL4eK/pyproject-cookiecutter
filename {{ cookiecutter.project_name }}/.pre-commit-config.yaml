@@ -59,5 +59,4 @@ repos:
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.4.1
     hooks:
-      - id: mypy
-        exclude: .additional/{% endif %}
+      - id: mypy{% endif %}
