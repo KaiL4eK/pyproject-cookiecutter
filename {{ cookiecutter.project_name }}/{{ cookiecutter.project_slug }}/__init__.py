@@ -1,4 +1,4 @@
-# type: ignore[attr-defined]
+# mypy: disable-error-code="attr-defined"
 """{{ cookiecutter.project_description }}"""
 
 from importlib import metadata as importlib_metadata

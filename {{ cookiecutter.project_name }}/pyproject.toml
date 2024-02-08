@@ -44,8 +44,8 @@ python-dotenv = "^0.21.1"
 wemake-python-styleguide = "^0.17.0"
 black = {version = "^23.3", allow-prereleases = true}
 isort = {extras = ["colors"], version = "^5.10.1"}
-{% if cookiecutter.include_mypy_linter == 'y' -%}mypy = "^0.910"
-mypy-extensions = "^0.4.3"{%- endif %}
+{% if cookiecutter.include_mypy_linter == 'y' -%}mypy = "^1.8.0"
+mypy-extensions = "^1.0.0"{%- endif %}
 pre-commit = "^2.14.0"
 {% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2.4"{%- endif %}
 nbdime = "^3.1.0"
@@ -97,7 +97,7 @@ color_output = true
 {% if cookiecutter.include_mypy_linter == 'y' %}
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
-python_version = {{ cookiecutter.minimal_python_version }}
+python_version = "{{ cookiecutter.minimal_python_version }}"
 pretty = true
 show_traceback = true
 color_output = true

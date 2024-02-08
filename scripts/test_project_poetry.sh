@@ -25,6 +25,7 @@ if [ $? -ne 0 ]; then
 fi
 
 poetry run pre-commit run --files notebooks/* nbstripout || true
+poetry run pre-commit run --files Makefile trailing-whitespace || true
 
 poetry run pre-commit run -a --show-diff-on-failure \
     && poetry build \

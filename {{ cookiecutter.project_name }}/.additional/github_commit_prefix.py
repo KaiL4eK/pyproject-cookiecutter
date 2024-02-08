@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from typing import NoReturn
-
 import argparse
 import re
 import subprocess  # nosec
@@ -14,7 +12,7 @@ def get_ticket_id_from_branch_name(branch):
         return matches[0]
 
 
-def main() -> NoReturn:
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("commit_msg_filepath")
     parser.add_argument(
