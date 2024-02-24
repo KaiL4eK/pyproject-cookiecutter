@@ -33,7 +33,7 @@ keywords = [
 classifiers = []
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.11"
+python = ">=3.8,<3.12"
 cookiecutter = "^2.2.0"
 
 [tool.poetry.group.dev.dependencies]
