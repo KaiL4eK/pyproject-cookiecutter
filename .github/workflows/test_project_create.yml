@@ -65,7 +65,7 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
 
-  test-project-39-poetry-132-docker-github:
+  test-project-39-poetry-120-docker-github:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py39
@@ -76,7 +76,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.5.0
+          version: 1.2.0
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
