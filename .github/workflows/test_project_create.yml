@@ -90,8 +90,6 @@ jobs:
         run: make project-init-ci
 
       - name: Create project from template
-        run: export PYTHON=which python
-        run: poetry env use $PYTHON
         run: poetry run cookiecutter . -f --config-file test-configs/py39-poetry-docker-github.yaml --no-input -o $new_project_directory
 
       - name: Test project commands
