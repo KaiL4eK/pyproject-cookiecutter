@@ -13,6 +13,11 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.8"
+          cache: pip
+
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
@@ -20,11 +25,6 @@ jobs:
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
-
-      - uses: actions/setup-python@v4
-        with:
-          python-version: "3.8"
-          cache: pip
 
       - name: Setup base project
         run: make project-init-ci
