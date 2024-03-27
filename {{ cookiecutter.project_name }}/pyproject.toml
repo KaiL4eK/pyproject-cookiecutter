@@ -1,6 +1,11 @@
 {%- set python_version_splitted = cookiecutter.minimal_python_version.split('.') | map('int') | list -%}
 {%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
 {%- set username = cookiecutter.username.replace(" ", "-") -%}
+{%- if cookiecutter.vcs_remote_type == "bitbucket" -%}
+  {%- set vcs_domen = "org" -%}
+{%- else -%}
+  {%- set vcs_domen = "com" -%}
+{%- endif -%}
 # Poetry pyproject.toml: https://python-poetry.org/docs/pyproject/
 [build-system]
 requires = ["poetry_core>=1.0.0"]
@@ -12,8 +17,8 @@ version = "{{ cookiecutter.version }}"
 description = "{{ cookiecutter.project_description }}"
 readme = "README.md"
 authors = ["{{ cookiecutter.username }} <{{ cookiecutter.email }}>"]
-repository = "https://{{ cookiecutter.vcs_remote_type }}.com/{{ username }}/{{ cookiecutter.project_name }}/"
-homepage = "https://{{ cookiecutter.vcs_remote_type }}.com/{{ username }}/{{ cookiecutter.project_name }}/"
+repository = "https://{{ cookiecutter.vcs_remote_type }}.{{ vcs_domen }}/{{ username }}/{{ cookiecutter.project_name }}/"
+homepage = "https://{{ cookiecutter.vcs_remote_type }}.{{ vcs_domen }}/{{ username }}/{{ cookiecutter.project_name }}/"
 
 # Keywords description https://python-poetry.org/docs/pyproject/#keywords
 keywords = []  #! Update me
