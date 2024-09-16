@@ -1,0 +1,9 @@
+default_context:
+  project_name: "test-project"
+  minimal_python_version: "3.10"
+  python_linter: ruff
+  python_formatter: ruff
+  include_docker_sample: "y"
+  include_tests_sample: "y"
+  include_mypy_type_checker: "y"
+  vcs_remote_type: "github"
