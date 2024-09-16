@@ -30,7 +30,7 @@ classifiers = [  #! Update me
   "Operating System :: OS Independent",
   "Topic :: Software Development :: Libraries :: Python Modules",
   "Programming Language :: Python :: 3",
-  {%- for minor_version in cookiecutter._all_python_minor_version if minor_version == python_version_splitted[1] %}
+  {%- for minor_version in cookiecutter._all_python_minor_version if minor_version == python_version_splitted[1] -%}
   "Programming Language :: Python :: 3.{{ minor_version }}",{% endfor %}
 ]
 
@@ -48,11 +48,12 @@ python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
 {% if cookiecutter.python_formatter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.19.0"{% endif %}
+{% if cookiecutter.python_formatter == 'flake8' %}flake8 = "^7.1.1{% endif %}
 {% if cookiecutter.python_linter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
-{% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10.1"}
+{% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10.1"}{% endif %}
 {% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6.5"{% endif %}
-{% if cookiecutter.include_mypy_type_checker == 'y' -%}mypy = "^1.8.0"
-mypy-extensions = "^1.0.0"{%- endif %}
+{% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8.0"
+mypy-extensions = "^1.0.0"{% endif %}
 pre-commit = "^2.14.0"
 {% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2.4"{%- endif %}
 nbdime = "^3.1.0"
@@ -62,9 +63,10 @@ jupyter = "^1.0.0"
 jupyter_contrib_nbextensions = "^0.5.1"
 jupyter-client = "==6.1.12"
 nbconvert = "5.6.1"
-jinja2 = "3.0.3"{% endif %}
+jinja2 = "3.0.3"
+{% endif %}
 
-{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}
+{%- if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' -%}
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -143,7 +145,7 @@ docstring-code-format = false
 docstring-code-line-length = "dynamic"
 {% endif %}
 
-{% if cookiecutter.python_formatter == 'black' %}
+{%- if cookiecutter.python_formatter == 'black' -%}
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py{{ merged_python_version }}"]
@@ -167,7 +169,7 @@ exclude = '''
 '''
 {% endif %}
 
-{% if cookiecutter.python_linter != 'ruff' %}
+{%- if cookiecutter.python_linter != 'ruff' -%}
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = {{ merged_python_version }}
@@ -182,7 +184,7 @@ indent = 4
 color_output = true
 {% endif %}
 
-{% if cookiecutter.include_mypy_type_checker == 'y' %}
+{% if cookiecutter.include_mypy_type_checker == 'y' -%}
 [tool.mypy]
 # https://mypy.readthedocs.io/en/latest/config_file.html#using-a-pyproject-toml-file
 python_version = "{{ cookiecutter.minimal_python_version }}"

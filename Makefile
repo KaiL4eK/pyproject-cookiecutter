@@ -42,10 +42,11 @@ lint:
 #* Create test project and test data
 .PHONY: test-project-creation
 test-project-creation:
-	poetry run cookiecutter . -f --config-file test-configs/py39-poetry-docker-github.yaml --no-input -o ${COOKIECUTTER_TEST_DIR}
+	poetry run cookiecutter . -f --config-file test-configs/py310-poetry-docker-github-ruff.yaml --no-input -o ${COOKIECUTTER_TEST_DIR}
 	ln -sf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} .
 	bash scripts/test_project_poetry.sh ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
 
 .PHONY: test-project-clean
 test-project-clean:
+	rm -rf ${TEST_PROJECT_NAME}
 	rm -rf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
