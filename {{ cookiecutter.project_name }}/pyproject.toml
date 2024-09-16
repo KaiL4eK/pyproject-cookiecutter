@@ -48,7 +48,7 @@ python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions
-{% if cookiecutter.python_linter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.18"{% endif %}
+{% if cookiecutter.python_linter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.17"{% endif %}
 {% if cookiecutter.python_linter == 'flake8' %}flake8 = "^7.1{% endif %}
 {% if cookiecutter.python_formatter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
 {% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10"}{% endif %}
@@ -67,7 +67,7 @@ nbconvert = "5.6.1"
 jinja2 = "3.0.3"
 {% endif %}
 
-{%- if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' -%}
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' -%}
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
 exclude = [
@@ -146,7 +146,7 @@ docstring-code-format = false
 docstring-code-line-length = "dynamic"
 {% endif %}
 
-{%- if cookiecutter.python_formatter == 'black' -%}
+{% if cookiecutter.python_formatter == 'black' -%}
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py{{ merged_python_version }}"]
@@ -170,7 +170,7 @@ exclude = '''
 '''
 {% endif %}
 
-{%- if cookiecutter.python_linter != 'ruff' -%}
+{% if cookiecutter.python_linter != 'ruff' -%}
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = {{ merged_python_version }}
