@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-project-38-poetry-120-docker-github:
+  test-project-38-poetry-130-docker-github:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py38
@@ -21,7 +21,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.2.0
+          version: 1.3.0
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
@@ -65,7 +65,7 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
 
-  test-project-39-poetry-120-docker-github:
+  test-project-39-poetry-160-docker-github:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py39
@@ -81,7 +81,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.2.0
+          version: 1.6.0
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
@@ -125,7 +125,7 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
   
-  test-project-310-poetry-182-docker-github-ruff:
+  test-project-310-poetry-183-docker-github-ruff:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py310
@@ -141,7 +141,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.8.2
+          version: 1.8.3
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
@@ -155,7 +155,7 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
 
-  test-project-310-poetry-mypy-140-docker-github:
+  test-project-310-poetry-mypy-180-docker-github:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py310
@@ -171,7 +171,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.4.0
+          version: 1.8.0
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true
@@ -185,7 +185,7 @@ jobs:
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
 
-  test-project-311-poetry-140-docker-github:
+  test-project-311-poetry-180-docker-github:
     runs-on: ubuntu-latest
     env:
       new_project_directory: /tmp/cookiecutter/py311
@@ -201,7 +201,7 @@ jobs:
       - name: Install Poetry
         uses: snok/install-poetry@v1
         with:
-          version: 1.4.0
+          version: 1.8.0
           virtualenvs-create: true
           virtualenvs-in-project: false
           installer-parallel: true

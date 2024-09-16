@@ -34,6 +34,13 @@ classifiers = [  #! Update me
   "Programming Language :: Python :: 3.{{ minor_version }}",{% endfor %}
 ]
 
+{% if cookiecutter.minimal_python_version == '3.8' -%}
+# Just a fix for https://github.com/python-poetry/poetry/issues/9293
+[[tool.poetry.source]]
+name = "pypi-public"
+url = "https://pypi.org/simple/"
+{% endif %}
+
 {% if cookiecutter.include_cli_example == 'y' %}
 [tool.poetry.scripts]
 # Entry points for the package https://python-poetry.org/docs/pyproject/#scripts

@@ -33,6 +33,12 @@ sudo apt-get install build-essential
 sudo apt install python{{ cookiecutter.minimal_python_version }}-dev
 ```
 
+Sometimes you need to install `distutils`
+
+```bash
+sudo apt install python{{ cookiecutter.minimal_python_version }}-distutils
+```
+
 ## Poetry
 
 - Windows
