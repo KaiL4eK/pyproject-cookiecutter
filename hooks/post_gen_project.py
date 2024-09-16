@@ -3,6 +3,7 @@ import platform
 import shutil
 
 REMOVE_PATHS = [
+    '{% if cookiecutter.python_linter == "ruff" %} .flake8 {% endif %}',
     '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',
     '{% if cookiecutter.include_docker_sample == "n" %} .dockerignore {% endif %}',
     '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',

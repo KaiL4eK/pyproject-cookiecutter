@@ -47,22 +47,100 @@ rich = "^10.7.0"
 python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
-wemake-python-styleguide = "^0.17.0"
-black = {version = "^23.3", allow-prereleases = true}
-isort = {extras = ["colors"], version = "^5.10.1"}
+{% if cookiecutter.python_formatter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.19.0"{% endif %}
+{% if cookiecutter.python_linter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
+{% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10.1"}
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6.5"{% endif %}
 {% if cookiecutter.include_mypy_type_checker == 'y' -%}mypy = "^1.8.0"
 mypy-extensions = "^1.0.0"{%- endif %}
 pre-commit = "^2.14.0"
 {% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2.4"{%- endif %}
 nbdime = "^3.1.0"
 envyaml = "^1.9.210927"
-{% if cookiecutter.include_notebooks_sample == 'y' %}
-ipykernel = "^6.4.2"
+{% if cookiecutter.include_notebooks_sample == 'y' %}ipykernel = "^6.4.2"
 jupyter = "^1.0.0"
 jupyter_contrib_nbextensions = "^0.5.1"
 jupyter-client = "==6.1.12"
 nbconvert = "5.6.1"
-jinja2 = "3.0.3"
+jinja2 = "3.0.3"{% endif %}
+
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}
+[tool.ruff]
+# Exclude a variety of commonly ignored directories.
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+]
+
+# Same as Black.
+line-length = {{ cookiecutter.line_length }}
+indent-width = 4
+target-version = "py{{ merged_python_version }}"
+
+[tool.ruff.lint]
+# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
+# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
+# McCabe complexity (`C901`) by default.
+select = []
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
+
+# Allow unused variables when underscore-prefixed.
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
+
+# Enable auto-formatting of code examples in docstrings. Markdown,
+# reStructuredText code/literal blocks and doctests are all supported.
+#
+# This is currently disabled by default, but it is planned for this
+# to be opt-out in the future.
+docstring-code-format = false
+
+# Set the line length limit used when formatting code snippets in
+# docstrings.
+#
+# This only has an effect when the `docstring-code-format` setting is
+# enabled.
+docstring-code-line-length = "dynamic"
 {% endif %}
 
 {% if cookiecutter.python_formatter == 'black' %}
@@ -89,7 +167,7 @@ exclude = '''
 '''
 {% endif %}
 
-{% if cookiecutter.python_linter == 'flake8' %}
+{% if cookiecutter.python_linter != 'ruff' %}
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = {{ merged_python_version }}

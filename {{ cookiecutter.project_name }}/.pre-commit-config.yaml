@@ -41,13 +41,6 @@ repos:
       - id: check-docstring-first
       - id: detect-private-key
       - id: check-case-conflict
-      
-{%- if cookiecutter.include_mypy_type_checker == 'y' -%}
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.2
-    hooks:
-      - id: mypy
-{% endif %}
 
   - repo: local
     # Use local tools to have same versions as you use in environment
@@ -64,7 +57,7 @@ repos:
         require_serial: true
         language: python
         types_or: [python, pyi, jupyter]
-{% else %}
+{%- else -%}
       # Source: https://github.com/PyCQA/isort/blob/main/.pre-commit-hooks.yaml
       - id: isort
         name: isort
@@ -94,6 +87,16 @@ repos:
       - id: black
         name: black
         entry: poetry run black
+        language: system
+{% endif %}
+
+{%- if cookiecutter.include_mypy_type_checker == 'y' -%}
+      # Source: https://github.com/pre-commit/mirrors-mypy/blob/main/.pre-commit-hooks.yaml
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        types_or: [python, pyi]
+        require_serial: true
         language: system
 {% endif %}
 
