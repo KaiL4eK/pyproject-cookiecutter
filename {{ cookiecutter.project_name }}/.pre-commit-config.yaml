@@ -65,8 +65,8 @@ repos:
         language: system
 
       # Source: https://github.com/PyCQA/flake8/blob/main/.pre-commit-hooks.yaml
-      - id: `{{cookiecutter.python_linter}}`
-        name: `{{cookiecutter.python_linter}}`
+      - id: {{cookiecutter.python_linter}}
+        name: {{cookiecutter.python_linter}}
         entry: poetry run flake8
         language: system
 {%- endif %}

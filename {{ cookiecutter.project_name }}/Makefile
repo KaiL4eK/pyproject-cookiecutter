@@ -33,7 +33,7 @@ docker-remove:
 
 #* Initialization
 .PHONY: project-init
-project-init: poetry-install tools-install {%- if cookiecutter.include_mypy_type_checker == 'y' -%}mypy-install{%- endif %}
+project-init: poetry-install tools-install{% if cookiecutter.include_mypy_type_checker == 'y' %} mypy-install{%- endif %}
 
 .PHONY: poetry-install
 poetry-install:
