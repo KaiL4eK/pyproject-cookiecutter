@@ -47,15 +47,16 @@ rich = "^10.7.0"
 python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
-{% if cookiecutter.python_linter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.19.0"{% endif %}
-{% if cookiecutter.python_linter == 'flake8' %}flake8 = "^7.1.1{% endif %}
+# In case of packages without patch part we just want to update them through minor versions
+{% if cookiecutter.python_linter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.18"{% endif %}
+{% if cookiecutter.python_linter == 'flake8' %}flake8 = "^7.1{% endif %}
 {% if cookiecutter.python_formatter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
-{% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10.1"}{% endif %}
-{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6.5"{% endif %}
-{% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8.0"
-mypy-extensions = "^1.0.0"{% endif %}
-pre-commit = "^2.14.0"
-{% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2.4"{%- endif %}
+{% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10"}{% endif %}
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6"{% endif %}
+{% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8"
+mypy-extensions = "^1.0"{% endif %}
+pre-commit = "^2.14"
+{% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2"{%- endif %}
 nbdime = "^3.1.0"
 envyaml = "^1.9.210927"
 {% if cookiecutter.include_notebooks_sample == 'y' %}ipykernel = "^6.4.2"
