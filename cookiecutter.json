@@ -23,9 +23,18 @@
   ],
   "version": "0.1.0",
   "line_length": 88,
+  "python_linter": [
+    "wemake-python-styleguide",
+    "flake8",
+    "ruff"
+  ],
+  "python_formatter": [
+    "black",
+    "ruff"
+  ],
+  "include_mypy_type_checker": "n",
   "include_cli_example": "n",
   "include_docker_sample": "n",
-  "include_tests_sample": "n",
-  "include_notebooks_sample": "y",
-  "include_mypy_linter": "n"
+  "include_tests_sample": "y",
+  "include_notebooks_sample": "y"
 }

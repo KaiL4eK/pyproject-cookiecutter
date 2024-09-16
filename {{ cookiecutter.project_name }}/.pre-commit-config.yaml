@@ -1,11 +1,22 @@
 {%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
 
 default_stages: [commit, push]
+# Fast fail - drop when first error appears
+# Used with nbstripout to restart right after cleaning
+# Because notebooks after cleaning are not indexed, we need to restart commit
+fail_fast: true
 
 repos:
-  # https://pre-commit.com/hooks.html
+  # Use this first to fail (clean) on the first step 
+  #   and restart right after that
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+
+  # List of all hooks: https://pre-commit.com/hooks.html
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.4.0
+    rev: v4.6.0
     hooks:
       - id: check-yaml
       - id: check-toml
@@ -30,33 +41,68 @@ repos:
       - id: check-docstring-first
       - id: detect-private-key
       - id: check-case-conflict
+      
+{%- if cookiecutter.include_mypy_type_checker == 'y' -%}
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.11.2
+    hooks:
+      - id: mypy
+{% endif %}
 
   - repo: local
+    # Use local tools to have same versions as you use in environment
+    # E.g. you use formatter to format during development 
+    #   and pre-commit can behave in a different way without local version
     hooks:
+{%- if cookiecutter.python_linter == 'ruff' -%}
+      # Run the ruff linter.
+      # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
+      - id: ruff
+        name: ruff
+        types_or: [ python, pyi ]
+        entry: poetry run ruff check --force-exclude
+        require_serial: true
+        language: python
+        types_or: [python, pyi, jupyter]
+{% else %}
+      # Source: https://github.com/PyCQA/isort/blob/main/.pre-commit-hooks.yaml
       - id: isort
         name: isort
         entry: poetry run isort --settings-path pyproject.toml
         types: [python]
         language: system
-{% if cookiecutter.vcs_remote_type != 'none' %}
+
+      # Source: https://github.com/PyCQA/flake8/blob/main/.pre-commit-hooks.yaml
+      - id: `{{cookiecutter.python_linter}}`
+        name: `{{cookiecutter.python_linter}}`
+        entry: poetry run flake8
+        language: system
+{% endif %}
+
+{%- if cookiecutter.python_formatter == 'ruff' -%}
+      # Run the ruff formatter.
+      # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
+      - id: ruff-format
+        name: ruff-format
+        types_or: [ python, pyi ]
+        entry: poetry run ruff format --force-exclude
+        require_serial: true
+        language: python
+        types_or: [python, pyi, jupyter]
+{%- elif cookiecutter.python_formatter == 'black' -%}
+      # Run black formatter
+      - id: black
+        name: black
+        entry: poetry run black
+        language: system
+{% endif %}
+
+{%- if cookiecutter.vcs_remote_type != 'none' -%}
       - id: git-commit-prefix
         name: git-commit-prefix{% if cookiecutter.vcs_remote_type == 'bitbucket' %}
         entry: poetry run python .additional/bitbucket_commit_prefix.py{% elif cookiecutter.vcs_remote_type == 'github' %}
         entry: poetry run python .additional/github_commit_prefix.py{% endif %}
         language: python
         stages: [prepare-commit-msg]
-        description: Searches the branch name for something looking like an issue name template and prepends the commit message with it{% endif %}
-
-  - repo: https://github.com/PyCQA/flake8
-    rev: 6.0.0
-    hooks:
-      - id: flake8
-
-  - repo: https://github.com/kynan/nbstripout
-    rev: 0.6.0
-    hooks:
-      - id: nbstripout{% if cookiecutter.include_mypy_linter == 'y' %}
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.4.1
-    hooks:
-      - id: mypy{% endif %}
+        description: Searches the branch name for something looking like an issue name template and prepends the commit message with it
+{% endif %}
