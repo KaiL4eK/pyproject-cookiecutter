@@ -52,4 +52,3 @@ curl -sSL https://install.python-poetry.org | python3 -
 ```
 
 [Table of contents](#table-of-contents)
-
