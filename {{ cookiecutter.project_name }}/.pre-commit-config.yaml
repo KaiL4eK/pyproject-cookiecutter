@@ -7,7 +7,7 @@ default_stages: [commit, push]
 fail_fast: true
 
 repos:
-  # Use this first to fail (clean) on the first step 
+  # Use this first to fail (clean) on the first step
   #   and restart right after that
   - repo: https://github.com/kynan/nbstripout
     rev: 0.7.1
@@ -44,7 +44,7 @@ repos:
 
   - repo: local
     # Use local tools to have same versions as you use in environment
-    # E.g. you use formatter to format during development 
+    # E.g. you use formatter to format during development
     #   and pre-commit can behave in a different way without local version
     hooks:
 {% if cookiecutter.python_linter == 'ruff' %}
@@ -52,7 +52,6 @@ repos:
       # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
       - id: ruff
         name: ruff
-        types_or: [ python, pyi ]
         entry: poetry run ruff check --force-exclude
         require_serial: true
         language: python
@@ -77,7 +76,6 @@ repos:
       # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
       - id: ruff-format
         name: ruff-format
-        types_or: [ python, pyi ]
         entry: poetry run ruff format --force-exclude
         require_serial: true
         language: python
