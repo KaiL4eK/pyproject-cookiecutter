@@ -1,4 +1,4 @@
-# {{ cookiecutter.project_name }}
+# Project README! Here we go!
 
 <div align="center">
 
@@ -9,7 +9,7 @@
 
 </div>
 
-- [{{ cookiecutter.project\_name }}](#-cookiecutterproject_name-)
+- [Project README! Here we go!](#project-readme-here-we-go)
   - [Repository contents](#repository-contents)
   - [System requirements](#system-requirements)
   - [Other interesting info](#other-interesting-info)
