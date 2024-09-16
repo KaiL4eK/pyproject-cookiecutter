@@ -39,8 +39,8 @@ lint:
 #* Create test project and test data
 COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
 TEST_PROJECT_NAME = test-project
-# TEST_PROJECT_CONFIG = py310-poetry-docker-github-ruff.yaml
-TEST_PROJECT_CONFIG = py310-poetry-docker-github.yaml
+TEST_PROJECT_CONFIG = py310-poetry-docker-github-ruff.yaml
+# TEST_PROJECT_CONFIG = py310-poetry-docker-github.yaml
 # TEST_PROJECT_CONFIG = py310-poetry-mypy-docker-github.yaml
 .PHONY: test-project-creation
 test-project-creation:

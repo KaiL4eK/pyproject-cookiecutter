@@ -38,14 +38,13 @@ def hello(name: str) -> str:
 
 def show_message(msg: str) -> None:
     """
-    Simple example to show how logger settings work
+    Simple example to show how logger settings work.
 
     Parameters
     ----------
     msg : str
         Message to show through logger
     """
-
     logger.debug(f"Debug: {msg}")
     logger.info(f"Info: {msg}")
     logger.warning(f"Warning: {msg}")

@@ -1,7 +1,18 @@
 [flake8]
-; ignore =
+ignore = D401, WPS305
 max-line-length = {{ cookiecutter.line_length }}
 max-complexity = 18
 
 strictness=long
 docstring_style=numpy
+
+exclude =
+    .additional/*
+
+per-file-ignores =
+    scripts/* : D, WPS
+    tests/* : D, S, WPS317
+    {{ cookiecutter.project_slug }}/__init__.py : WPS412, D400, D103, WPS410
+
+# Should be last to correctly show in editor
+inline-quotes = "

@@ -105,11 +105,19 @@ indent-width = 4
 target-version = "py{{ merged_python_version }}"
 
 [tool.ruff.lint]
-# Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
-# Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
-# McCabe complexity (`C901`) by default.
-select = []
-ignore = []
+# https://docs.astral.sh/ruff/rules/#pyflakes-f
+select = ["ALL"]
+ignore = [
+  "ANN",
+  "G004",
+  "D401",
+  "RET504",
+  "ISC001",
+]
+
+exclude = [
+  ".additional/*"
+]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
@@ -117,6 +125,14 @@ unfixable = []
 
 # Allow unused variables when underscore-prefixed.
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S", "D"]
+"{{ cookiecutter.project_slug }}/__init__.py" = ["D400", "D103"]
+"scripts/*" = ["T201", "BLE001", "D", "INP001"]
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.

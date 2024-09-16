@@ -68,6 +68,7 @@ repos:
       - id: {{cookiecutter.python_linter}}
         name: {{cookiecutter.python_linter}}
         entry: poetry run flake8
+        types_or: [python, pyi]
         language: system
 {%- endif %}
 
@@ -86,6 +87,7 @@ repos:
         name: black
         entry: poetry run black
         language: system
+        types_or: [python, pyi, jupyter]
 {%- endif %}
 
 {% if cookiecutter.include_mypy_type_checker == 'y' %}

@@ -6,3 +6,4 @@ select = B,C,E,F,W,T4,B9
 
 strictness=long
 docstring_style=numpy
+inline-quotes = "
