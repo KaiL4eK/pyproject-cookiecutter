@@ -22,6 +22,10 @@ poetry-main-install:
 poetry-lock-update:
 	poetry lock --no-update
 
+.PHONY: pre-commit-update
+pre-commit-update:
+	poetry run pre-commit autoupdate
+
 .PHONY: tools-install
 tools-install:
 	poetry run pre-commit install

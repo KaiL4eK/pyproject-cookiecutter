@@ -31,7 +31,7 @@ docker-remove:
 	docker rmi -f $(IMAGE):$(VERSION)
 {%- endif %}
 
-#* Installation
+#* Initialization
 .PHONY: project-init
 project-init: poetry-install tools-install {% if cookiecutter.include_mypy_linter == 'y' -%}mypy-install{%- endif %}
 
@@ -51,10 +51,19 @@ poetry-export:
 poetry-export-dev:
 	poetry lock -n && poetry export --with dev --without-hashes > requirements.dev.txt
 
+#* Tools
 .PHONY: tools-install
 tools-install:
 	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 	poetry run nbdime config-git --enable
+
+.PHONY: pre-commit-update
+pre-commit-update:
+	poetry run pre-commit autoupdate
+
+.PHONY: pre-commit-run-all
+pre-commit-run-all:
+	poetry run pre-commit run --all-files
 
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
 .PHONY: nbextention-toc-install
