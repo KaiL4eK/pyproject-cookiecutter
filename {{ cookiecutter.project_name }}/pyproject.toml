@@ -47,9 +47,9 @@ rich = "^10.7.0"
 python-dotenv = "^0.21.1"
 
 [tool.poetry.group.dev.dependencies]
-{% if cookiecutter.python_formatter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.19.0"{% endif %}
-{% if cookiecutter.python_formatter == 'flake8' %}flake8 = "^7.1.1{% endif %}
-{% if cookiecutter.python_linter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
+{% if cookiecutter.python_linter == 'wemake-python-styleguide' %}wemake-python-styleguide = "^0.19.0"{% endif %}
+{% if cookiecutter.python_linter == 'flake8' %}flake8 = "^7.1.1{% endif %}
+{% if cookiecutter.python_formatter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
 {% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10.1"}{% endif %}
 {% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6.5"{% endif %}
 {% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8.0"
