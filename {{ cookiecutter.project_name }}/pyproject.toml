@@ -137,7 +137,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 convention = "numpy"
 
 [tool.ruff.lint.per-file-ignores]
-"tests/*" = ["S", "D"]
+"tests/*" = ["S", "D", "INP001"]
 "{{ cookiecutter.project_slug }}/__init__.py" = ["D400", "D103"]
 "scripts/*" = ["T201", "BLE001", "D", "INP001"]
 
