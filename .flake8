@@ -1,8 +1,0 @@
-[flake8]
-ignore = E20, E999, E501
-max-line-length = 88
-max-complexity = 18
-select = B,C,E,F,W,T4,B9
-
-strictness=long
-docstring_style=numpy

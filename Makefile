@@ -22,13 +22,14 @@ poetry-main-install:
 poetry-lock-update:
 	poetry lock --no-update
 
+.PHONY: pre-commit-update
+pre-commit-update:
+	poetry run pre-commit autoupdate
+
 .PHONY: tools-install
 tools-install:
 	poetry run pre-commit install
 	poetry run nbdime config-git --enable
-
-COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
-TEST_PROJECT_NAME = test-project
 
 #* Linting
 .PHONY: lint
@@ -36,12 +37,20 @@ lint:
 	poetry run pre-commit run -a
 
 #* Create test project and test data
+COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
+TEST_PROJECT_NAME = test-project
+TEST_PROJECT_CONFIG = py310-poetry-docker-github.yaml
+
 .PHONY: test-project-creation
 test-project-creation:
-	poetry run cookiecutter . -f --config-file test-configs/py39-poetry-docker-github.yaml --no-input -o ${COOKIECUTTER_TEST_DIR}
+	poetry run cookiecutter . -f --config-file test-configs/${TEST_PROJECT_CONFIG} --no-input -o ${COOKIECUTTER_TEST_DIR}
 	ln -sf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME} .
+
+.PHONY: test-project
+test-project: test-project-creation
 	bash scripts/test_project_poetry.sh ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
 
 .PHONY: test-project-clean
 test-project-clean:
+	rm -rf ${TEST_PROJECT_NAME}
 	rm -rf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}

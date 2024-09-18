@@ -1,4 +1,4 @@
-# {{ cookiecutter.project_name }}
+# Project README! Here we go!
 
 <div align="center">
 
@@ -9,9 +9,10 @@
 
 </div>
 
-- [Repository contents](#repository-contents)
-- [System requirements](#system-requirements)
-- [Other interesting info](#other-interesting-info)
+- [Project README! Here we go!](#project-readme-here-we-go)
+  - [Repository contents](#repository-contents)
+  - [System requirements](#system-requirements)
+  - [Other interesting info](#other-interesting-info)
 
 ## Repository contents
 
@@ -27,7 +28,7 @@
   > These ones are not included into the pakckage if you build one - these scripts are only for usage with repository
 - [{{ cookiecutter.project_slug }}]({{ cookiecutter.project_slug }}) - source files of the project
 - [.editorconfig](.editorconfig) - configuration for [editorconfig](https://editorconfig.org/)
-- [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration
+{% if cookiecutter.python_formatter != 'ruff' %}- [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration{% endif %}
 - [.gitignore](.gitignore) - the files/folders `git` should ignore
 - [.pre-commit-config.yaml](.pre-commit-config.yaml) - [pre-commit](https://pre-commit.com/) configuration file
 - [README.md](README.md) - the one you read =)
@@ -40,7 +41,7 @@
 ## System requirements
 
 - Python version: {{ cookiecutter.minimal_python_version }}
-- Operating system: Ubuntu 20.04
+- Operating system: Ubuntu or WSL
 - Poetry version >= 1.2.0
 
 > We tested on this setup - you can try other versions or operation systems by yourself!

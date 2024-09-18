@@ -4,61 +4,22 @@ This is guide how to prepare development environment and use main tools
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
-- [Preparations](#preparations)
-- [Initialize your code](#initialize-your-code)
-  - [Just created project?](#just-created-project)
-  - [Cloned existing project](#cloned-existing-project)
-- [Optional setup steps](#optional-setup-steps)
-- [Some known issues](#some-known-issues)
+- [Development guide](#development-guide)
+  - [Table of contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Initialize your code](#initialize-your-code)
+    - [Just created project?](#just-created-project)
+    - [Cloned existing project](#cloned-existing-project)
+  - [Optional setup steps](#optional-setup-steps)
+  - [Some known issues](#some-known-issues)
 
-## Preparations
+## Prerequisites
 
-1. Install make
-    - Windows:
+> If you need to install tools, check links
 
-        Install [chocolatey](https://chocolatey.org/install) and install `make` with command:
-
-    ```powershell
-    choco install make
-    ```
-
-    - Linux:
-
-    ```bash
-    sudo apt-get install build-essential
-    ```
-
-1. Install python {{ cookiecutter.minimal_python_version }}
-    - Windows
-
-        Install with [official executable](https://www.python.org/downloads/)
-
-    - Linux
-
-    ```bash
-    sudo apt install python{{ cookiecutter.minimal_python_version }}-dev
-    ```
-
-1. Install poetry
-
-   - Windows
-
-        Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
-
-    ```powershell
-    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-    ```
-
-   - Linux
-
-        Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer) or bash command:
-
-    ```bash
-    curl -sSL https://install.python-poetry.org | python3 -
-    ```
-
-[Table of contents](#table-of-contents)
+- [Python](docs/TOOLS.md#python)
+- [Poetry](docs/TOOLS.md#poetry)
+- [Make](docs/TOOLS.md#make)
 
 ## Initialize your code
 
@@ -67,10 +28,10 @@ This is guide how to prepare development environment and use main tools
 0. Create repository on your favourite server (Bitbucket, Github or other) and obtain "Version control system URL" like this one:
 
 ```url
-https://github.com/KaiL4eK/pyproject-cookiecutter.git
+https://github.com/user/my-project.git
 ```
 
-1. Initialize `git` inside your repo:
+1. Create folder and initialize `git` inside your repo folder:
 
 ```bash
 cd {{ cookiecutter.project_name }} && git init
@@ -110,7 +71,7 @@ make project-init
    - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
       Open control panel (Ctrl+P) and enter `ext install EditorConfig.EditorConfig`
 
-{% if cookiecutter.include_tests_sample == 'y' -%}
+{% if cookiecutter.include_notebooks_sample == 'y' -%}
 
 1. To initialize generation of Table of Contents from notebook headers we use `nbextension`:
 

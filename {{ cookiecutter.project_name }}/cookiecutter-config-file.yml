@@ -11,8 +11,11 @@ default_context:
   version: "{{ cookiecutter.version }}"
   line_length: "{{ cookiecutter.line_length }}"
 
+  python_linter: "{{ cookiecutter.python_linter }}"
+  python_formatter: "{{ cookiecutter.python_formatter }}"
+
+  include_mypy_type_checker: "{{ cookiecutter.include_mypy_type_checker }}"
   include_cli_example: "{{ cookiecutter.include_cli_example }}"
   include_docker_sample: "{{ cookiecutter.include_docker_sample }}"
   include_tests_sample: "{{ cookiecutter.include_tests_sample }}"
   include_notebooks_sample: "{{ cookiecutter.include_notebooks_sample }}"
-  include_mypy_linter: "{{ cookiecutter.include_mypy_linter }}"
