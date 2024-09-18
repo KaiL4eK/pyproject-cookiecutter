@@ -13,7 +13,7 @@
 
 ## Features ##
 
-* Python 3.8, 3.9 or 3.10 supported
+* Python 3.8, 3.9, 3.10 and 3.11 supported
 * [Poetry](https://python-poetry.org/) for package/dependency management
   * Version `>= 1.3.0` supported
 * Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
