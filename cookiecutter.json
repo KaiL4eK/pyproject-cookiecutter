@@ -5,8 +5,8 @@
   "username": "Awesome user",
   "email": "awesome-user@example.com",
   "vcs_remote_type": [
-    "github",
     "bitbucket",
+    "github",
     "none"
   ],
   "_all_python_minor_version": [
@@ -24,15 +24,15 @@
   "version": "0.1.0",
   "line_length": 88,
   "python_linter": [
+    "ruff",
     "wemake-python-styleguide",
-    "flake8",
-    "ruff"
+    "flake8"
   ],
   "python_formatter": [
-    "black",
-    "ruff"
+    "ruff",
+    "black"
   ],
-  "include_mypy_type_checker": "n",
+  "include_mypy_type_checker": "y",
   "include_cli_example": "n",
   "include_docker_sample": "n",
   "include_tests_sample": "y",

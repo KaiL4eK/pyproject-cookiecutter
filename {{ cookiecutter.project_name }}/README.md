@@ -1,18 +1,19 @@
 # Project README! Here we go!
-
+{% if cookiecutter.vcs_remote_type != 'bitbucket' %}
 <div align="center">
+{%- endif %}
 
 [![PythonSupported](https://img.shields.io/badge/python-{{ cookiecutter.minimal_python_version }}-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
 
 {{ cookiecutter.project_description }}
-
+{% if cookiecutter.vcs_remote_type != 'bitbucket' %}
 </div>
+{%- endif %}
 
-- [Project README! Here we go!](#project-readme-here-we-go)
-  - [Repository contents](#repository-contents)
-  - [System requirements](#system-requirements)
-  - [Other interesting info](#other-interesting-info)
+- [Repository contents](#repository-contents)
+- [System requirements](#system-requirements)
+- [Other interesting info](#other-interesting-info)
 
 ## Repository contents
 
