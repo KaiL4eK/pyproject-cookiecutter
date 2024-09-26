@@ -29,17 +29,19 @@ def main():
     try:
         logging.config.dictConfig(config["logger"])
     except Exception as e:
-        print(e)
-        print("Error in Logging Configuration. Using default configs")
+        logging.warning(e)
+        logging.warning("Error in Logging Configuration. Using default configs")
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
         )
 
+    logger = logging.getLogger(__name__)
+
     greeting: str = hello(config["username"])
     show_message(greeting)
 
-    print(f"ENV_VARIABLE = {env_var_value}")
+    logger.info(f"ENV_VARIABLE = {env_var_value}")
 
 
 if __name__ == "__main__":
