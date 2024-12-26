@@ -18,10 +18,8 @@ WORKDIR /workspace
 COPY pyproject.toml poetry.lock Makefile requirements.project.txt ./
 
 # Install Poetry
-ENV POETRY_HOME=/opt/poetry
-RUN pip install -r requirements.project.txt \
-    && cd /usr/local/bin \
-    && ln -s /opt/poetry/bin/poetry \
+RUN pip install --upgrade pip \
+    && pip install -r requirements.project.txt \
     # Install all packages into system env
     && poetry config virtualenvs.create false
 

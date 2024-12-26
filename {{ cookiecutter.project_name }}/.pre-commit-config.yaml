@@ -1,6 +1,6 @@
 {%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
 
-default_stages: [commit, push]
+default_stages: [pre-commit, pre-push]
 # Fast fail - drop when first error appears
 # Used with nbstripout to restart right after cleaning
 # Because notebooks after cleaning are not indexed, we need to restart commit
@@ -16,7 +16,7 @@ repos:
 
   # List of all hooks: https://pre-commit.com/hooks.html
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-yaml
       - id: check-toml

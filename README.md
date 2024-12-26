@@ -13,9 +13,9 @@
 
 ## Features ##
 
-* Python 3.8, 3.9, 3.10 and 3.11 supported
+* Python 3.9, 3.10, 3.11, 3.12 supported
 * [Poetry](https://python-poetry.org/) for package/dependency management
-  * Version `>= 1.3.0` supported
+  * Version `>= 1.8.0` supported
 * Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
 * Pre-commit hooks with [pre-commit](https://pre-commit.com/)
   * Linting using [flake8](https://flake8.pycqa.org/en/latest/)
