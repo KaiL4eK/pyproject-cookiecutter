@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![PythonSupported](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-brightgreen.svg)](https://python3statement.org/#sections50-why)
+[![PythonSupported](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Dependencies Status](https://img.shields.io/badge/dependencies-up%20to%20date-brightgreen.svg)](https://github.com/KaiL4eK/pyproject-cookiecutter/pulls?utf8=%E2%9C%93&q=is%3Apr%20author%3Aapp%2Fdependabot)
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
