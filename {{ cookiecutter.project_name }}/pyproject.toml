@@ -49,7 +49,7 @@ url = "https://pypi.org/simple/"
 
 [tool.poetry.dependencies]
 python = "~{{ cookiecutter.minimal_python_version }}.0"
-python-dotenv = "^0.21.1"
+python-dotenv = "^1.0.1"
 {% if cookiecutter.include_cli_example == 'y' %}
 typer = {extras = ["all"], version = "^0.9.0"}
 rich = "^10.7.0"
@@ -61,10 +61,10 @@ rich = "^10.7.0"
 {% if cookiecutter.python_linter == 'flake8' %}flake8 = "^7.1{% endif %}
 {% if cookiecutter.python_formatter == 'black' %}black = {version = "^24.8", allow-prereleases = true}{% endif %}
 {% if cookiecutter.python_formatter != 'ruff' %}isort = {extras = ["colors"], version = "^5.10"}{% endif %}
-{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.6"{% endif %}
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.8"{% endif %}
 {% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8"
 mypy-extensions = "^1.0"{% endif %}
-pre-commit = "^2.14"
+pre-commit = "^4.0.1"
 {% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2"{%- endif %}
 {% if cookiecutter.include_notebooks_sample == 'y' -%}nbdime = "^3.1.0"{%- endif %}
 envyaml = "^1.9.210927"
