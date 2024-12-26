@@ -64,7 +64,7 @@ rich = "^10.7.0"
 {% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}ruff = "^0.8"{% endif %}
 {% if cookiecutter.include_mypy_type_checker == 'y' %}mypy = "^1.8"
 mypy-extensions = "^1.0"{% endif %}
-pre-commit = "^4.0.1"
+pre-commit = "^3.2.0"
 {% if cookiecutter.include_tests_sample == 'y' -%}pytest = "^6.2"{%- endif %}
 {% if cookiecutter.include_notebooks_sample == 'y' -%}nbdime = "^3.1.0"{%- endif %}
 envyaml = "^1.9.210927"
