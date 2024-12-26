@@ -15,15 +15,15 @@ RUN mkdir -p /workspace
 WORKDIR /workspace
 
 # Copy project dependencies list to setup first and cache
-COPY pyproject.toml poetry.lock Makefile ./
+COPY pyproject.toml poetry.lock Makefile requirements.project.txt ./
 
 # Install Poetry
 ENV POETRY_HOME=/opt/poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - --version 1.4.0 && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
+RUN pip install -r requirements.project.txt \
+    && cd /usr/local/bin \
+    && ln -s /opt/poetry/bin/poetry \
     # Install all packages into system env
-    poetry config virtualenvs.create false
+    && poetry config virtualenvs.create false
 
 # Install main packages without dev - only core dependencies
 RUN poetry install --only main --no-root

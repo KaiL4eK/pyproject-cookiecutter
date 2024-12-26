@@ -38,12 +38,13 @@
 - [cookiecutter-config-file.yml](cookiecutter-config-file.yml) - cookiecutter project config log
 - [poetry.toml](poetry.toml) - poetry local config
 - [pyproject.toml](pyproject.toml) - Python project configuration
+- [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry and may be other packages to be installed before installing core packages)
 
 ## System requirements
 
 - Python version: {{ cookiecutter.minimal_python_version }}
 - Operating system: Ubuntu or WSL
-- Poetry version >= 1.2.0
+- Poetry version >= 1.3.0
 
 > We tested on this setup - you can try other versions or operation systems by yourself!
 
