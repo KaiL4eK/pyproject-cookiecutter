@@ -13,7 +13,7 @@ def get_ticket_id_from_branch_name(branch):
         return matches[0]
 
 
-def main() -> NoReturn:
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("commit_msg_filepath")
     parser.add_argument(
