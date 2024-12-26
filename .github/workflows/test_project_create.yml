@@ -5,17 +5,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-project-312-poetry-180-docker-github:
+  test-project-311-poetry-180-docker-bitbucket:
     runs-on: ubuntu-latest
     env:
-      new_project_directory: /tmp/cookiecutter/py312
+      new_project_directory: /tmp/cookiecutter/py311
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
-          python-version: "3.12"
+          python-version: "3.11"
           cache: pip
 
       - name: Install Poetry
@@ -30,7 +30,7 @@ jobs:
         run: make project-init-ci
 
       - name: Create project from template
-        run: poetry run cookiecutter . -f --config-file test-configs/py312-poetry-docker-github.yaml --no-input -o $new_project_directory
+        run: poetry run cookiecutter . -f --config-file test-configs/py311-poetry-docker-bitbucket.yaml --no-input -o $new_project_directory
 
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project

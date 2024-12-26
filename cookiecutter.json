@@ -12,14 +12,12 @@
   "_all_python_minor_version": [
     "9",
     "10",
-    "11",
-    "12"
+    "11"
   ],
   "minimal_python_version": [
     "3.9",
     "3.10",
-    "3.11",
-    "3.12"
+    "3.11"
   ],
   "version": "0.1.0",
   "line_length": 88,
