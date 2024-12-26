@@ -30,7 +30,7 @@ jobs:
         run: make project-init-ci
 
       - name: Create project from template
-        run: poetry run cookiecutter . -f --config-file test-configs/py38-poetry-docker-github.yaml --no-input -o $new_project_directory
+        run: poetry run cookiecutter . -f --config-file test-configs/py312-poetry-docker-github.yaml --no-input -o $new_project_directory
 
       - name: Test project commands
         run: bash scripts/test_project_poetry.sh $new_project_directory/test-project

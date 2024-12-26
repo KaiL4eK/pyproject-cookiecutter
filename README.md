@@ -91,7 +91,7 @@ Check [this answer](https://stackoverflow.com/a/5834094). In short, setup `git c
 
 [tool.black]
 # https://github.com/psf/black
-target-version = ["py38"]
+target-version = ["py39"]
 line-length = 100
 color = true
 
