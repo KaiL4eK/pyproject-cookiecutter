@@ -12,6 +12,7 @@
 {%- endif %}
 
 - [Repository contents](#repository-contents)
+- [Additional directories to be considered](#additional-directories-to-be-considered)
 - [System requirements](#system-requirements)
 - [Other interesting info](#other-interesting-info)
 
@@ -40,11 +41,21 @@
 - [pyproject.toml](pyproject.toml) - Python project configuration
 - [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry and may be other packages to be installed before installing core packages)
 
+## Additional directories to be considered
+
+- [data](data) - various data representations (raw/source, preprocessed)
+  - for small files (less than e.g. 5 Mb for all files) you can put them directly to repo
+  - for medium files (less than e.g. 1 Gb for all files) you can use [Git LFS](https://git-lfs.com/)
+  - for large files better use FTP, Samba, NFS or other cloud/hosted persistent storage and describe here all required access and structure
+  - for data versioning better use [DVC](https://dvc.org/), [ClearML Data](https://clear.ml/docs/latest/docs/clearml_data/) or other data versioning tool
+- [models](models) - serialized models
+  - same rules as for `data` directory
+
 ## System requirements
 
 - Python version: {{ cookiecutter.minimal_python_version }}
 - Operating system: Ubuntu or WSL
-- Poetry version >= 1.3.0
+- Poetry version >= 1.8.0
 
 > We tested on this setup - you can try other versions or operation systems by yourself!
 

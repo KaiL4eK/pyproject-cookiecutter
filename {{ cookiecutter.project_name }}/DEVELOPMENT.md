@@ -4,14 +4,14 @@ This is guide how to prepare development environment and use main tools
 
 ## Table of contents
 
-- [Development guide](#development-guide)
-  - [Table of contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [Initialize your code](#initialize-your-code)
-    - [Just created project?](#just-created-project)
-    - [Cloned existing project](#cloned-existing-project)
-  - [Optional setup steps](#optional-setup-steps)
-  - [Some known issues](#some-known-issues)
+- [Table of contents](#table-of-contents)
+- [Prerequisites](#prerequisites)
+- [Initialize your code](#initialize-your-code)
+  - [Just created project?](#just-created-project)
+  - [Cloned existing project](#cloned-existing-project)
+- [Optional setup steps](#optional-setup-steps)
+- [Other recommendations for the project](#other-recommendations-for-the-project)
+- [Some known issues](#some-known-issues)
 
 ## Prerequisites
 
@@ -95,6 +95,16 @@ make project-init
 {%- endif %}
 
 [Table of contents](#table-of-contents)
+
+## Other recommendations for the project
+
+- Versioning (tags) + changelog
+- Automate various venv creations with [tox](https://pypi.org/project/tox/)
+- Make documentation for your code based on docstrings (sphinx, mkdocs)
+- Organize package build + publication
+- For better data control create data split and fix lists of splitted files in CSV/Excel files
+- Use Git Flow [ref1](https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html), [ref2](https://www.gitkraken.com/learn/git/git-flow)
+- Even if you`ve prepared data manually (remove lines, update values) - spend time to automated even smallest steps to make it repetative from source data
 
 ## Some known issues
 
