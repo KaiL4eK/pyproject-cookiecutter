@@ -23,6 +23,15 @@ docker-build-cached:
 		-t $(IMAGE):$(VERSION) . \
 		-f ./docker/Dockerfile
 
+.PHONY: docker-dive-analyze
+docker-dive-analyze:
+	@echo Analyze docker image with dive $(IMAGE):$(VERSION) ...
+	docker run -ti --rm  \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-e CI=true \
+		wagoodman/dive:0.13.0 \
+		$(IMAGE):$(VERSION)
+
 # Example: make docker-remove VERSION=latest
 # Example: make docker-remove IMAGE=some_name VERSION={{ cookiecutter.version }}
 .PHONY: docker-remove

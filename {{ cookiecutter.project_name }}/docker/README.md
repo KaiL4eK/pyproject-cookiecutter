@@ -45,3 +45,11 @@ make docker-remove IMAGE=some_name VERSION=latest
 ```
 
 If you want to clean all, including `build` and `pycache` run `make clean-all`
+
+## Dive analyzer
+
+You can analyze you image using tool [dive](https://github.com/wagoodman/dive).
+
+```sh
+make docker-dive-analyze
+```

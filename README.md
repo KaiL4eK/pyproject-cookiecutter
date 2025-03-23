@@ -26,6 +26,8 @@
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 * [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
 * Ready-to-go [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build image with package
+  * With multistage build
+* Docker image analyzer - [dive](https://github.com/wagoodman/dive)
 
 ## How to start ##
 
