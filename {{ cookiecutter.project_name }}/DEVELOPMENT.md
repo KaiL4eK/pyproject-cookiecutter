@@ -105,6 +105,8 @@ make project-init
 - For better data control create data split and fix lists of splitted files in CSV/Excel files
 - Use Git Flow [ref1](https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html), [ref2](https://www.gitkraken.com/learn/git/git-flow)
 - Even if you`ve prepared data manually (remove lines, update values) - spend time to automated even smallest steps to make it repetative from source data
+- If you want to keep credentials away (e.g. remote server) but cache them use `git config credential.helper 'cache --timeout=3600'`
+- Use [pipx](https://github.com/pypa/pipx) for global tools
 
 ## Some known issues
 
