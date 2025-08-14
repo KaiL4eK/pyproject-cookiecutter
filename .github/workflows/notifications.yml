@@ -1,6 +1,7 @@
 name: Notify Telegram
 
 on:
+  workflow_dispatch: {} # ручной тест
   issues:
     types: [opened, reopened, closed, assigned, labeled, unlabeled]
   issue_comment:
@@ -26,6 +27,7 @@ permissions:
 
 jobs:
   notify:
+    # Отфильтруем шум от ботов при желании (добавь ещё логины через &&)
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
 
@@ -39,19 +41,51 @@ jobs:
             const p = context.payload;
             const {owner, repo} = context.repo;
 
-            const esc = (s='') =>
-              String(s).replace(/([_*[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
+            // Надёжное экранирование MarkdownV2
+            const esc = (s = '') =>
+              String(s).replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
 
+            const trim = (s = '', max = 3500) =>
+              (s.length > max) ? (s.slice(0, max - 1) + '…') : s;
+
+            const actor = p.sender?.login || context.actor || 'unknown';
             let title = '', url = '', body = '';
+            let footer = `Repo: ${owner}/${repo}\nby ${actor}`;
 
-            if (event === 'workflow_run') {
-              if (p.workflow_run.conclusion !== 'failure') {
+            if (event === 'workflow_dispatch') {
+              title = '🧪 Тестовое уведомление';
+              url = `https://github.com/${owner}/${repo}/actions`;
+              body = 'Проверка форматирования и доставки сообщений в Telegram.';
+            } else if (event === 'workflow_run') {
+              // Уведомляем только при падении
+              const wr = p.workflow_run;
+              if (!wr || wr.conclusion !== 'failure') {
                 core.setOutput('skip', 'true');
-                return;
+              } else {
+                const name = p.workflow?.name || wr.name || 'Workflow';
+                title = `❌ Упал workflow: ${name}`;
+                url = wr.html_url;
+
+                // Продолжительность
+                let dur = '';
+                try {
+                  const start = new Date(wr.run_started_at).getTime();
+                  const end   = new Date(wr.updated_at || wr.created_at).getTime();
+                  const sec = Math.max(0, Math.round((end - start)/1000));
+                  const m = Math.floor(sec / 60), s = sec % 60;
+                  dur = `${m}m ${s}s`;
+                } catch (_) {}
+
+                const head = [
+                  `Branch: ${wr.head_branch}`,
+                  `Conclusion: ${wr.conclusion}`,
+                  dur ? `Duration: ${dur}` : null,
+                  `Event: ${wr.event}`
+                ].filter(Boolean).join('\n');
+
+                const commitMsg = wr.head_commit?.message || '';
+                body = [head, '', commitMsg].join('\n');
               }
-              title = `❌ Workflow "${p.workflow.name}" упал`;
-              url = p.workflow_run.html_url;
-              body = `Branch: ${p.workflow_run.head_branch}\nCommit: ${p.workflow_run.head_commit.message}`;
             } else {
               switch (event) {
                 case 'issues':
@@ -97,19 +131,22 @@ jobs:
               }
             }
 
-            const maxBody = 900;
-            const actor = context.actor;
+            if (core.getOutput('skip') === 'true') {
+              return;
+            }
 
-            const message = [
-              `*${esc(title)}*`,
+            // Сборка сообщения
+            const parts = [
+              `*${esc(title || 'Событие')}*`,
               '',
-              `Repo: ${esc(owner)}/${esc(repo)}`,
-              `by ${esc(actor)}`,
+              esc(footer),
               body ? '' : null,
-              body ? esc(body).slice(0, maxBody) : null,
+              body ? trim(esc(body), 3200) : null,
               '',
-              esc(url)
-            ].filter(Boolean).join('\n');
+              url // URL не экранируем, чтобы его можно было нажать
+            ].filter(Boolean);
+
+            const message = parts.join('\n');
 
             core.setOutput('message', message);
 
@@ -119,8 +156,11 @@ jobs:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: |
-          curl -sS "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+          set -euo pipefail
+          API_URL="https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage"
+          curl -sS "$API_URL" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${{ steps.build.outputs.message }}" \
             --data-urlencode "parse_mode=MarkdownV2" \
-            --data "disable_web_page_preview=true"
+            --data-urlencode "disable_web_page_preview=true" \
+          | jq -r '.ok as $ok | if $ok then "sent" else ( .description // "unknown error") end'
