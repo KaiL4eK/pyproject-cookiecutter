@@ -1,0 +1,113 @@
+name: Notify Telegram
+
+on:
+  issues:
+    types: [opened, reopened, closed, assigned, labeled, unlabeled]
+  issue_comment:
+    types: [created]
+  pull_request:
+    types: [opened, reopened, closed, ready_for_review, review_requested, converted_to_draft]
+  pull_request_review:
+    types: [submitted]
+  pull_request_review_comment:
+    types: [created]
+  discussion:
+    types: [created, edited, answered, pinned, unpinned]
+  discussion_comment:
+    types: [created]
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    if: github.actor != 'dependabot[bot]' # при желании убери фильтр
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Сформировать текст сообщения
+        id: build
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const event = context.eventName;
+            const p = context.payload;
+            const {owner, repo} = context.repo;
+
+            const esc = (s='') =>
+              String(s).replace(/([_*[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
+
+            let title = '', url = '', body = '';
+
+            switch (event) {
+              case 'issues':
+                title = `🆕 Issue ${p.action}: #${p.issue.number} ${p.issue.title}`;
+                url   = p.issue.html_url;
+                body  = p.issue.body || '';
+                break;
+              case 'issue_comment':
+                title = `💬 Комментарий к issue #${p.issue.number} от ${p.comment.user.login}`;
+                url   = p.comment.html_url;
+                body  = p.comment.body || '';
+                break;
+              case 'pull_request':
+                title = `🔀 PR ${p.action}: #${p.pull_request.number} ${p.pull_request.title}`;
+                url   = p.pull_request.html_url;
+                body  = p.pull_request.body || '';
+                break;
+              case 'pull_request_review':
+                title = `📝 Review ${p.action} PR #${p.pull_request.number} от ${p.review.user.login}`;
+                url   = p.review.html_url || p.pull_request.html_url;
+                body  = p.review.body || '';
+                break;
+              case 'pull_request_review_comment':
+                title = `💬 Комментарий в PR #${p.pull_request.number} от ${p.comment.user.login}`;
+                url   = p.comment.html_url;
+                body  = p.comment.body || '';
+                break;
+              case 'discussion':
+              case 'discussion_comment':
+                title = `💬 Discussion ${p.action}: ${p.discussion.title}`;
+                url   = p.discussion.html_url;
+                body  = (p.comment && p.comment.body) || p.discussion.body || '';
+                break;
+              case 'release':
+                title = `🏷️ Release ${p.action}: ${p.release.tag_name}`;
+                url   = p.release.html_url;
+                body  = p.release.body || '';
+                break;
+              default:
+                title = `📣 ${event} ${p.action || ''}`.trim();
+                url   = `https://github.com/${owner}/${repo}`;
+                body  = '';
+            }
+
+            // Ограничим длину тела, чтобы не уткнуться в лимиты Telegram
+            const maxBody = 900;
+            const actor = context.actor;
+
+            const message = [
+              `*${esc(title)}*`,
+              '',
+              `Repo: ${esc(owner)}/${esc(repo)}`,
+              `by ${esc(actor)}`,
+              body ? '' : null,
+              body ? esc(body).slice(0, maxBody) : null,
+              '',
+              esc(url)
+            ].filter(Boolean).join('\n');
+
+            core.setOutput('message', message);
+
+      - name: Отправить в Telegram
+        env:
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          curl -sS "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
+            --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
+            --data-urlencode "text=${{ steps.build.outputs.message }}" \
+            --data-urlencode "parse_mode=MarkdownV2" \
+            --data "disable_web_page_preview=true"
