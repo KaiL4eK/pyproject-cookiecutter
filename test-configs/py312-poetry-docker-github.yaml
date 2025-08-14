@@ -1,0 +1,6 @@
+default_context:
+  project_name: "test-project"
+  minimal_python_version: "3.11"
+  include_docker_sample: "y"
+  include_tests_sample: "y"
+  vcs_remote_type: "github"

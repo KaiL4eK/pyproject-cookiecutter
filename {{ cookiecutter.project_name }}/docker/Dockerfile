@@ -1,5 +1,5 @@
 # Stage 1 - collect wheel files for dependencies
-FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster AS builder
+FROM python:{{ cookiecutter.minimal_python_version }}-slim-bullseye AS builder
 
 # Prepare system packages
 RUN apt-get update && \
@@ -23,7 +23,7 @@ RUN pip install --upgrade pip \
     && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 
 # Stage 2 - install dependencies (wheels) and main package
-FROM python:{{ cookiecutter.minimal_python_version }}-slim-buster
+FROM python:{{ cookiecutter.minimal_python_version }}-slim-bullseye
 
 # Prepare system packages
 RUN apt-get update && \
