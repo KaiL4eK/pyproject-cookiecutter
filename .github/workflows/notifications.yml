@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Сформировать текст сообщения
+      - name: Сформировать текст сообщения (plain text)
         id: build
         uses: actions/github-script@v7
         with:
@@ -39,13 +39,6 @@ jobs:
             const event = context.eventName;
             const p = context.payload;
             const {owner, repo} = context.repo;
-
-            // Экранирование для Telegram parse_mode=HTML
-            const escHtml = (s='') => String(s)
-              .replace(/&/g, '&amp;')
-              .replace(/</g, '&lt;')
-              .replace(/>/g, '&gt;')
-              .replace(/"/g, '&quot;');
 
             const trim = (s = '', max = 3500) =>
               (s.length > max) ? (s.slice(0, max - 1) + '…') : s;
@@ -60,7 +53,8 @@ jobs:
             } else if (event === 'workflow_run') {
               const wr = p.workflow_run;
               if (!wr || wr.conclusion !== 'failure') {
-                core.setOutput('skip', 'true'); return; // уведомляем только о падениях
+                core.setOutput('skip', 'true');
+                return;
               }
               const name = p.workflow?.name || wr.name || 'Workflow';
               title = `❌ Упал workflow: ${name}`;
@@ -131,20 +125,20 @@ jobs:
             }
 
             const footer = `Repo: ${owner}/${repo}\nby ${actor}`;
-            const html = [
-              `<b>${escHtml(title || 'Событие')}</b>`,
+            const text = [
+              (title || 'Событие'),
               '',
-              escHtml(footer),
+              footer,
               body ? '' : null,
-              body ? escHtml(trim(body, 3200)) : null,
+              body ? trim(body, 3200) : null,
               '',
-              url ? `<a href="${escHtml(url)}">Открыть в GitHub</a>` : null
+              (url || `https://github.com/${owner}/${repo}`)
             ].filter(Boolean).join('\n');
 
-            core.setOutput('message', html);
+            core.setOutput('message', text);
             core.setOutput('skip', 'false');
 
-      - name: Отправить в Telegram (JSON, HTML)
+      - name: Отправить в Telegram (JSON, без parse_mode)
         if: steps.build.outputs.skip != 'true'
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -152,10 +146,9 @@ jobs:
         run: |
           set -euo pipefail
           API_URL="https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage"
-          # Собираем JSON через jq, чтобы корректно экранировать переносы строк и кавычки
           payload="$(jq -n \
             --arg chat_id "$TELEGRAM_CHAT_ID" \
             --arg text    "${{ steps.build.outputs.message }}" \
-            '{chat_id: $chat_id, text: $text, parse_mode: "HTML", disable_web_page_preview: true}')"
+            '{chat_id: $chat_id, text: $text, disable_web_page_preview: true}')"
           curl -sS -H "Content-Type: application/json" -X POST "$API_URL" -d "$payload" \
             | jq -r '.ok as $ok | if $ok then "sent" else ( .description // "unknown error") end'
