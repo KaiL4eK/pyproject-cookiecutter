@@ -1,7 +1,7 @@
 name: Notify Telegram
 
 on:
-  workflow_dispatch: {} # ручной тест
+  workflow_dispatch: {}
   issues:
     types: [opened, reopened, closed, assigned, labeled, unlabeled]
   issue_comment:
@@ -27,7 +27,6 @@ permissions:
 
 jobs:
   notify:
-    # Отфильтруем шум от ботов при желании (добавь ещё логины через &&)
     if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
 
@@ -41,7 +40,7 @@ jobs:
             const p = context.payload;
             const {owner, repo} = context.repo;
 
-            // Надёжное экранирование MarkdownV2
+            // Экранирование для MarkdownV2
             const esc = (s = '') =>
               String(s).replace(/([_*\[\]()~`>#+\-=|{}.!\\])/g, '\\$1');
 
@@ -50,42 +49,43 @@ jobs:
 
             const actor = p.sender?.login || context.actor || 'unknown';
             let title = '', url = '', body = '';
-            let footer = `Repo: ${owner}/${repo}\nby ${actor}`;
+            const footer = `Repo: ${owner}/${repo}\nby ${actor}`;
+            let skip = false;
 
             if (event === 'workflow_dispatch') {
               title = '🧪 Тестовое уведомление';
               url = `https://github.com/${owner}/${repo}/actions`;
-              body = 'Проверка форматирования и доставки сообщений в Telegram.';
+              body = 'Проверка доставки сообщений в Telegram.';
             } else if (event === 'workflow_run') {
-              // Уведомляем только при падении
               const wr = p.workflow_run;
               if (!wr || wr.conclusion !== 'failure') {
+                skip = true;
                 core.setOutput('skip', 'true');
-              } else {
-                const name = p.workflow?.name || wr.name || 'Workflow';
-                title = `❌ Упал workflow: ${name}`;
-                url = wr.html_url;
-
-                // Продолжительность
-                let dur = '';
-                try {
-                  const start = new Date(wr.run_started_at).getTime();
-                  const end   = new Date(wr.updated_at || wr.created_at).getTime();
-                  const sec = Math.max(0, Math.round((end - start)/1000));
-                  const m = Math.floor(sec / 60), s = sec % 60;
-                  dur = `${m}m ${s}s`;
-                } catch (_) {}
-
-                const head = [
-                  `Branch: ${wr.head_branch}`,
-                  `Conclusion: ${wr.conclusion}`,
-                  dur ? `Duration: ${dur}` : null,
-                  `Event: ${wr.event}`
-                ].filter(Boolean).join('\n');
-
-                const commitMsg = wr.head_commit?.message || '';
-                body = [head, '', commitMsg].join('\n');
+                return; // выходим без сборки сообщения
               }
+              const name = p.workflow?.name || wr.name || 'Workflow';
+              title = `❌ Упал workflow: ${name}`;
+              url = wr.html_url;
+
+              // Продолжительность
+              let dur = '';
+              try {
+                const start = new Date(wr.run_started_at).getTime();
+                const end   = new Date(wr.updated_at || wr.created_at).getTime();
+                const sec = Math.max(0, Math.round((end - start)/1000));
+                const m = Math.floor(sec / 60), s = sec % 60;
+                dur = `${m}m ${s}s`;
+              } catch (_) {}
+
+              const head = [
+                `Branch: ${wr.head_branch}`,
+                `Conclusion: ${wr.conclusion}`,
+                dur ? `Duration: ${dur}` : null,
+                `Event: ${wr.event}`
+              ].filter(Boolean).join('\n');
+
+              const commitMsg = wr.head_commit?.message || '';
+              body = [head, '', commitMsg].join('\n');
             } else {
               switch (event) {
                 case 'issues':
@@ -131,24 +131,19 @@ jobs:
               }
             }
 
-            if (core.getOutput('skip') === 'true') {
-              return;
-            }
-
-            // Сборка сообщения
-            const parts = [
+            // Если мы не вышли раньше — собираем сообщение
+            const lines = [
               `*${esc(title || 'Событие')}*`,
               '',
               esc(footer),
               body ? '' : null,
               body ? trim(esc(body), 3200) : null,
               '',
-              url // URL не экранируем, чтобы его можно было нажать
+              (url || `https://github.com/${owner}/${repo}`)
             ].filter(Boolean);
 
-            const message = parts.join('\n');
-
-            core.setOutput('message', message);
+            core.setOutput('message', lines.join('\n'));
+            if (!skip) core.setOutput('skip', 'false');
 
       - name: Отправить в Telegram
         if: steps.build.outputs.skip != 'true'
@@ -162,5 +157,4 @@ jobs:
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${{ steps.build.outputs.message }}" \
             --data-urlencode "parse_mode=MarkdownV2" \
-            --data-urlencode "disable_web_page_preview=true" \
-          | jq -r '.ok as $ok | if $ok then "sent" else ( .description // "unknown error") end'
+            --data-urlencode "disable_web_page_preview=true"
