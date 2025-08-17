@@ -21,9 +21,17 @@ repos:
     -   id: check-added-large-files
         args:
         - --maxkb=100
+
 -   repo: local
     hooks:
     -   id: generate-samples
         name: Generate project samples
         entry: poetry run bash scripts/generate_sample_projects.sh
         language: system
+
+    -   id: git-commit-prefix
+        name: git-commit-prefix
+        entry: poetry run python .additional/github_commit_prefix.py
+        language: python
+        stages: [prepare-commit-msg]
+        description: Searches the branch name for something looking like an issue name template and prepends the commit message with it

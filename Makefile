@@ -28,7 +28,7 @@ pre-commit-update:
 
 .PHONY: tools-install
 tools-install:
-	poetry run pre-commit install
+	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 	poetry run nbdime config-git --enable
 
 #* Linting

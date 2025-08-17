@@ -90,11 +90,18 @@ repos:
         types_or: [python, pyi, jupyter]
 {%- endif %}
 
-{% if cookiecutter.include_mypy_type_checker == 'y' %}
+{% if cookiecutter.python_type_checker == 'mypy' %}
       # Source: https://github.com/pre-commit/mirrors-mypy/blob/main/.pre-commit-hooks.yaml
       - id: mypy
         name: mypy
         entry: poetry run mypy
+        types_or: [python, pyi]
+        require_serial: true
+        language: system
+{%- elif cookiecutter.python_type_checker == 'ty' -%}
+      - id: ty
+        name: ty
+        entry: poetry run ty check
         types_or: [python, pyi]
         require_serial: true
         language: system

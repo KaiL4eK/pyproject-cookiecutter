@@ -4,14 +4,17 @@ This is guide how to prepare development environment and use main tools
 
 ## Table of contents
 
-- [Table of contents](#table-of-contents)
-- [Prerequisites](#prerequisites)
-- [Initialize your code](#initialize-your-code)
-  - [Just created project?](#just-created-project)
-  - [Cloned existing project](#cloned-existing-project)
-- [Optional setup steps](#optional-setup-steps)
-- [Other recommendations for the project](#other-recommendations-for-the-project)
-- [Some known issues](#some-known-issues)
+- [Development guide](#development-guide)
+  - [Table of contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Initialize your code](#initialize-your-code)
+    - [Just created project?](#just-created-project)
+    - [Cloned existing project](#cloned-existing-project)
+  - [Linting](#linting)
+    - [Type check](#type-check)
+  - [Optional setup steps](#optional-setup-steps)
+  - [Other recommendations for the project](#other-recommendations-for-the-project)
+  - [Some known issues](#some-known-issues)
 
 ## Prerequisites
 
@@ -61,6 +64,18 @@ git push -u origin develop
 
 ```bash
 make project-init
+```
+
+[Table of contents](#table-of-contents)
+
+## Linting
+
+### Type check
+
+Run type checker on your project sources
+
+```bash
+make type-check
 ```
 
 [Table of contents](#table-of-contents)

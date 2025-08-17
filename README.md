@@ -18,16 +18,27 @@
   * Version `>= 1.8.0` supported
 * Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
 * Pre-commit hooks with [pre-commit](https://pre-commit.com/)
-  * Linting using [flake8](https://flake8.pycqa.org/en/latest/)
-  * Code style via [black](https://github.com/psf/black)
+  * Linting using (one of)
+    * [ruff linter](https://docs.astral.sh/ruff/linter/)
+    * [wemake](https://wemake-python-styleguide.readthedocs.io/en/latest/pages/usage/configuration.html)
+    * [flake8](https://flake8.pycqa.org/en/latest/)
+  * Code style via (one of)
+    * [ruff formatter](https://docs.astral.sh/ruff/formatter/)
+    * [black](https://github.com/psf/black)
+  * Type checking via (one of)
+    * [mypy](https://mypy.readthedocs.io/en/stable/)
+    * [ty](https://docs.astral.sh/ty/)
   * Notebooks cleaning via [nbstripout](https://github.com/kynan/nbstripout)
   * Security checks via [bandit](https://github.com/PyCQA/bandit)
-  * Local hooks for issues number substitution into commit comment for [GitHub](https://github.com/) and [Bitbucket (JIRA)](https://bitbucket.org/)
+  * Local hooks for issues number substitution into commit comment for
+    * [GitHub](https://github.com/)
+    * [Bitbucket (JIRA)](https://bitbucket.org/)
 * [VSCode](https://code.visualstudio.com/) editor config with [EditorConfig](https://editorconfig.org/)
 * [Numpydoc](https://numpydoc.readthedocs.io/en/latest/format.html) format for docstring
 * Ready-to-go [Dockerfile](https://docs.docker.com/engine/reference/builder/) to build image with package
   * With multistage build
 * Docker image analyzer - [dive](https://github.com/wagoodman/dive)
+* Project samples generated in [sample-projects](sample-projects) directory
 
 ## How to start ##
 

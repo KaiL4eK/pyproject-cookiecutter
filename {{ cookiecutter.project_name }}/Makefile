@@ -42,7 +42,7 @@ docker-remove:
 
 #* Initialization
 .PHONY: project-init
-project-init: poetry-install tools-install{% if cookiecutter.include_mypy_type_checker == 'y' %} mypy-install{%- endif %}
+project-init: poetry-install tools-install
 
 .PHONY: poetry-install
 poetry-install:
@@ -86,14 +86,14 @@ nbextention-toc-install:
 tests:
 	poetry run pytest -c pyproject.toml{%- endif %}
 
-{% if cookiecutter.include_mypy_type_checker == 'y' -%}#* Linting
-.PHONY: mypy-install
-mypy-install:
-	poetry run mypy --install-types --non-interactive ./
-
-.PHONY: mypy
-mypy:
-	poetry run mypy --config-file pyproject.toml ./{%- endif %}
+#* Linting
+.PHONY: type-check
+type-check:
+{%- if cookiecutter.python_type_checker == 'mypy' %}
+	poetry run mypy
+{%- elif cookiecutter.python_type_checker == 'ty' %}
+	poetry run ty check
+{%- endif %}
 
 #* Cleaning
 .PHONY: pycache-remove
