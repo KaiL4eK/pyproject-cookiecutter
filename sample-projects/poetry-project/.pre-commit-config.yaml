@@ -1,0 +1,83 @@
+default_stages: [pre-commit, pre-push]
+# Fast fail - drop when first error appears
+# Used with nbstripout to restart right after cleaning
+# Because notebooks after cleaning are not indexed, we need to restart commit
+fail_fast: true
+
+repos:
+  # Use this first to fail (clean) on the first step
+  #   and restart right after that
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+      - id: nbstripout
+
+  # List of all hooks: https://pre-commit.com/hooks.html
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+      - id: end-of-file-fixer
+        exclude: LICENSE
+      - id: trailing-whitespace
+        exclude: ^exports/
+      - id: mixed-line-ending
+        args: ["--fix=lf"]
+      - id: check-merge-conflict
+      - id: check-ast
+      - id: check-executables-have-shebangs
+      - id: debug-statements
+      - id: check-added-large-files
+        args: ["--maxkb=100"]
+        exclude: |
+          (?x)^(
+            ^exports/|
+            ^poetry.lock
+          )$
+      - id: check-docstring-first
+      - id: detect-private-key
+      - id: check-case-conflict
+
+  - repo: local
+    # Use local tools to have same versions as you use in environment
+    # E.g. you use formatter to format during development
+    #   and pre-commit can behave in a different way without local version
+    hooks:
+
+      # Run the ruff linter.
+      # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
+      - id: ruff
+        name: ruff
+        entry: poetry run ruff check --force-exclude
+        require_serial: true
+        language: python
+        types_or: [python, pyi, jupyter]
+
+
+      # Run the ruff formatter.
+      # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
+      - id: ruff-format
+        name: ruff-format
+        entry: poetry run ruff format --force-exclude
+        require_serial: true
+        language: python
+        types_or: [python, pyi, jupyter]
+
+
+      # Source: https://github.com/pre-commit/mirrors-mypy/blob/main/.pre-commit-hooks.yaml
+      - id: mypy
+        name: mypy
+        entry: poetry run mypy
+        types_or: [python, pyi]
+        require_serial: true
+        language: system
+
+
+      - id: git-commit-prefix
+        name: git-commit-prefix
+        entry: poetry run python .additional/github_commit_prefix.py
+        language: python
+        stages: [prepare-commit-msg]
+        description: Searches the branch name for something looking like an issue name template and prepends the commit message with it

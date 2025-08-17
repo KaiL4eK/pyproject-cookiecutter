@@ -3,7 +3,7 @@ default_stages:
 - pre-push
 repos:
 -   repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: v6.0.0
     hooks:
     -   id: check-yaml
         exclude: ^{{ cookiecutter.project_name }}
@@ -21,3 +21,9 @@ repos:
     -   id: check-added-large-files
         args:
         - --maxkb=100
+-   repo: local
+    hooks:
+    -   id: generate-samples
+        name: Generate project samples
+        entry: poetry run bash scripts/generate_sample_projects.sh
+        language: system
