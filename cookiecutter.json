@@ -25,7 +25,7 @@
   "line_length": 88,
   "python_linter": [
     "ruff",
-    "wemake-python-styleguide",
+    "wemake",
     "flake8"
   ],
   "python_formatter": [

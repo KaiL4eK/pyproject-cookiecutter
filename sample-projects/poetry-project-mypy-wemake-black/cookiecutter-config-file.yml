@@ -11,7 +11,7 @@ default_context:
   version: "0.1.0"
   line_length: "88"
 
-  python_linter: "wemake-python-styleguide"
+  python_linter: "wemake"
   python_formatter: "black"
   python_type_checker: "mypy"
 

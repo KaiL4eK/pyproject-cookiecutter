@@ -9,7 +9,7 @@ poetry run cookiecutter . -f \
     -o sample-projects \
     project_name=poetry-project-mypy-wemake-black \
     python_type_checker=mypy \
-    python_linter=wemake-python-styleguide \
+    python_linter=wemake \
     python_formatter=black
 
 poetry run cookiecutter . -f \

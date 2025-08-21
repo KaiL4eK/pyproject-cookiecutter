@@ -54,8 +54,8 @@ repos:
         language: system
 
       # Source: https://github.com/PyCQA/flake8/blob/main/.pre-commit-hooks.yaml
-      - id: wemake-python-styleguide
-        name: wemake-python-styleguide
+      - id: wemake
+        name: wemake
         entry: poetry run flake8
         types_or: [python, pyi]
         language: system

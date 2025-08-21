@@ -5,9 +5,25 @@
 
 [![PythonSupported](https://img.shields.io/badge/python-{{ cookiecutter.minimal_python_version }}-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
-
+[![poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
+{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' -%}
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+{% endif -%}
+{% if cookiecutter.python_linter == 'wemake' -%}
+[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
+{% endif -%}
+{% if cookiecutter.python_formatter == 'black' -%}
+[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+{% endif -%}
+{% if cookiecutter.python_type_checker == 'ty' -%}
+[![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
+{% endif -%}
+{% if cookiecutter.python_type_checker == 'mypy' -%}
+[![mypy](https://img.shields.io/badge/type%20checked-mypy-039dfc)](https://mypy-lang.org/)
+{% endif %}
 {{ cookiecutter.project_description }}
-{% if cookiecutter.vcs_remote_type != 'bitbucket' %}
+
+{%- if cookiecutter.vcs_remote_type != 'bitbucket' %}
 </div>
 {%- endif %}
 
