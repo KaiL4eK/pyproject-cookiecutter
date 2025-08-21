@@ -21,6 +21,20 @@
 
 ## [1.0.0]
 
-Before this version we supported python3.8 and poetry 1.2.0.
+### Added
 
-Now - we don't =)
+- Poetry package manager
+- Pytest samples
+    - conftest
+    - fixtures
+    - parametrization
+- `.env` sample and `python-dotenv` framework
+- Black formatter
+- Ruff formatter/linter
+- Wemake/flake8 linters
+- Docker sample with multistage to download and build wheels (1st stage) and install them to clean images (2nd stage)
+- Tests for different build configurations
+- Scripts to automatically set task number from branch name
+- Pre-commit configuration
+- Notebook sample
+- YAML config sample (with loggin setup) and processing script
