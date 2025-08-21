@@ -59,6 +59,7 @@ rich = "^10.7.0"
 # In case of packages without patch part we just want to update them through minor versions
 pre-commit = "^4.3.0"
 pytest = "^8.4"
+envyaml = "^1.10"
 {% if cookiecutter.python_linter == 'wemake' -%}
 wemake-python-styleguide = "^1.3"
 {% endif -%}
