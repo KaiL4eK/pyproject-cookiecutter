@@ -25,14 +25,17 @@
   "line_length": 88,
   "python_linter": [
     "ruff",
-    "wemake-python-styleguide",
+    "wemake",
     "flake8"
   ],
   "python_formatter": [
     "ruff",
     "black"
   ],
-  "include_mypy_type_checker": "y",
+  "python_type_checker": [
+    "mypy",
+    "ty"
+  ],
   "include_cli_example": "n",
   "include_docker_sample": "n",
   "include_tests_sample": "y",

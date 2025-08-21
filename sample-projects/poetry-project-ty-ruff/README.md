@@ -1,31 +1,15 @@
 # Project README! Here we go!
-{% if cookiecutter.vcs_remote_type != 'bitbucket' %}
-<div align="center">
-{%- endif %}
 
-[![PythonSupported](https://img.shields.io/badge/python-{{ cookiecutter.minimal_python_version }}-brightgreen.svg)](https://python3statement.org/#sections50-why)
+<div align="center">
+
+[![PythonSupported](https://img.shields.io/badge/python-3.12-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
 [![poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
-{% if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' -%}
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
-{% endif -%}
-{% if cookiecutter.python_linter == 'wemake' -%}
-[![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
-{% endif -%}
-{% if cookiecutter.python_formatter == 'black' -%}
-[![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-{% endif -%}
-{% if cookiecutter.python_type_checker == 'ty' -%}
 [![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
-{% endif -%}
-{% if cookiecutter.python_type_checker == 'mypy' -%}
-[![mypy](https://img.shields.io/badge/type%20checked-mypy-039dfc)](https://mypy-lang.org/)
-{% endif %}
-{{ cookiecutter.project_description }}
 
-{%- if cookiecutter.vcs_remote_type != 'bitbucket' %}
+Awesome `poetry-project-ty-ruff` project!
 </div>
-{%- endif %}
 
 - [Repository contents](#repository-contents)
 - [Additional directories to be considered](#additional-directories-to-be-considered)
@@ -38,15 +22,15 @@
 - [reports](reports) - reports generated (as generated from notebooks)
   > Check if you need to ignore large reports or keep them in Git LFS
 - [configs](configs) - configuration files directory
-{% if cookiecutter.include_docker_sample == 'y' -%}- [Docker](Docker) - definition of "How to build image for Docker"
-- [.dockerignore](.dockerignore) - the files/folders `docker` should ignore{%- endif %}
-{% if cookiecutter.include_notebooks_sample == 'y' -%}- [notebooks](notebooks) - directory for `jupyter` notebooks{%- endif %}
-{% if cookiecutter.include_tests_sample == 'y' -%}- [tests](tests) - project tasts based on [pytest](https://docs.pytest.org/en/stable/){%- endif %}
+- [Docker](Docker) - definition of "How to build image for Docker"
+- [.dockerignore](.dockerignore) - the files/folders `docker` should ignore
+- [notebooks](notebooks) - directory for `jupyter` notebooks
+- [tests](tests) - project tasts based on [pytest](https://docs.pytest.org/en/stable/)
 - [scripts](scripts) - repository service scripts
   > These ones are not included into the pakckage if you build one - these scripts are only for usage with repository
-- [{{ cookiecutter.project_slug }}]({{ cookiecutter.project_slug }}) - source files of the project
+- [poetry_project_ty_ruff](poetry_project_ty_ruff) - source files of the project
 - [.editorconfig](.editorconfig) - configuration for [editorconfig](https://editorconfig.org/)
-{% if cookiecutter.python_formatter != 'ruff' %}- [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration{% endif %}
+
 - [.gitignore](.gitignore) - the files/folders `git` should ignore
 - [.pre-commit-config.yaml](.pre-commit-config.yaml) - [pre-commit](https://pre-commit.com/) configuration file
 - [README.md](README.md) - the one you read =)
@@ -69,7 +53,7 @@
 
 ## System requirements
 
-- Python version: {{ cookiecutter.minimal_python_version }}
+- Python version: 3.12
 - Operating system: Ubuntu or WSL
 - Poetry version >= 1.8.0
 

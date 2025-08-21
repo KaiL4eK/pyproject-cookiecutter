@@ -28,7 +28,7 @@ pre-commit-update:
 
 .PHONY: tools-install
 tools-install:
-	poetry run pre-commit install
+	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 	poetry run nbdime config-git --enable
 
 #* Linting
@@ -54,3 +54,8 @@ test-project: test-project-creation
 test-project-clean:
 	rm -rf ${TEST_PROJECT_NAME}
 	rm -rf ${COOKIECUTTER_TEST_DIR}/${TEST_PROJECT_NAME}
+
+#* Tools
+.PHONY: generate-samples
+generate-samples:
+	poetry run bash scripts/generate_sample_projects.sh

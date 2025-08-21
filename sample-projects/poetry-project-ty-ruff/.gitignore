@@ -1,0 +1,14 @@
+# poetry
+.venv
+
+# Ignore data directory
+/data
+
+# Ignore .env file
+.env
+
+# Ignore exports directory
+/exports
+
+# Compiled python files
+*.pyc

@@ -3,4 +3,5 @@ default_context:
   minimal_python_version: "3.12"
   include_docker_sample: "y"
   include_tests_sample: "y"
+  python_type_checker: "mypy"
   vcs_remote_type: "github"

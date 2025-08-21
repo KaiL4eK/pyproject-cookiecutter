@@ -2,13 +2,13 @@
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
 
-{% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
-IMAGE := {{ cookiecutter.project_slug }}
+#* Docker variables
+IMAGE := poetry_project_mypy_wemake_black
 VERSION := latest
 
 #* Docker
 # Example: make docker-build VERSION=latest
-# Example: make docker-build IMAGE=some_name VERSION={{ cookiecutter.version }}
+# Example: make docker-build IMAGE=some_name VERSION=0.1.0
 .PHONY: docker-build
 docker-build:
 	@echo Building docker $(IMAGE):$(VERSION) ...
@@ -33,12 +33,11 @@ docker-dive-analyze:
 		$(IMAGE):$(VERSION)
 
 # Example: make docker-remove VERSION=latest
-# Example: make docker-remove IMAGE=some_name VERSION={{ cookiecutter.version }}
+# Example: make docker-remove IMAGE=some_name VERSION=0.1.0
 .PHONY: docker-remove
 docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
 	docker rmi -f $(IMAGE):$(VERSION)
-{%- endif %}
 
 #* Initialization
 .PHONY: project-init
@@ -64,8 +63,8 @@ poetry-export-dev:
 .PHONY: tools-install
 tools-install:
 	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
-{% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
-	poetry run nbdime config-git --enable{%- endif %}
+#* Notebooks
+	poetry run nbdime config-git --enable
 
 .PHONY: pre-commit-update
 pre-commit-update:
@@ -75,25 +74,21 @@ pre-commit-update:
 pre-commit-run-all:
 	poetry run pre-commit run --all-files
 
-{% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
+#* Notebooks
 .PHONY: nbextention-toc-install
 nbextention-toc-install:
 	poetry run jupyter contrib nbextension install --user
-	poetry run jupyter nbextension enable toc2/main{%- endif %}
+	poetry run jupyter nbextension enable toc2/main
 
-{% if cookiecutter.include_tests_sample == 'y' -%}#* Tests
+#* Tests
 .PHONY: tests
 tests:
-	poetry run pytest -c pyproject.toml{%- endif %}
+	poetry run pytest -c pyproject.toml
 
 #* Linting
 .PHONY: type-check
 type-check:
-{%- if cookiecutter.python_type_checker == 'mypy' %}
 	poetry run mypy
-{%- elif cookiecutter.python_type_checker == 'ty' %}
-	poetry run ty check
-{%- endif %}
 
 #* Cleaning
 .PHONY: pycache-remove
@@ -106,7 +101,7 @@ build-remove:
 	rm -rf build/
 
 .PHONY: clean-all
-clean-all: pycache-remove build-remove {% if cookiecutter.include_docker_sample == 'y' -%}docker-remove{% endif %}
+clean-all: pycache-remove build-remove docker-remove
 
 #* Service targets
 .PHONY: grep-todos

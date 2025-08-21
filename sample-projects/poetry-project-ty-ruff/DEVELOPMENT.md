@@ -37,7 +37,7 @@ https://github.com/user/my-project.git
 1. Create folder and initialize `git` inside your repo folder:
 
 ```bash
-cd {{ cookiecutter.project_name }} && git init
+cd poetry-project-ty-ruff && git init
 ```
 
 2. Initialize poetry and install `pre-commit` hooks:
@@ -86,8 +86,6 @@ make type-check
    - [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
       Open control panel (Ctrl+P) and enter `ext install EditorConfig.EditorConfig`
 
-{% if cookiecutter.include_notebooks_sample == 'y' -%}
-
 1. To initialize generation of Table of Contents from notebook headers we use `nbextension`:
 
     - `nbextention-toc-install`
@@ -107,7 +105,6 @@ make type-check
       ```bash
       poetry run jupyter nbconvert --template toc2 --to html_embed --output-dir ./exports <путь до файла>
       ```
-{%- endif %}
 
 [Table of contents](#table-of-contents)
 
@@ -128,12 +125,12 @@ make type-check
 - If you have issues with python version like:
 
     ```bash
-    The currently activated Python version 3.9.7 is not supported by the project (~{{ cookiecutter.minimal_python_version }}.0)
+    The currently activated Python version 3.9.7 is not supported by the project (~3.12.0)
     ...
     NoCompatiblePythonVersionFound
     ...
     ```
 
-    Check version of your `python3` binary and make sure you have python{{ cookiecutter.minimal_python_version }} installed.
+    Check version of your `python3` binary and make sure you have python3.12 installed.
 
 [Table of contents](#table-of-contents)
