@@ -271,4 +271,4 @@ jobs:
         run: cookiecutter . -f --config-file test-configs/py312-uv-github.yaml --no-input -o $new_project_directory
 
       - name: Test project commands
-        run: bash scripts/test_project_poetry.sh $new_project_directory/test-project
+        run: bash scripts/test_project_uv.sh $new_project_directory/test-project

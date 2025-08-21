@@ -65,7 +65,7 @@ convention = "numpy"
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S", "D", "INP001"]
 "{{ cookiecutter.project_slug }}/__init__.py" = ["D400", "D103"]
-"scripts/*" = ["BLE001", "D", "INP001"]
+"scripts/*" = ["BLE001", "D", "INP001", "LOG"]
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
