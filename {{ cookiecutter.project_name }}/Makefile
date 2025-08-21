@@ -1,3 +1,9 @@
+{%- if cookiecutter.package_manager == "poetry" -%}
+  {%- set pm_cmd = "poetry" -%}
+{%- elif cookiecutter.package_manager == "uv" -%}
+  {%- set pm_cmd = "uv" -%}
+{%- endif -%}
+
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
@@ -42,57 +48,73 @@ docker-remove:
 
 #* Initialization
 .PHONY: project-init
-project-init: poetry-install tools-install
+project-init: install-packages tools-install
 
-.PHONY: poetry-install
-poetry-install:
+.PHONY: install-packages
+install-packages:
+{%- if cookiecutter.package_manager == "poetry" %}
 	poetry install -n
+{%- elif cookiecutter.package_manager == "uv" %}
+	uv sync
+{%- endif %}
 
-.PHONY: poetry-lock-update
-poetry-lock-update:
+.PHONY: lock-update
+lock-update:
+{%- if cookiecutter.package_manager == "poetry" %}
 	poetry lock --no-update
+{%- elif cookiecutter.package_manager == "uv" %}
+	uv lock
+{%- endif %}
 
-.PHONY: poetry-export
-poetry-export:
-	poetry lock -n && poetry export --without-hashes > requirements.txt
+.PHONY: requirements-export
+requirements-export: lock-update
+{%- if cookiecutter.package_manager == "poetry" %}
+	poetry export --without-hashes > requirements.txt
+{%- elif cookiecutter.package_manager == "uv" %}
+	uv export --no-hashes --no-cache --no-dev --no-emit-workspace --format requirements.txt > requirements.txt
+{%- endif %}
 
-.PHONY: poetry-export-dev
-poetry-export-dev:
-	poetry lock -n && poetry export --with dev --without-hashes > requirements.dev.txt
+.PHONY: requirements-export-dev
+requirements-export-dev: lock-update
+{%- if cookiecutter.package_manager == "poetry" %}
+	poetry export --with dev --without-hashes > requirements.dev.txt
+{%- elif cookiecutter.package_manager == "uv" %}
+	uv export --no-hashes --no-cache --no-emit-workspace --format requirements.txt > requirements.dev.txt
+{%- endif %}
 
 #* Tools
 .PHONY: tools-install
 tools-install:
-	poetry run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
+	{{ pm_cmd }} run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
-	poetry run nbdime config-git --enable{%- endif %}
+	{{ pm_cmd }} run nbdime config-git --enable{%- endif %}
 
 .PHONY: pre-commit-update
 pre-commit-update:
-	poetry run pre-commit autoupdate
+	{{ pm_cmd }} run pre-commit autoupdate
 
 .PHONY: pre-commit-run-all
 pre-commit-run-all:
-	poetry run pre-commit run --all-files
+	{{ pm_cmd }} run pre-commit run --all-files
 
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
 .PHONY: nbextention-toc-install
 nbextention-toc-install:
-	poetry run jupyter contrib nbextension install --user
-	poetry run jupyter nbextension enable toc2/main{%- endif %}
+	{{ pm_cmd }} run jupyter contrib nbextension install --user
+	{{ pm_cmd }} run jupyter nbextension enable toc2/main{%- endif %}
 
-{% if cookiecutter.include_tests_sample == 'y' -%}#* Tests
+#* Tests
 .PHONY: tests
 tests:
-	poetry run pytest -c pyproject.toml{%- endif %}
+	{{ pm_cmd }} run pytest -c pyproject.toml
 
 #* Linting
 .PHONY: type-check
 type-check:
 {%- if cookiecutter.python_type_checker == 'mypy' %}
-	poetry run mypy
+	{{ pm_cmd }} run mypy
 {%- elif cookiecutter.python_type_checker == 'ty' %}
-	poetry run ty check
+	{{ pm_cmd }} run ty check
 {%- endif %}
 
 #* Cleaning

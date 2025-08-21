@@ -1,6 +1,6 @@
 [flake8]
 ignore = D401, WPS305
-max-line-length = 88
+max-line-length = 100
 max-complexity = 18
 
 strictness=long

@@ -41,23 +41,23 @@ docker-remove:
 
 #* Initialization
 .PHONY: project-init
-project-init: poetry-install tools-install
+project-init: install-packages tools-install
 
-.PHONY: poetry-install
-poetry-install:
+.PHONY: install-packages
+install-packages:
 	poetry install -n
 
-.PHONY: poetry-lock-update
-poetry-lock-update:
+.PHONY: lock-update
+lock-update:
 	poetry lock --no-update
 
-.PHONY: poetry-export
-poetry-export:
-	poetry lock -n && poetry export --without-hashes > requirements.txt
+.PHONY: requirements-export
+requirements-export: lock-update
+	poetry export --without-hashes > requirements.txt
 
-.PHONY: poetry-export-dev
-poetry-export-dev:
-	poetry lock -n && poetry export --with dev --without-hashes > requirements.dev.txt
+.PHONY: requirements-export-dev
+requirements-export-dev: lock-update
+	poetry export --with dev --without-hashes > requirements.dev.txt
 
 #* Tools
 .PHONY: tools-install

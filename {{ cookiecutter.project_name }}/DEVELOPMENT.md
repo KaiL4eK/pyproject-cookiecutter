@@ -1,27 +1,36 @@
+{%- if cookiecutter.package_manager == "poetry" -%}
+  {%- set pm_cmd = "poetry" -%}
+{%- elif cookiecutter.package_manager == "uv" -%}
+  {%- set pm_cmd = "uv" -%}
+{%- endif -%}
+
 # Development guide
 
 This is guide how to prepare development environment and use main tools
 
 ## Table of contents
 
-- [Development guide](#development-guide)
-  - [Table of contents](#table-of-contents)
-  - [Prerequisites](#prerequisites)
-  - [Initialize your code](#initialize-your-code)
-    - [Just created project?](#just-created-project)
-    - [Cloned existing project](#cloned-existing-project)
-  - [Linting](#linting)
-    - [Type check](#type-check)
-  - [Optional setup steps](#optional-setup-steps)
-  - [Other recommendations for the project](#other-recommendations-for-the-project)
-  - [Some known issues](#some-known-issues)
+- [Prerequisites](#prerequisites)
+- [Initialize your code](#initialize-your-code)
+  - [Just created project?](#just-created-project)
+  - [Cloned existing project](#cloned-existing-project)
+- [Linting](#linting)
+  - [Type check](#type-check)
+- [Optional setup steps](#optional-setup-steps)
+- [Other recommendations for the project](#other-recommendations-for-the-project)
+- [Some known issues](#some-known-issues)
 
 ## Prerequisites
 
 > If you need to install tools, check links
 
 - [Python](docs/TOOLS.md#python)
+{% if cookiecutter.package_manager == 'poetry' -%}
 - [Poetry](docs/TOOLS.md#poetry)
+{% endif -%}
+{% if cookiecutter.package_manager == 'uv' -%}
+- [uv](docs/TOOLS.md#uv)
+{% endif -%}
 - [Make](docs/TOOLS.md#make)
 
 ## Initialize your code
@@ -40,7 +49,7 @@ https://github.com/user/my-project.git
 cd {{ cookiecutter.project_name }} && git init
 ```
 
-2. Initialize poetry and install `pre-commit` hooks:
+2. Initialize virtual environment and install `pre-commit` hooks:
 
 ```bash
 make project-init
@@ -60,7 +69,7 @@ git push -u origin develop
 
 ### Cloned existing project
 
-1. Initialize poetry and install `pre-commit` hooks:
+1. Initialize virtual environment and install `pre-commit` hooks:
 
 ```bash
 make project-init
@@ -97,15 +106,15 @@ make type-check
     - To export notebook with ToC use next command:
 
       ```bash
-      poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports <путь до файла>
+      {{ pm_cmd }} run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports <путь до файла>
       ```
 
-      > For example, `poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb`
+      > For example, `{{ pm_cmd }} run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb`
 
       To use embedded images into HTML use option `html_embed`:
 
       ```bash
-      poetry run jupyter nbconvert --template toc2 --to html_embed --output-dir ./exports <путь до файла>
+      {{ pm_cmd }} run jupyter nbconvert --template toc2 --to html_embed --output-dir ./exports <путь до файла>
       ```
 {%- endif %}
 
@@ -113,15 +122,16 @@ make type-check
 
 ## Other recommendations for the project
 
-- Versioning (tags) + changelog
-- Automate various venv creations with [tox](https://pypi.org/project/tox/)
+- Versioning (tags)
+- Automate various venv creations with [tox](https://pypi.org/project/tox/) for tests
 - Make documentation for your code based on docstrings (sphinx, mkdocs)
 - Organize package build + publication
 - For better data control create data split and fix lists of splitted files in CSV/Excel files
 - Use Git Flow [ref1](https://danielkummer.github.io/git-flow-cheatsheet/index.ru_RU.html), [ref2](https://www.gitkraken.com/learn/git/git-flow)
 - Even if you`ve prepared data manually (remove lines, update values) - spend time to automated even smallest steps to make it repetative from source data
 - If you want to keep credentials away (e.g. remote server) but cache them use `git config credential.helper 'cache --timeout=3600'`
-- Use [pipx](https://github.com/pypa/pipx) for global tools
+- Use [pipx](https://github.com/pypa/pipx) or [uvx](https://docs.astral.sh/uv/guides/tools/) for global tools
+- If you are going to use project with pip-only environment, call `pip install -e .` to setup your sources in venv
 
 ## Some known issues
 

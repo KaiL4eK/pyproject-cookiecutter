@@ -6,9 +6,9 @@ repos:
     rev: v6.0.0
     hooks:
     -   id: check-yaml
-        exclude: ^{{ cookiecutter.project_name }}
+        exclude: ^{{ cookiecutter.project_name }}/
     -   id: check-toml
-        exclude: ^{{ cookiecutter.project_name }}
+        exclude: ^{{ cookiecutter.project_name }}/
     -   id: check-json
     -   id: end-of-file-fixer
         exclude: ^LICENSE
@@ -24,11 +24,6 @@ repos:
 
 -   repo: local
     hooks:
-    -   id: generate-samples
-        name: Generate project samples
-        entry: make generate-samples
-        language: system
-
     -   id: git-commit-prefix
         name: git-commit-prefix
         entry: poetry run python .additional/github_commit_prefix.py

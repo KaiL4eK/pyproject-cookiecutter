@@ -1,9 +1,14 @@
 # Additional instructions
 
-- [Additional instructions](#additional-instructions)
-  - [Make](#make)
-  - [Python](#python)
-  - [Poetry](#poetry)
+## Table of contents
+
+- [Make](#make)
+- [Python](#python)
+{% if cookiecutter.package_manager == 'poetry' -%}
+- [Poetry](#poetry)
+{% elif cookiecutter.package_manager == 'uv' -%}
+- [uv](#uv)
+{% endif %}
 
 ## Make
 
@@ -20,6 +25,8 @@ choco install make
 ```bash
 sudo apt-get install build-essential
 ```
+
+[Table of contents](#table-of-contents)
 
 ## Python
 
@@ -39,22 +46,42 @@ Sometimes you need to install `distutils`
 sudo apt install python{{ cookiecutter.minimal_python_version }}-distutils
 ```
 
+[Table of contents](#table-of-contents)
+
+{% if cookiecutter.package_manager == 'poetry' -%}
+
 ## Poetry
 
-- Windows
-
-    Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
-
-```powershell
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-```
-
-- Linux
-
-    Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer) or bash command:
+Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer):
 
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+
+Or use [pipx](https://github.com/pypa/pipx) or [uvx](https://docs.astral.sh/uv/guides/tools/) for installing
+
+```bash
+pipx install poetry
+```
+
+{% endif %}
+
+{% if cookiecutter.package_manager == 'uv' -%}
+
+## uv
+
+Use [official instructions](https://docs.astral.sh/uv/getting-started/installation/):
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Or use [pipx](https://github.com/pypa/pipx) or [uvx](https://docs.astral.sh/uv/guides/tools/) for installing
+
+```bash
+pipx install uv
+```
+
+{% endif -%}
 
 [Table of contents](#table-of-contents)

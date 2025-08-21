@@ -1,9 +1,11 @@
 # Additional instructions
 
-- [Additional instructions](#additional-instructions)
-  - [Make](#make)
-  - [Python](#python)
-  - [Poetry](#poetry)
+## Table of contents
+
+- [Make](#make)
+- [Python](#python)
+- [Poetry](#poetry)
+
 
 ## Make
 
@@ -20,6 +22,8 @@ choco install make
 ```bash
 sudo apt-get install build-essential
 ```
+
+[Table of contents](#table-of-contents)
 
 ## Python
 
@@ -39,22 +43,22 @@ Sometimes you need to install `distutils`
 sudo apt install python3.12-distutils
 ```
 
+[Table of contents](#table-of-contents)
+
 ## Poetry
 
-- Windows
-
-    Use [official instructions](https://python-poetry.org/docs/#windows-powershell-install-instructions) or use `powershell` command:
-
-```powershell
-(Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-```
-
-- Linux
-
-    Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer) or bash command:
+Use [official instructions](https://python-poetry.org/docs/#installing-with-the-official-installer):
 
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
+
+Or use [pipx](https://github.com/pypa/pipx) or [uvx](https://docs.astral.sh/uv/guides/tools/) for installing
+
+```bash
+pipx install poetry
+```
+
+
 
 [Table of contents](#table-of-contents)

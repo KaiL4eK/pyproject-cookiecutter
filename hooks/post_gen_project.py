@@ -3,26 +3,26 @@ import platform
 import shutil
 
 REMOVE_PATHS = [
-    '{% if cookiecutter.python_linter == "ruff" %} .flake8 {% endif %}',
+    '{% if cookiecutter.python_linter != "wemake" and cookiecutter.python_linter != "flake8" %} .flake8 {% endif %}',
     '{% if cookiecutter.include_docker_sample == "n" %} docker {% endif %}',
     '{% if cookiecutter.include_docker_sample == "n" %} .dockerignore {% endif %}',
-    '{% if cookiecutter.include_tests_sample == "n" %} tests {% endif %}',
     '{% if cookiecutter.include_notebooks_sample == "n" %} notebooks {% endif %}',
     '{% if cookiecutter.include_cli_example == "n" %} {{ cookiecutter.project_slug }}/__main__.py {% endif %}',
     '{% if cookiecutter.vcs_remote_type != "github" %} .additional/github_commit_prefix.py {% endif %}',
     '{% if cookiecutter.vcs_remote_type != "bitbucket" %} .additional/bitbucket_commit_prefix.py {% endif %}',
+    '{% if cookiecutter.package_manager != "poetry" %} poetry.toml {% endif %}',
 ]
 
-for path in REMOVE_PATHS:
+def remove_path(path: str):
     path = path.strip()
     if not path:
-        continue
+        return
 
     # print("Removing {}".format(path))
 
     if not os.path.exists(path):
         print(f"Not found: {path}")
-        continue
+        return
 
     if os.path.isdir(path):
         shutil.rmtree(path)
@@ -30,5 +30,34 @@ for path in REMOVE_PATHS:
         os.remove(path)
 
 
+for path in REMOVE_PATHS:
+    remove_path(path)
+
 # Linux / Windows / Darwin (Mac)
 DETECTED_OS = platform.system()
+
+# Unify pyproject files
+general_fname = "pyproject.general.toml"
+pyproject_all_files = [
+    "pyproject.uv.toml",
+    "pyproject.poetry.toml",
+    general_fname,
+]
+
+base_pyproject_fname = "pyproject.{{ cookiecutter.package_manager }}.toml"
+
+def read_files_content(fpath: str):
+    merged_content = []
+    with open(fpath, 'r') as f:
+        merged_content.append(f.read())
+
+    return merged_content
+
+package_manager_content = read_files_content(base_pyproject_fname)
+general_content = read_files_content(general_fname)
+
+with open('pyproject.toml', 'w') as f:
+    f.write('\n'.join(package_manager_content + general_content))
+
+for fpath in pyproject_all_files:
+    remove_path(fpath)
