@@ -12,13 +12,12 @@ WORKDIR /workspace
 # Copy project dependencies list to setup first and cache
 COPY pyproject.toml poetry.lock requirements.project.txt ./
 
-# Install Poetry, export to requirements and collect/build wheels
+# Install package manager, export to requirements and collect/build wheels
 RUN pip install --upgrade pip \
     && pip install --no-cache-dir wheel~=0.45.1 \
     && pip install --no-cache-dir -r requirements.project.txt \
     # Export main packages without dev - only core dependencies
     && poetry export --without-hashes --only main -f requirements.txt > requirements.txt \
-    && ls \
     # Collect wheel files to install them in second stage
     && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 

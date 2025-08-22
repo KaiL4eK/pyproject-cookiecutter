@@ -35,22 +35,18 @@ python-dotenv = "^1.0.1"
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions
-
-
-
-
-ruff = "^0.8"
-ty = "^0.0.1a18"
 pre-commit = "^4.3.0"
-pytest = "^6.2"
-nbdime = "^3.1.0"
-envyaml = "^1.9.210927"
-ipykernel = "^6.4.2"
-jupyter = "^1.0.0"
-jupyter_contrib_nbextensions = "^0.5.1"
+pytest = "^8.4"
+envyaml = "^1.10"
+ruff = "^0.12"
+ty = "^0.0.1a19"
+ipykernel = "^6.29.5"
+jupyter = "^1.1.1"
 jupyter-client = "==6.1.12"
+jupyter_contrib_nbextensions = "^0.5.1"
 nbconvert = "5.6.1"
 jinja2 = "3.0.3"
+nbdime = "^4.0.2"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
@@ -84,7 +80,7 @@ exclude = [
 ]
 
 # Same as Black.
-line-length = 88
+line-length = 100
 indent-width = 4
 target-version = "py312"
 
@@ -116,7 +112,7 @@ convention = "numpy"
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S", "D", "INP001"]
 "poetry_project_ty_ruff/__init__.py" = ["D400", "D103"]
-"scripts/*" = ["BLE001", "D", "INP001"]
+"scripts/*" = ["BLE001", "D", "INP001", "LOG"]
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.

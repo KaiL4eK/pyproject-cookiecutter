@@ -22,7 +22,11 @@
     "3.12"
   ],
   "version": "0.1.0",
-  "line_length": 88,
+  "line_length": 100,
+  "package_manager": [
+    "poetry",
+    "uv"
+  ],
   "python_linter": [
     "ruff",
     "wemake",
@@ -38,6 +42,5 @@
   ],
   "include_cli_example": "n",
   "include_docker_sample": "n",
-  "include_tests_sample": "y",
   "include_notebooks_sample": "y"
 }

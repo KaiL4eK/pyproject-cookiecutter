@@ -9,7 +9,8 @@ default_context:
   vcs_remote_type: "github"
   minimal_python_version: "3.12"
   version: "0.1.0"
-  line_length: "88"
+  line_length: "100"
+  package_manager: "poetry"
 
   python_linter: "wemake"
   python_formatter: "black"
@@ -17,5 +18,4 @@ default_context:
 
   include_cli_example: "n"
   include_docker_sample: "y"
-  include_tests_sample: "y"
   include_notebooks_sample: "y"

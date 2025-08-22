@@ -1,0 +1,81 @@
+{%- set python_version_splitted = cookiecutter.minimal_python_version.split('.') | map('int') | list -%}
+{%- set merged_python_version = cookiecutter.minimal_python_version.replace('.', '') -%}
+{%- set username = cookiecutter.username.replace(" ", "-") -%}
+{%- if cookiecutter.vcs_remote_type == "bitbucket" -%}
+  {%- set vcs_domen = "org" -%}
+{%- else -%}
+  {%- set vcs_domen = "com" -%}
+{%- endif -%}
+
+[project]
+name = "{{ cookiecutter.project_name }}"
+version = "{{ cookiecutter.version }}"
+description = "{{ cookiecutter.project_description }}"
+readme = "README.md"
+authors = [
+  {name = "{{ cookiecutter.username }}", email = "{{ cookiecutter.email }}"}
+]
+requires-python = ">={{ cookiecutter.minimal_python_version }}"
+
+# Pypi classifiers: https://pypi.org/classifiers/
+classifiers = [  #! Update me
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Programming Language :: Python :: 3",
+  {%- for minor_version in cookiecutter._all_python_minor_version if minor_version == python_version_splitted[1] -%}
+  "Programming Language :: Python :: 3.{{ minor_version }}",{% endfor %}
+]
+
+dependencies = [
+    "python-dotenv>=1.1.1",
+{% if cookiecutter.include_cli_example == 'y' %}
+    "rich>=14.1.0",
+    "typer[all]>=0.16.1",
+{% endif -%}
+]
+
+[build-system]
+requires = ["uv_build>=0.8.10,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "{{ cookiecutter.project_slug }}"
+module-root = ""
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.3.0",
+    "pytest>=8.4.1",
+    "envyaml>=1.10",
+{%- if cookiecutter.python_linter == 'wemake' %}
+    "wemake-python-styleguide>=1.3.0",
+{%- endif %}
+{%- if cookiecutter.python_linter == 'flake8' %}
+    "flake8>=7.3.0",
+{%- endif %}
+{%- if cookiecutter.python_formatter == 'black' %}
+    "black>=25.1.0",
+{% endif -%}
+{%- if cookiecutter.python_formatter != 'ruff' %}
+    "isort[colors]>=6.0.1",
+{%- endif %}
+{%- if cookiecutter.python_formatter == 'ruff' or cookiecutter.python_linter == 'ruff' %}
+    "ruff>=0.12.9",
+{%- endif %}
+{%- if cookiecutter.python_type_checker == 'mypy' %}
+    "mypy>=1.17.1",
+{%- elif cookiecutter.python_type_checker == 'ty' %}
+    "ty>=0.0.1a19",
+{%- endif %}
+{%- if cookiecutter.include_notebooks_sample == 'y' %}
+    "ipykernel>=6.29.5",
+    "jupyter>=1.1.1",
+    "jupyter-client==6.1.12",
+    "jupyter-contrib-nbextensions>=0.5.1",
+    "nbconvert==5.6.1",
+    "jinja2==3.0.3",
+    "nbdime>=4.0.2",
+{%- endif %}
+]

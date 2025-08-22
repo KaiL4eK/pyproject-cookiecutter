@@ -19,6 +19,9 @@ Awesome `poetry-project-mypy-wemake-black` project!
 
 ## Repository contents
 
+- [README.md](README.md) - the one you read =)
+- [DEVELOPMENT.md](DEVELOPMENT.md) - guide for development team
+- [CHANGELOG.md](CHANGELOG.md) - simple changelog, don't forget to keep it updated! Base format is [here](https://keepachangelog.com/en/1.0.0/)
 - [docs](docs) - documentation of the project
 - [reports](reports) - reports generated (as generated from notebooks)
   > Check if you need to ignore large reports or keep them in Git LFS
@@ -31,16 +34,14 @@ Awesome `poetry-project-mypy-wemake-black` project!
   > These ones are not included into the pakckage if you build one - these scripts are only for usage with repository
 - [poetry_project_mypy_wemake_black](poetry_project_mypy_wemake_black) - source files of the project
 - [.editorconfig](.editorconfig) - configuration for [editorconfig](https://editorconfig.org/)
-- [.flake8](.flake8) - [flake8](https://github.com/pycqa/flake8) linter configuration
 - [.gitignore](.gitignore) - the files/folders `git` should ignore
 - [.pre-commit-config.yaml](.pre-commit-config.yaml) - [pre-commit](https://pre-commit.com/) configuration file
-- [README.md](README.md) - the one you read =)
-- [DEVELOPMENT.md](DEVELOPMENT.md) - guide for development team
 - [Makefile](Makefile) - targets for `make` command
 - [cookiecutter-config-file.yml](cookiecutter-config-file.yml) - cookiecutter project config log
 - [poetry.toml](poetry.toml) - poetry local config
 - [pyproject.toml](pyproject.toml) - Python project configuration
-- [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry and may be other packages to be installed before installing core packages)
+- [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry/uv and may be other packages to be installed before installing core packages)
+  > Mainly used in docker and for documentation
 
 ## Additional directories to be considered
 
@@ -56,7 +57,6 @@ Awesome `poetry-project-mypy-wemake-black` project!
 
 - Python version: 3.12
 - Operating system: Ubuntu or WSL
-- Poetry version >= 1.8.0
 
 > We tested on this setup - you can try other versions or operation systems by yourself!
 

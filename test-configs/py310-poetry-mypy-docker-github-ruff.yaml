@@ -5,5 +5,4 @@ default_context:
   python_formatter: ruff
   python_type_checker: "mypy"
   include_docker_sample: "y"
-  include_tests_sample: "y"
   vcs_remote_type: "github"

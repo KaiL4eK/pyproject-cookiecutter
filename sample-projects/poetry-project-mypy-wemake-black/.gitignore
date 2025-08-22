@@ -1,4 +1,4 @@
-# poetry
+# Virtual environment
 .venv
 
 # Ignore data directory
