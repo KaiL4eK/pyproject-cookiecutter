@@ -5,8 +5,9 @@
 ### Added
 
 - CHANGELOG.md to template and base project
-- New package manager - `uv`!
-- New python version - `3.12`
+- New package manager - `uv`! [#54]
+- New python version - `3.12` [#48]
+- Added `ty` type checker [#51]
 - Samples of packages to see results of generation
 
 ### Changed
