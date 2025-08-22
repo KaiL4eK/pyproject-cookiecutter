@@ -5,9 +5,9 @@
 ### Added
 
 - CHANGELOG.md to template and base project
-- New package manager - `uv`! [#54]
-- New python version - `3.12` [#48]
-- Added `ty` type checker [#51]
+- New package manager - `uv`! [#54](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/54)
+- New python version - `3.12` [#48](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/48)
+- Added `ty` type checker [#51](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/51)
 - Samples of packages to see results of generation
 
 ### Changed
