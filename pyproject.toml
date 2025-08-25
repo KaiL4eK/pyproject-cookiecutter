@@ -9,7 +9,6 @@ version = "1.0.0"
 description = "Cookiecutter template for Python cli/packages"
 readme = "README.md"
 authors = [
-  "Roman Tezikov <tez.romach@gmail.com>",
   "Aleksey Devyatkin <alexey4dev@gmail.com>",
 ]
 license = "MIT"
