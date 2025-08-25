@@ -619,3 +619,6 @@ MigrationBackup/
 # User ignore
 
 /test-project
+
+# Can be a link to wiki repository
+/wiki
