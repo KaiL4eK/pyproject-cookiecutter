@@ -24,11 +24,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-poetry run pre-commit run --files notebooks/* nbstripout || true
-poetry run pre-commit run --files Makefile trailing-whitespace || true
+poetry run pre-commit run --show-diff-on-failure -a lint
+poetry run pre-commit run --show-diff-on-failure -a type-check
 
-poetry run pre-commit run -a --show-diff-on-failure \
-    && poetry build \
+poetry build \
     && make docker-build-cached \
     && make docker-remove
 

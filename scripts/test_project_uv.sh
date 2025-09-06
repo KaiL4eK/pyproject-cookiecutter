@@ -24,11 +24,16 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-uv run pre-commit run --files notebooks/* nbstripout || true
-uv run pre-commit run --files Makefile trailing-whitespace || true
+uv run ruff check .
+if [ $? -ne 0 ]; then
+    echo "Failed to check project"
+    exit 1
+fi
 
-uv run pre-commit run -a --show-diff-on-failure \
-    && uv build \
+uv run pre-commit run --show-diff-on-failure -a lint
+uv run pre-commit run --show-diff-on-failure -a type-check
+
+uv build \
     && make docker-build-cached \
     && make docker-remove
 

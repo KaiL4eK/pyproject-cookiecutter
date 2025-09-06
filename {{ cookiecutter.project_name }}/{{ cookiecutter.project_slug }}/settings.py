@@ -1,21 +1,27 @@
+"""Settings module."""
+
 {% if cookiecutter.include_streamlit == 'y' %}from pydantic import SecretStr, computed_field{%- endif %}
 from pydantic_settings import BaseSettings
 
 
 # https://docs.pydantic.dev/latest/concepts/pydantic_settings/
 class AppSettings(BaseSettings):
+    """Application settings."""
+
     class Config:
         env_prefix = "APP_"
         case_sensitive = False
         # https://docs.pydantic.dev/latest/concepts/pydantic_settings/#dotenv-env-support
-        env_file='.env'
-        env_file_encoding='utf-8'
+        env_file=".env"
+        env_file_encoding="utf-8"
 
     # Loads APP_NAME env
     name: str
 
 {% if cookiecutter.include_streamlit == 'y' %}
 class DatabaseSettings(BaseSettings):
+    """Database settings."""
+
     class Config:
         env_prefix="DATABASE_"
         case_sensitive=False
@@ -37,6 +43,8 @@ class DatabaseSettings(BaseSettings):
 
 
 class StreamlitAppSettings(BaseSettings):
+    """Streamlit application settings."""
+
     class Config:
         env_prefix="STREAMLIT_APP_"
         case_sensitive=False
