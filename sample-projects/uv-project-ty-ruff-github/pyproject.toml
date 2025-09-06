@@ -18,7 +18,7 @@ classifiers = [  #! Update me
 ]
 
 dependencies = [
-    "python-dotenv>=1.1.1",
+    "pydantic-settings>=2.10.1",
 ]
 
 [build-system]
@@ -31,6 +31,7 @@ module-root = ""
 
 [dependency-groups]
 dev = [
+    "python-dotenv>=1.1.1",
     "pre-commit>=4.3.0",
     "pytest>=8.4.1",
     "envyaml>=1.10",

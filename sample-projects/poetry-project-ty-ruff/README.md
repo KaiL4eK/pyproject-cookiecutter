@@ -4,6 +4,7 @@
 
 [![PythonSupported](https://img.shields.io/badge/python-3.12-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
+[![pydantic-settings](https://img.shields.io/badge/settings-pydantic-settings)](https://github.com/pydantic/pydantic-settings)
 [![poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 [![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 [![ty](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ty/main/assets/badge/v0.json)](https://github.com/astral-sh/ty)
@@ -41,7 +42,6 @@ Awesome `poetry-project-ty-ruff` project!
 - [pyproject.toml](pyproject.toml) - Python project configuration
 - [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry/uv and may be other packages to be installed before installing core packages)
   > Mainly used in docker and for documentation
-
 ## Additional directories to be considered
 
 - [data](data) - various data representations (raw/source, preprocessed)

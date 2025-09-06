@@ -1,0 +1,63 @@
+services:
+
+  app:
+    image: streamlit-{{ cookiecutter.project_name }}:latest
+    build:
+      context: ..
+      dockerfile: streamlit/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8503:8501"
+    env_file:
+      - ../.env
+    environment:
+      DATABASE_HOST: postgres
+    logging:
+      options:
+        max-file: "2"
+        max-size: "20m"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  migrations:
+    # Not used build section as already built for main app
+    image: streamlit-{{ cookiecutter.project_name }}:latest
+    command:
+      - alembic
+      - upgrade
+      - head
+    env_file:
+      - ../.env
+    environment:
+      DATABASE_HOST: postgres
+    logging:
+      options:
+        max-file: "2"
+        max-size: "20m"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: bitnami/postgresql:17.6.0-debian-12-r4
+    restart: unless-stopped
+    env_file:
+      - ../.env
+    volumes:
+      - postgresql_data:/bitnami/postgresql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRESQL_USERNAME} -d $${POSTGRESQL_DATABASE}"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    logging:
+      options:
+        max-file: "2"
+        max-size: "20m"
+
+volumes:
+  postgresql_data:

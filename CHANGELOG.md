@@ -4,6 +4,10 @@
 
 ### Added
 
+- Added `.env.example` as default file to keep samples of required ENVs
+- Added `streamlit` application sample with Database migrations using `alembic`
+- Added `pydantic-settings` to be used as main ENVs parser
+    - `python-dotenv` better used for notebooks and other development scripts
 - CHANGELOG.md to template and base project
 - New package manager - `uv`! [#54](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/54)
 - New python version - `3.12` [#48](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/48)
@@ -12,11 +16,14 @@
 
 ### Changed
 
+- Moved `python-dotenv` to development dependencies as `load_dotenv()` has to be used only for development
+    - Production deployemnt has to provide ENVs to app so no usage of `.env` in production
 - `pytest` is now always presented in template, no choice
 - Increased default line length `88` -> `100`
 
 ### Removed
 
+- `.PHONY` instructions from Makefile as not required for generic python project
 - Python `<3.9` support
 - Poetry `<1.8` support
 

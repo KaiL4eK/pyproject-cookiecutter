@@ -12,7 +12,7 @@ project-init-ci:
 
 .PHONY: poetry-install
 poetry-install:
-	poetry install -n
+	poetry install -n --no-root
 
 .PHONY: poetry-main-install
 poetry-main-install:

@@ -1,0 +1,22 @@
+services:
+  app:
+    environment:
+      DATABASE_HOST: postgres
+      DATABASE_ECHO: true
+      STREAMLIT_APP_CREATE_ALL_TABLES: true
+      STREAMLIT_SERVER_RUN_ON_SAVE: true
+    develop:
+      watch:
+        - path: ../streamlit
+          target: /app/
+          action: sync
+        - path: ../uv_project_ty_ruff_bitbucket_streamlit/
+          target: /app/uv_project_ty_ruff_bitbucket_streamlit/
+          action: sync
+
+  postgres:
+    volumes:
+      - postgresql_debug_data:/bitnami/postgresql
+
+volumes:
+  postgresql_debug_data:

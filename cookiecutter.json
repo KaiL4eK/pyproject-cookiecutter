@@ -42,5 +42,6 @@
   ],
   "include_cli_example": "n",
   "include_docker_sample": "n",
-  "include_notebooks_sample": "y"
+  "include_notebooks_sample": "y",
+  "include_streamlit": "n"
 }
