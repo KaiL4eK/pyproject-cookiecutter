@@ -1,5 +1,5 @@
 # Stage 1 - collect wheel files for dependencies
-FROM python:3.12-slim-bullseye AS builder
+FROM python:3.11-slim-bullseye AS builder
 
 # Set working directory
 WORKDIR /workspace
@@ -23,7 +23,7 @@ RUN pip install --upgrade pip \
     && pip wheel --no-cache-dir --wheel-dir /wheels -r requirements.txt
 
 # Stage 2 - install dependencies (wheels) and main package
-FROM python:3.12-slim-bullseye
+FROM python:3.11-slim-bullseye
 
 # Prepare system packages
 RUN apt-get update && \

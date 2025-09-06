@@ -16,7 +16,7 @@ fi
 poetry run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb \
     && make nbextention-toc-install \
     && poetry run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb \
-    && poetry run pytest \
+    && make tests \
     && poetry run python scripts/config_sample.py --config configs/config_sample.yml
 
 if [ $? -ne 0 ]; then

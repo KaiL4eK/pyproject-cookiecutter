@@ -1,5 +1,3 @@
-from pages import add_user, show_users
-
 import streamlit as st
 from {{cookiecutter.project_slug}}.settings import StreamlitAppSettings
 
@@ -17,8 +15,8 @@ if app_settings.create_all_tables:
 st.set_page_config(page_title="User management", page_icon=":robot:", layout="wide")
 
 pages = [
-    st.Page(show_users.main, url_path="users", title="Users"),
-    st.Page(add_user.main, url_path="new-user", title="Add user"),
+    st.Page("pages/show_users.py", url_path="users", title="Users"),
+    st.Page("pages/add_user.py", url_path="new-user", title="Add user"),
 ]
 
 navigator = st.navigation(pages, position="sidebar", expanded=True)

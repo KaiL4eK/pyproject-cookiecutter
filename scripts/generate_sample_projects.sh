@@ -33,7 +33,7 @@ poetry run cookiecutter . -f \
     python_formatter=ruff
 
 poetry run cookiecutter . -f \
-    --config-file test-configs/py312-uv-bitbucket-streamlit.yaml \
+    --config-file test-configs/py311-uv-bitbucket-streamlit.yaml \
     --no-input \
     -o sample-projects \
     project_name=uv-project-ty-ruff-bitbucket-streamlit \

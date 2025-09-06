@@ -16,7 +16,7 @@ fi
 uv run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb \
     && make nbextention-toc-install \
     && uv run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb \
-    && uv run pytest \
+    && make tests \
     && uv run python scripts/config_sample.py --config configs/config_sample.yml
 
 if [ $? -ne 0 ]; then

@@ -69,7 +69,7 @@ nbextention-toc-install:
 
 #* Tests
 tests:
-	poetry run pytest -c pyproject.toml
+	poetry run pytest tests/ -c pyproject.toml
 
 #* Linting
 type-check:

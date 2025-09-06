@@ -124,12 +124,12 @@ make type-check
 - If you have issues with python version like:
 
     ```bash
-    The currently activated Python version 3.9.7 is not supported by the project (~3.12.0)
+    The currently activated Python version 3.9.7 is not supported by the project (~3.11.0)
     ...
     NoCompatiblePythonVersionFound
     ...
     ```
 
-    Check version of your `python3` binary and make sure you have python3.12 installed.
+    Check version of your `python3` binary and make sure you have python3.11 installed.
 
 [Table of contents](#table-of-contents)

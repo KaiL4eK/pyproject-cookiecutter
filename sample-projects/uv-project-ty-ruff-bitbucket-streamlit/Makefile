@@ -69,7 +69,7 @@ nbextention-toc-install:
 
 #* Tests
 tests:
-	uv run pytest -c pyproject.toml
+	uv run pytest tests/ -c pyproject.toml
 
 #* Linting
 type-check:

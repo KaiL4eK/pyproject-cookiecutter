@@ -1,3 +1,4 @@
+"""Models to mirror ORM representations in more general way."""
 from datetime import datetime
 from typing import Annotated
 
@@ -21,6 +22,8 @@ class BaseORMFilterModel(BaseModel):
 
 
 class UserModel(BaseORMModel):
+    """User object model."""
+
     id: OptionalInt
     username: str
     age: int
@@ -28,4 +31,6 @@ class UserModel(BaseORMModel):
 
 
 class UserFilterModel(BaseORMModel):
+    """User ORM filtering model."""
+
     username: str

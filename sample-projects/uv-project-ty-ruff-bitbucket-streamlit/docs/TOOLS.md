@@ -34,13 +34,13 @@ sudo apt-get install build-essential
 - Linux
 
 ```bash
-sudo apt install python3.12-dev
+sudo apt install python3.11-dev
 ```
 
 Sometimes you need to install `distutils`
 
 ```bash
-sudo apt install python3.12-distutils
+sudo apt install python3.11-distutils
 ```
 
 [Table of contents](#table-of-contents)

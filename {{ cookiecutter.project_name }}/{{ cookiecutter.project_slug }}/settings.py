@@ -38,6 +38,7 @@ class DatabaseSettings(BaseSettings):
     @computed_field
     @property
     def sqlalchemy_uri_sync(self) -> dict:
+        """Return SQLAlchemy URI string representation."""
         uri = f"postgresql+psycopg://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.name}"
         return uri
 

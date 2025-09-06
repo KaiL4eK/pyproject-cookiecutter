@@ -24,18 +24,22 @@ class Base(DeclarativeBase):
     __abstract__ = True
 
     @declared_attr
-    def __tablename__(cls) -> str:
+    def __tablename__(cls) -> str:  # noqa: N805
         return cls.__name__.lower() + "s"
 
     def to_dict(self, exclude_none: bool = False):
         """
         Converts the model object to a dictionary.
 
-        Args:
-            exclude_none (bool): Whether to exclude None values from the result
+        Parameters
+        ----------
+        exclude_none : bool
+            Whether to exclude None values from the result
 
-        Returns:
-            dict: Dictionary with object data
+        Returns
+        -------
+        dict
+            Dictionary with object data
         """
         result = {}
         for column in inspect(self.__class__).columns:
@@ -61,10 +65,10 @@ class Base(DeclarativeBase):
 
 
 def session_commited(method):
-    """Wrapper"""
+    """Wrapper for services providing session object."""
 
     def wrapper(*args, **kwargs):
-        with session_maker() as session:
+        with session_maker() as session:    # noqa: SIM117
             with session.begin():
                 return method(*args, session=session, **kwargs)
 

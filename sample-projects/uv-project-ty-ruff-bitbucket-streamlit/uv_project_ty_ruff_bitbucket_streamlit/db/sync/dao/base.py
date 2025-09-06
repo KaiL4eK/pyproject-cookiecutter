@@ -5,16 +5,16 @@ from sqlalchemy import delete as sqlalchemy_delete
 from sqlalchemy import func
 from sqlalchemy import update as sqlalchemy_update
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.orm import Session
 from sqlalchemy.future import select
+from sqlalchemy.orm import Session
 
 from uv_project_ty_ruff_bitbucket_streamlit.db.sync.engine import Base
 from uv_project_ty_ruff_bitbucket_streamlit.schemas import BaseORMFilterModel, BaseORMModel
 
+
 T = TypeVar("T", bound=Base)
 F = TypeVar("F", bound=BaseORMFilterModel)
 V = TypeVar("V", bound=BaseORMModel)
-
 
 logger = logging.getLogger("dao.base")
 
@@ -34,10 +34,11 @@ class BaseDAO(Generic[T]):
             record = result.scalar_one_or_none()
             log_message = f"Record {self.model.__name__} with ID {data_id} {'found' if record else 'not found'}."
             logger.info(log_message)
-            return record
-        except SQLAlchemyError as e:
-            logger.error(f"Error while searching for record with ID {data_id}: {e}")
+        except SQLAlchemyError:
+            logger.exception(f"Error while searching for record with ID {data_id}")
             raise
+        else:
+            return record
 
     def find_one_or_none(self, filters: type[F]) -> type[T]:
         # NOTE: `exclude_unset` - excludes even default values, only explicit __init__ args are kept
@@ -49,10 +50,11 @@ class BaseDAO(Generic[T]):
             record = result.scalar_one_or_none()
             log_message = f"Record {'found' if record else 'not found'} by filters: {filter_dict}"
             logger.info(log_message)
-            return record
-        except SQLAlchemyError as e:
-            logger.error(f"Error while searching for record by filters {filter_dict}: {e}")
+        except SQLAlchemyError:
+            logger.exception(f"Error while searching for record by filters {filter_dict}")
             raise
+        else:
+            return record
 
     def find_all(self, filters: type[F] | None = None) -> list[type[T]]:
         filter_dict = filters.model_dump(exclude_unset=True) if filters else {}
@@ -62,10 +64,11 @@ class BaseDAO(Generic[T]):
             result = self._session.execute(query)
             records = result.scalars().all()
             logger.info(f"Found {len(records)} records.")
-            return records
-        except SQLAlchemyError as e:
-            logger.error(f"Error while searching for all records by filters {filter_dict}: {e}")
+        except SQLAlchemyError:
+            logger.exception(f"Error while searching for all records by filters {filter_dict}")
             raise
+        else:
+            return records
 
     def add(self, values: type[V]) -> type[T]:
         values_dict = values.model_dump(exclude_unset=True)
@@ -75,10 +78,11 @@ class BaseDAO(Generic[T]):
             self._session.add(new_instance)
             logger.info(f"Record {self.model.__name__} successfully added.")
             self._session.flush()
-            return new_instance
-        except SQLAlchemyError as e:
-            logger.error(f"Error while adding record: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while adding record")
             raise
+        else:
+            return new_instance
 
     def add_or_update(self, values: type[V]) -> type[T]:
         values_dict = values.model_dump(exclude_unset=True)
@@ -88,10 +92,11 @@ class BaseDAO(Generic[T]):
             self._session.add(new_instance)
             logger.info(f"Record {self.model.__name__} successfully added.")
             self._session.flush()
-            return new_instance
-        except SQLAlchemyError as e:
-            logger.error(f"Error while adding record: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while adding record")
             raise
+        else:
+            return new_instance
 
     def add_many(self, instances: list[type[V]]) -> list[type[T]]:
         values_list = [item.model_dump(exclude_unset=True) for item in instances]
@@ -101,10 +106,11 @@ class BaseDAO(Generic[T]):
             self._session.add_all(new_instances)
             logger.info(f"Successfully added {len(new_instances)} records.")
             self._session.flush()
-            return new_instances
-        except SQLAlchemyError as e:
-            logger.error(f"Error while adding multiple records: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while adding multiple records")
             raise
+        else:
+            return new_instances
 
     def update(self, filters: type[F], values: type[V]) -> int:
         filter_dict = filters.model_dump(exclude_unset=True)
@@ -122,26 +128,27 @@ class BaseDAO(Generic[T]):
             result = self._session.execute(query)
             logger.info(f"Updated {result.rowcount} records.")
             self._session.flush()
-            return result.rowcount
-        except SQLAlchemyError as e:
-            logger.error(f"Error while updating records: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while updating records")
             raise
+        else:
+            return result.rowcount
 
     def delete(self, filters: type[F]):
         filter_dict = filters.model_dump(exclude_unset=True)
         logger.info(f"Deleting records {self.model.__name__} by filter: {filter_dict}")
         if not filter_dict:
-            logger.error("At least one filter is required for deletion.")
-            raise ValueError("At least one filter is required for deletion.")
+            raise ValueError("At least one filter is required for deletion.")   # TRY003
         try:
             query = sqlalchemy_delete(self.model).filter_by(**filter_dict)
             result = self._session.execute(query)
             logger.info(f"Deleted {result.rowcount} records.")
             self._session.flush()
-            return result.rowcount
-        except SQLAlchemyError as e:
-            logger.error(f"Error while deleting records: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while deleting records")
             raise
+        else:
+            return result.rowcount
 
     def count(self, filters: type[F] | None = None) -> int:
         filter_dict = filters.model_dump(exclude_unset=True) if filters else {}
@@ -151,10 +158,11 @@ class BaseDAO(Generic[T]):
             result = self._session.execute(query)
             count = result.scalar()
             logger.info(f"Found {count} records.")
-            return count
-        except SQLAlchemyError as e:
-            logger.error(f"Error while counting records: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while counting records")
             raise
+        else:
+            return count
 
     def bulk_update(self, records: list[type[V]]) -> list[type[T]]:
         logger.info(f"Mass update of records {self.model.__name__}")
@@ -176,7 +184,8 @@ class BaseDAO(Generic[T]):
 
             logger.info(f"Updated {updated_count} records")
             self._session.flush()
-            return updated_count
-        except SQLAlchemyError as e:
-            logger.error(f"Error while mass updating: {e}")
+        except SQLAlchemyError:
+            logger.exception("Error while mass updating")
             raise
+        else:
+            return updated_count

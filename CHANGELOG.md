@@ -19,7 +19,7 @@
 - Moved `python-dotenv` to development dependencies as `load_dotenv()` has to be used only for development
     - Production deployemnt has to provide ENVs to app so no usage of `.env` in production
 - `pytest` is now always presented in template, no choice
-- Increased default line length `88` -> `100`
+- Increased default line length `88` -> `120`
 
 ### Removed
 

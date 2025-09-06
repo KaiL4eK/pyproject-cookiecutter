@@ -6,7 +6,7 @@ readme = "README.md"
 authors = [
   {name = "Awesome user", email = "awesome-user@example.com"}
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 
 # Pypi classifiers: https://pypi.org/classifiers/
 classifiers = [  #! Update me
@@ -80,12 +80,13 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "migrations/*",
 ]
 
 # Same as Black.
-line-length = 100
+line-length = 120
 indent-width = 4
-target-version = "py312"
+target-version = "py311"
 
 [tool.ruff.lint]
 # https://docs.astral.sh/ruff/rules/#pyflakes-f
@@ -96,6 +97,10 @@ ignore = [
   "D401",
   "RET504",
   "ISC001",
+  "D106",
+  "EM101",
+  "COM812",
+  "TRY003",
 ]
 
 exclude = [
@@ -116,6 +121,12 @@ convention = "numpy"
 "tests/*" = ["S", "D", "INP001"]
 "uv_project_ty_ruff_bitbucket_streamlit/__init__.py" = ["D400", "D103"]
 "scripts/*" = ["BLE001", "D", "INP001", "LOG"]
+"uv_project_ty_ruff_bitbucket_streamlit/settings.py" = ["D106"]
+
+"uv_project_ty_ruff_bitbucket_streamlit/db/sync/engine.py" = ["FBT"]
+"uv_project_ty_ruff_bitbucket_streamlit/db/*" = ["D10"]
+"streamlit/*" = ["D10", "INP"]
+
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.
@@ -156,7 +167,7 @@ include = [
 
 [tool.ty.environment]
 python = "./.venv"
-python-version = "3.12"
+python-version = "3.11"
 
 
 [tool.pytest.ini_options]

@@ -75,10 +75,11 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "migrations/*",
 ]
 
 # Same as Black.
-line-length = 100
+line-length = 120
 indent-width = 4
 target-version = "py312"
 
@@ -91,6 +92,10 @@ ignore = [
   "D401",
   "RET504",
   "ISC001",
+  "D106",
+  "EM101",
+  "COM812",
+  "TRY003",
 ]
 
 exclude = [
@@ -111,6 +116,8 @@ convention = "numpy"
 "tests/*" = ["S", "D", "INP001"]
 "uv_project_ty_ruff_github/__init__.py" = ["D400", "D103"]
 "scripts/*" = ["BLE001", "D", "INP001", "LOG"]
+"uv_project_ty_ruff_github/settings.py" = ["D106"]
+
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.

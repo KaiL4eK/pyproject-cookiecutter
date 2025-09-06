@@ -57,7 +57,7 @@ nbdime = "^4.0.2"
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py312"]
-line-length = 100
+line-length = 120
 color = true
 
 exclude = '''
@@ -80,7 +80,7 @@ exclude = '''
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = 312
-line_length = 100
+line_length = 120
 
 known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
 sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]

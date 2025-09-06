@@ -48,7 +48,7 @@ repos:
 
       # Run the ruff linter.
       # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
-      - id: ruff
+      - id: lint
         name: ruff
         entry: uv run ruff check --force-exclude
         require_serial: true
@@ -58,7 +58,7 @@ repos:
 
       # Run the ruff formatter.
       # Source: https://github.com/astral-sh/ruff-pre-commit/blob/main/.pre-commit-hooks.yaml
-      - id: ruff-format
+      - id: format
         name: ruff-format
         entry: uv run ruff format --force-exclude
         require_serial: true
@@ -66,7 +66,7 @@ repos:
         types_or: [python, pyi, jupyter]
 
 
-      - id: ty
+      - id: type-check
         name: ty
         entry: uv run ty check
         types_or: [python, pyi]
