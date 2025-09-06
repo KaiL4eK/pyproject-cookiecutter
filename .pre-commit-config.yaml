@@ -2,6 +2,11 @@ default_stages:
 - pre-commit
 - pre-push
 repos:
+-   repo: https://github.com/kynan/nbstripout
+    rev: 0.8.1
+    hooks:
+    -   id: nbstripout
+
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
     hooks:

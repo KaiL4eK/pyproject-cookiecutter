@@ -31,3 +31,14 @@ poetry run cookiecutter . -f \
     python_type_checker=ty \
     python_linter=ruff \
     python_formatter=ruff
+
+poetry run cookiecutter . -f \
+    --config-file test-configs/py311-uv-bitbucket-streamlit.yaml \
+    --no-input \
+    -o sample-projects \
+    project_name=uv-project-ty-ruff-bitbucket-streamlit \
+    package_manager=uv \
+    python_type_checker=ty \
+    python_linter=ruff \
+    python_formatter=ruff \
+    include_streamlit=y

@@ -29,10 +29,16 @@ classifiers = [  #! Update me
 ]
 
 dependencies = [
-    "python-dotenv>=1.1.1",
+    "pydantic-settings>=2.10.1",
 {% if cookiecutter.include_cli_example == 'y' %}
     "rich>=14.1.0",
     "typer[all]>=0.16.1",
+{% endif -%}
+{% if cookiecutter.include_streamlit == 'y' %}
+    "psycopg[binary]>=3.2.9",
+    "sqlalchemy>=2.0.43",
+    "streamlit>=1.48.1",
+    "alembic>=1.16.5",
 {% endif -%}
 ]
 
@@ -46,6 +52,7 @@ module-root = ""
 
 [dependency-groups]
 dev = [
+    "python-dotenv>=1.1.1",
     "pre-commit>=4.3.0",
     "pytest>=8.4.1",
     "envyaml>=1.10",

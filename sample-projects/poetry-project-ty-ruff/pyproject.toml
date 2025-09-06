@@ -30,11 +30,13 @@ classifiers = [  #! Update me
 
 [tool.poetry.dependencies]
 python = "~3.12.0"
-python-dotenv = "^1.0.1"
+pydantic-settings = "^2.10.1"
+
 
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions
+python-dotenv = "^1.1.1"
 pre-commit = "^4.3.0"
 pytest = "^8.4"
 envyaml = "^1.10"
@@ -77,10 +79,11 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "migrations/*",
 ]
 
 # Same as Black.
-line-length = 100
+line-length = 120
 indent-width = 4
 target-version = "py312"
 
@@ -93,6 +96,10 @@ ignore = [
   "D401",
   "RET504",
   "ISC001",
+  "D106",
+  "EM101",
+  "COM812",
+  "TRY003",
 ]
 
 exclude = [
@@ -113,6 +120,8 @@ convention = "numpy"
 "tests/*" = ["S", "D", "INP001"]
 "poetry_project_ty_ruff/__init__.py" = ["D400", "D103"]
 "scripts/*" = ["BLE001", "D", "INP001", "LOG"]
+"poetry_project_ty_ruff/settings.py" = ["D106"]
+
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.

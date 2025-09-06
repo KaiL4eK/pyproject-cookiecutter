@@ -11,6 +11,11 @@ REMOVE_PATHS = [
     '{% if cookiecutter.vcs_remote_type != "github" %} .additional/github_commit_prefix.py {% endif %}',
     '{% if cookiecutter.vcs_remote_type != "bitbucket" %} .additional/bitbucket_commit_prefix.py {% endif %}',
     '{% if cookiecutter.package_manager != "poetry" %} poetry.toml {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} streamlit {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} migrations {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} alembic.ini {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/schemas.py {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/db {% endif %}',
 ]
 
 def remove_path(path: str):

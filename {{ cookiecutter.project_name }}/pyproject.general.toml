@@ -30,6 +30,7 @@ exclude = [
     "node_modules",
     "site-packages",
     "venv",
+    "migrations/*",
 ]
 
 # Same as Black.
@@ -46,6 +47,10 @@ ignore = [
   "D401",
   "RET504",
   "ISC001",
+  "D106",
+  "EM101",
+  "COM812",
+  "TRY003",
 ]
 
 exclude = [
@@ -66,6 +71,12 @@ convention = "numpy"
 "tests/*" = ["S", "D", "INP001"]
 "{{ cookiecutter.project_slug }}/__init__.py" = ["D400", "D103"]
 "scripts/*" = ["BLE001", "D", "INP001", "LOG"]
+"{{ cookiecutter.project_slug }}/settings.py" = ["D106"]
+{% if cookiecutter.include_streamlit == 'y' %}
+"{{ cookiecutter.project_slug }}/db/sync/engine.py" = ["FBT"]
+"{{ cookiecutter.project_slug }}/db/*" = ["D10"]
+"streamlit/*" = ["D10", "INP"]
+{% endif %}
 
 [tool.ruff.format]
 # Like Black, use double quotes for strings.

@@ -1,13 +1,14 @@
 # Stage 1 - collect wheel files for dependencies
 FROM python:3.12-slim-bullseye AS builder
 
+# Set working directory
+WORKDIR /workspace
+
 # Prepare system packages
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
   curl make \
   && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /workspace
 
 # Copy project dependencies list to setup first and cache
 COPY pyproject.toml uv.lock requirements.project.txt ./

@@ -9,7 +9,7 @@ default_context:
   vcs_remote_type: "github"
   minimal_python_version: "3.12"
   version: "0.1.0"
-  line_length: "100"
+  line_length: "120"
   package_manager: "uv"
 
   python_linter: "ruff"

@@ -1,0 +1,32 @@
+username: "Awesome user"
+
+# This is an example of logger configuration from file
+logger:
+  version: 1
+  disable_existing_loggers: true
+
+  formatters:
+    brief:
+      format: '%(message)s'
+    default:
+      format: '%(asctime)s %(levelname)-8s %(name)-15s %(message)s'
+      datefmt: '%Y-%m-%d %H:%M:%S'
+
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: default
+      stream: ext://sys.stdout
+    none:
+      class: logging.NullHandler
+
+  root:
+    level: WARNING
+    handlers: []
+
+  loggers:
+    uv_project_ty_ruff_bitbucket_streamlit.example:
+      level: INFO
+      handlers: [console]
+      propogate: false

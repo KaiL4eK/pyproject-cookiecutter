@@ -4,6 +4,7 @@
 
 [![PythonSupported](https://img.shields.io/badge/python-3.12-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
+[![pydantic-settings](https://img.shields.io/badge/settings-pydantic-settings)](https://github.com/pydantic/pydantic-settings)
 [![poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 [![wemake-python-styleguide](https://img.shields.io/badge/style-wemake-000000.svg)](https://github.com/wemake-services/wemake-python-styleguide)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
@@ -42,7 +43,6 @@ Awesome `poetry-project-mypy-wemake-black` project!
 - [pyproject.toml](pyproject.toml) - Python project configuration
 - [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry/uv and may be other packages to be installed before installing core packages)
   > Mainly used in docker and for documentation
-
 ## Additional directories to be considered
 
 - [data](data) - various data representations (raw/source, preprocessed)
