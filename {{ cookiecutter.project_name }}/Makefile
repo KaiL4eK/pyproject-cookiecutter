@@ -92,7 +92,7 @@ nbextention-toc-install:
 
 #* Tests
 tests:
-	{{ pm_cmd }} run pytest -c pyproject.toml
+	{{ pm_cmd }} run pytest tests/ -c pyproject.toml
 
 #* Linting
 type-check:
