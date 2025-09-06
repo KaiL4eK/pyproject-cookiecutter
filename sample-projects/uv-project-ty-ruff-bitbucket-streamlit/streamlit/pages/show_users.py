@@ -1,7 +1,6 @@
 import streamlit as st
 from uv_project_ty_ruff_bitbucket_streamlit.db.sync.services import find_user_by_username, get_all_users
 
-
 st.set_page_config(page_title="Show users", page_icon="📈")
 
 st.title("Find user")

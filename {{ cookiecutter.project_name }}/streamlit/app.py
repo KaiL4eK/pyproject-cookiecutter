@@ -1,7 +1,6 @@
 import streamlit as st
 from {{cookiecutter.project_slug}}.settings import StreamlitAppSettings
 
-
 app_settings = StreamlitAppSettings()
 
 if app_settings.create_all_tables:

@@ -24,8 +24,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-poetry run pre-commit run --show-diff-on-failure -a lint
-poetry run pre-commit run --show-diff-on-failure -a type-check
+poetry run pre-commit run --all-files lint
+if [ $? -ne 0 ]; then
+    echo "Failed to check project"
+    exit 1
+fi
 
 poetry build \
     && make docker-build-cached \

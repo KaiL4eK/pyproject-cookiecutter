@@ -11,7 +11,6 @@ from sqlalchemy.orm import Session
 from uv_project_ty_ruff_bitbucket_streamlit.db.sync.engine import Base
 from uv_project_ty_ruff_bitbucket_streamlit.schemas import BaseORMFilterModel, BaseORMModel
 
-
 T = TypeVar("T", bound=Base)
 F = TypeVar("F", bound=BaseORMFilterModel)
 V = TypeVar("V", bound=BaseORMModel)

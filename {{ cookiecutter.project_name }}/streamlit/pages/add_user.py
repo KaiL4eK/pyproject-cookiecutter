@@ -1,8 +1,6 @@
 import streamlit as st
-
 from {{cookiecutter.project_slug}}.db.sync.services import add_new_user
 from {{cookiecutter.project_slug}}.schemas import UserModel
-
 
 st.set_page_config(page_title="Add user")
 

@@ -1,7 +1,5 @@
-# from pages import add_user, show_users
 import streamlit as st
 from uv_project_ty_ruff_bitbucket_streamlit.settings import StreamlitAppSettings
-
 
 app_settings = StreamlitAppSettings()
 

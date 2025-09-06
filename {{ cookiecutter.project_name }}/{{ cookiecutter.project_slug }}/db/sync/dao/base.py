@@ -11,7 +11,6 @@ from sqlalchemy.orm import Session
 from {{cookiecutter.project_slug}}.db.sync.engine import Base
 from {{cookiecutter.project_slug}}.schemas import BaseORMFilterModel, BaseORMModel
 
-
 T = TypeVar("T", bound=Base)
 F = TypeVar("F", bound=BaseORMFilterModel)
 V = TypeVar("V", bound=BaseORMModel)
