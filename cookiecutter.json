@@ -22,7 +22,7 @@
     "3.12"
   ],
   "version": "0.1.0",
-  "line_length": 100,
+  "line_length": 120,
   "package_manager": [
     "poetry",
     "uv"
@@ -42,5 +42,6 @@
   ],
   "include_cli_example": "n",
   "include_docker_sample": "n",
-  "include_notebooks_sample": "y"
+  "include_notebooks_sample": "y",
+  "include_streamlit": "n"
 }

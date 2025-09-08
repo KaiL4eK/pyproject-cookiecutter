@@ -49,14 +49,21 @@ url = "https://pypi.org/simple/"
 
 [tool.poetry.dependencies]
 python = "~{{ cookiecutter.minimal_python_version }}.0"
-python-dotenv = "^1.0.1"
+pydantic-settings = "^2.10.1"
 {% if cookiecutter.include_cli_example == 'y' %}
 typer = {extras = ["all"], version = "^0.9.0"}
 rich = "^10.7.0"
 {% endif %}
+{% if cookiecutter.include_streamlit == 'y' %}
+psycopg = {extras = ["binary"], version = "^3.2.9"}
+sqlalchemy = "^2.0.43"
+streamlit = "^1.48.1"
+alembic = "^1.16.5"
+{% endif %}
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions
+python-dotenv = "^1.1.1"
 pre-commit = "^4.3.0"
 pytest = "^8.4"
 envyaml = "^1.10"

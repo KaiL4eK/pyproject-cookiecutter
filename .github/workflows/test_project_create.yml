@@ -272,3 +272,31 @@ jobs:
 
       - name: Test project commands
         run: bash scripts/test_project_uv.sh $new_project_directory/test-project
+
+  test-project-311-uv-docker-bitbucket-streamlit:
+    runs-on: ubuntu-latest
+    env:
+      new_project_directory: /tmp/cookiecutter/py311
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          # Install a specific version of uv.
+          version: "0.8.13"
+
+      - name: Setup base project
+        run: make project-init-ci
+
+      - name: Create project from template
+        run: cookiecutter . -f --config-file test-configs/py311-uv-bitbucket-streamlit.yaml --no-input -o $new_project_directory
+
+      - name: Test project commands
+        run: bash scripts/test_project_uv.sh $new_project_directory/test-project

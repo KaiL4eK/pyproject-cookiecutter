@@ -1,0 +1,21 @@
+# This file contains values from Cookiecutter
+
+default_context:
+  project_name: "uv-project-ty-ruff-bitbucket-streamlit"
+  project_slug: "uv_project_ty_ruff_bitbucket_streamlit"
+  project_description: "Awesome `uv-project-ty-ruff-bitbucket-streamlit` project!"
+  username: "Awesome user"
+  email: "awesome-user@example.com"
+  vcs_remote_type: "github"
+  minimal_python_version: "3.11"
+  version: "0.1.0"
+  line_length: "120"
+  package_manager: "uv"
+
+  python_linter: "ruff"
+  python_formatter: "ruff"
+  python_type_checker: "ty"
+
+  include_cli_example: "n"
+  include_docker_sample: "y"
+  include_notebooks_sample: "y"

@@ -30,11 +30,13 @@ classifiers = [  #! Update me
 
 [tool.poetry.dependencies]
 python = "~3.12.0"
-python-dotenv = "^1.0.1"
+pydantic-settings = "^2.10.1"
+
 
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions
+python-dotenv = "^1.1.1"
 pre-commit = "^4.3.0"
 pytest = "^8.4"
 envyaml = "^1.10"
@@ -55,7 +57,7 @@ nbdime = "^4.0.2"
 [tool.black]
 # https://github.com/psf/black
 target-version = ["py312"]
-line-length = 100
+line-length = 120
 color = true
 
 exclude = '''
@@ -78,7 +80,7 @@ exclude = '''
 [tool.isort]
 # https://github.com/timothycrosley/isort/
 py_version = 312
-line_length = 100
+line_length = 120
 
 known_typing = ["typing", "types", "typing_extensions", "mypy", "mypy_extensions"]
 sections = ["FUTURE", "TYPING", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]

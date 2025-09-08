@@ -54,7 +54,7 @@ repos:
         language: system
 
       # Source: https://github.com/PyCQA/flake8/blob/main/.pre-commit-hooks.yaml
-      - id: wemake
+      - id: lint
         name: wemake
         entry: poetry run flake8
         types_or: [python, pyi]
@@ -62,7 +62,7 @@ repos:
 
 
       # Run black formatter
-      - id: black
+      - id: format
         name: black
         entry: poetry run black
         language: system
@@ -70,7 +70,7 @@ repos:
 
 
       # Source: https://github.com/pre-commit/mirrors-mypy/blob/main/.pre-commit-hooks.yaml
-      - id: mypy
+      - id: type-check
         name: mypy
         entry: poetry run mypy
         types_or: [python, pyi]

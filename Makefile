@@ -12,7 +12,7 @@ project-init-ci:
 
 .PHONY: poetry-install
 poetry-install:
-	poetry install -n
+	poetry install -n --no-root
 
 .PHONY: poetry-main-install
 poetry-main-install:
@@ -40,7 +40,7 @@ lint:
 COOKIECUTTER_TEST_DIR = /tmp/cookiecutter
 TEST_PROJECT_NAME = test-project
 TEST_PROJECT_CONFIG_POETRY = py312-poetry-docker-github.yaml
-TEST_PROJECT_CONFIG_UV = py312-uv-github.yaml
+TEST_PROJECT_CONFIG_UV = py311-uv-bitbucket-streamlit.yaml
 
 .PHONY: test-project-creation-poetry
 test-project-creation-poetry:

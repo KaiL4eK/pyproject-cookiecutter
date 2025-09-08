@@ -15,21 +15,18 @@ VERSION := latest
 #* Docker
 # Example: make docker-build VERSION=latest
 # Example: make docker-build IMAGE=some_name VERSION={{ cookiecutter.version }}
-.PHONY: docker-build
 docker-build:
 	@echo Building docker $(IMAGE):$(VERSION) ...
 	docker build \
 		-t $(IMAGE):$(VERSION) . \
 		-f ./docker/Dockerfile --no-cache
 
-.PHONY: docker-build-cached
 docker-build-cached:
 	@echo Building docker $(IMAGE):$(VERSION) ...
 	docker build \
 		-t $(IMAGE):$(VERSION) . \
 		-f ./docker/Dockerfile
 
-.PHONY: docker-dive-analyze
 docker-dive-analyze:
 	@echo Analyze docker image with dive $(IMAGE):$(VERSION) ...
 	docker run -ti --rm  \
@@ -40,17 +37,14 @@ docker-dive-analyze:
 
 # Example: make docker-remove VERSION=latest
 # Example: make docker-remove IMAGE=some_name VERSION={{ cookiecutter.version }}
-.PHONY: docker-remove
 docker-remove:
 	@echo Removing docker $(IMAGE):$(VERSION) ...
 	docker rmi -f $(IMAGE):$(VERSION)
 {%- endif %}
 
 #* Initialization
-.PHONY: project-init
 project-init: install-packages tools-install
 
-.PHONY: install-packages
 install-packages:
 {%- if cookiecutter.package_manager == "poetry" %}
 	poetry install -n
@@ -58,7 +52,6 @@ install-packages:
 	uv sync
 {%- endif %}
 
-.PHONY: lock-update
 lock-update:
 {%- if cookiecutter.package_manager == "poetry" %}
 	poetry lock --no-update
@@ -66,7 +59,6 @@ lock-update:
 	uv lock
 {%- endif %}
 
-.PHONY: requirements-export
 requirements-export: lock-update
 {%- if cookiecutter.package_manager == "poetry" %}
 	poetry export --without-hashes > requirements.txt
@@ -74,7 +66,6 @@ requirements-export: lock-update
 	uv export --no-hashes --no-cache --no-dev --no-emit-workspace --format requirements.txt > requirements.txt
 {%- endif %}
 
-.PHONY: requirements-export-dev
 requirements-export-dev: lock-update
 {%- if cookiecutter.package_manager == "poetry" %}
 	poetry export --with dev --without-hashes > requirements.dev.txt
@@ -83,33 +74,27 @@ requirements-export-dev: lock-update
 {%- endif %}
 
 #* Tools
-.PHONY: tools-install
 tools-install:
 	{{ pm_cmd }} run pre-commit install --hook-type prepare-commit-msg --hook-type pre-commit
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
 	{{ pm_cmd }} run nbdime config-git --enable{%- endif %}
 
-.PHONY: pre-commit-update
 pre-commit-update:
 	{{ pm_cmd }} run pre-commit autoupdate
 
-.PHONY: pre-commit-run-all
 pre-commit-run-all:
 	{{ pm_cmd }} run pre-commit run --all-files
 
 {% if cookiecutter.include_notebooks_sample == 'y' -%}#* Notebooks
-.PHONY: nbextention-toc-install
 nbextention-toc-install:
 	{{ pm_cmd }} run jupyter contrib nbextension install --user
 	{{ pm_cmd }} run jupyter nbextension enable toc2/main{%- endif %}
 
 #* Tests
-.PHONY: tests
 tests:
-	{{ pm_cmd }} run pytest -c pyproject.toml
+	{{ pm_cmd }} run pytest tests/ -c pyproject.toml
 
 #* Linting
-.PHONY: type-check
 type-check:
 {%- if cookiecutter.python_type_checker == 'mypy' %}
 	{{ pm_cmd }} run mypy
@@ -118,19 +103,64 @@ type-check:
 {%- endif %}
 
 #* Cleaning
-.PHONY: pycache-remove
 pycache-remove:
 	find . | grep -E "(__pycache__|\.pyc|\.pyo$$)" | xargs rm -rf
 	find . | grep -E "(.ipynb_checkpoints$$)" | xargs rm -rf
 
-.PHONY: build-remove
 build-remove:
 	rm -rf build/
 
-.PHONY: clean-all
 clean-all: pycache-remove build-remove {% if cookiecutter.include_docker_sample == 'y' -%}docker-remove{% endif %}
 
 #* Service targets
-.PHONY: grep-todos
 grep-todos:
 	git grep -EIn "TODO|FIXME|XXX"
+
+{% if cookiecutter.include_streamlit == 'y' -%}
+#* Streamlit Docker
+streamlit-docker-build:
+	docker compose -f streamlit/docker-compose.yml build
+
+streamlit-docker-start:
+	docker compose -f streamlit/docker-compose.yml up --build
+
+streamlit-docker-start-daemon:
+	docker compose -f streamlit/docker-compose.yml up --build -d
+
+streamlit-docker-start-debug:
+	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml up --build --watch app
+
+streamlit-docker-down:
+	docker compose -f streamlit/docker-compose.yml down
+
+streamlit-docker-clean:
+	docker compose -f streamlit/docker-compose.yml down -v
+
+streamlit-docker-clean-debug:
+	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml down -v
+
+streamlit-docker-push: streamlit-docker-build
+	docker compose -f streamlit/docker-compose.yml push
+
+#* Streamlit
+streamlit-start:
+	{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=.env{% endif %} \
+		streamlit run streamlit/app.py \
+			--server.runOnSave true \
+			--server.address 0.0.0.0 \
+			--server.port 8503
+
+#* Migrations
+MIGRATION_COMMENT?=""
+migrations-check-env:
+	@if [ -z "$(MIGRATION_COMMENT)" ]; then \
+	    echo "MIGRATION_COMMENT is not set." && exit 1; \
+	elif echo "$(MIGRATION_COMMENT)" | grep -q ' '; then \
+	    echo "MIGRATION_COMMENT must not contain spaces." && exit 1; \
+	fi
+
+migrations-new-revision: migrations-check-env
+	DATABASE_HOST=localhost \
+		{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=.env{% endif %} \
+		alembic revision --autogenerate -m ${MIGRATION_COMMENT}
+{%- endif %}

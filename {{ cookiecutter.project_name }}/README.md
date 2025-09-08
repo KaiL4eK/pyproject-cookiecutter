@@ -5,6 +5,12 @@
 
 [![PythonSupported](https://img.shields.io/badge/python-{{ cookiecutter.minimal_python_version }}-brightgreen.svg)](https://python3statement.org/#sections50-why)
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://pre-commit.com/)
+[![pydantic-settings](https://img.shields.io/badge/settings-pydantic-settings)](https://github.com/pydantic/pydantic-settings)
+{% if cookiecutter.include_streamlit == 'y' -%}
+[![Streamlit](https://img.shields.io/badge/-Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://github.com/streamlit)
+[![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-306998?logo=python&logoColor=white)](https://github.com/sqlalchemy/sqlalchemy)
+[![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+{% endif -%}
 {% if cookiecutter.package_manager == 'poetry' -%}
 [![poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
 {% endif -%}
@@ -71,6 +77,9 @@
 - [pyproject.toml](pyproject.toml) - Python project configuration
 - [requirements.project.txt](requirements.project.txt) - Python project requirements (e.g. poetry/uv and may be other packages to be installed before installing core packages)
   > Mainly used in docker and for documentation
+{% if cookiecutter.include_streamlit == 'y' -%}
+- [streamlit](streamlit) - directory for `Streamlit` app
+{% endif -%}
 
 ## Additional directories to be considered
 
@@ -88,6 +97,43 @@
 - Operating system: Ubuntu or WSL
 
 > We tested on this setup - you can try other versions or operation systems by yourself!
+
+{% if cookiecutter.include_streamlit == 'y' -%}
+## Streamlit
+
+## Commands (make)
+
+> Call each as `make <command>`
+
+- `streamlit-start` - Start standalone app version with hot reload (no DB started)
+
+- `streamlit-docker-start` - Start docker Streamlit version
+  - Managed by [streamlit/docker-compose.yml](streamlit/docker-compose.debug.yml)
+  - Requires `compose` version >= 2.22
+
+- `streamlit-docker-start-debug` - Start docker Streamlit version with debug capavilities (reload on save, other environment)
+  - Managed by [streamlit/docker-compose.debug.yml](streamlit/docker-compose.debug.yml)
+
+- `streamlit-docker-push` - Push image to registry
+  - Need to be logged in if there is authentication required
+
+### New migrations revision
+
+Run application
+
+```bash
+make streamlit-docker-start
+```
+
+In separate terminal run new revision creation
+
+```bash
+make create-migration MIGRATION_COMMENT="initial"
+```
+
+New version has to appear in [migrations/versions](migrations/versions)
+
+{% endif -%}
 
 ## Other interesting info
 

@@ -16,7 +16,7 @@ fi
 uv run jupyter nbconvert --inplace --to notebook --execute notebooks/example.ipynb \
     && make nbextention-toc-install \
     && uv run jupyter nbconvert --template toc2 --to html_toc --output-dir ./exports notebooks/example.ipynb \
-    && uv run pytest \
+    && make tests \
     && uv run python scripts/config_sample.py --config configs/config_sample.yml
 
 if [ $? -ne 0 ]; then
@@ -24,11 +24,13 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-uv run pre-commit run --files notebooks/* nbstripout || true
-uv run pre-commit run --files Makefile trailing-whitespace || true
+uv run pre-commit run --all-files lint
+if [ $? -ne 0 ]; then
+    echo "Failed to check project"
+    exit 1
+fi
 
-uv run pre-commit run -a --show-diff-on-failure \
-    && uv build \
+uv build \
     && make docker-build-cached \
     && make docker-remove
 
