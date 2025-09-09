@@ -10,6 +10,7 @@
     - `python-dotenv` better used for notebooks and other development scripts
 - CHANGELOG.md to template and base project
 - New package manager - `uv`! [#54](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/54)
+    - And [instruction how to transfer from `poetry`](https://github.com/KaiL4eK/pyproject-cookiecutter/wiki/Transfer-Poetry-2-uv)
 - New python version - `3.12` [#48](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/48)
 - Added `ty` type checker [#51](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/51)
 - Samples of packages to see results of generation
