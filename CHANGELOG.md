@@ -5,6 +5,7 @@
 ### Added
 
 - Added `.env.example` as default file to keep samples of required ENVs
+- Added `sqlalchemy` Data Access Object pattern
 - Added `streamlit` application sample with Database migrations using `alembic`
 - Added `pydantic-settings` to be used as main ENVs parser
     - `python-dotenv` better used for notebooks and other development scripts
