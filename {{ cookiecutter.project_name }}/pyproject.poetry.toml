@@ -60,6 +60,9 @@ sqlalchemy = "^2.0.43"
 streamlit = "^1.48.1"
 alembic = "^1.16.5"
 {% endif %}
+{% if cookiecutter.include_streamlit == 'y' %}
+apache-airflow = "^3.1.5"
+{% endif %}
 
 [tool.poetry.group.dev.dependencies]
 # In case of packages without patch part we just want to update them through minor versions

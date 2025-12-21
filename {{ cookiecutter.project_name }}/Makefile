@@ -7,6 +7,7 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
+ENV_FILE := .env
 
 {% if cookiecutter.include_docker_sample == 'y' -%}#* Docker variables
 IMAGE := {{ cookiecutter.project_slug }}
@@ -118,33 +119,40 @@ grep-todos:
 
 {% if cookiecutter.include_streamlit == 'y' -%}
 #* Streamlit Docker
+STREAMLIT_DOCKER_FILES_OPTS := -f streamlit/docker-compose.yml
+STREAMLIT_DOCKER_DEBUG_FILES_OPTS := ${STREAMLIT_DOCKER_FILES_OPTS} -f streamlit/docker-compose.yml
+STREAMLIT_DOCKER_ENV_FILE_OPTS := --env-file ./${ENV_FILE}
+
 streamlit-docker-build:
-	docker compose -f streamlit/docker-compose.yml build
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} build
 
 streamlit-docker-start:
-	docker compose -f streamlit/docker-compose.yml up --build
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build
 
 streamlit-docker-start-daemon:
-	docker compose -f streamlit/docker-compose.yml up --build -d
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build -d
 
 streamlit-docker-start-debug:
-	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml up --build --watch app
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_DEBUG_FILES_OPTS} up --build --watch app
 
 streamlit-docker-down:
-	docker compose -f streamlit/docker-compose.yml down
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} down
 
 streamlit-docker-clean:
-	docker compose -f streamlit/docker-compose.yml down -v
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} down -v
 
 streamlit-docker-clean-debug:
-	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml down -v
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_DEBUG_FILES_OPTS} down -v
 
 streamlit-docker-push: streamlit-docker-build
-	docker compose -f streamlit/docker-compose.yml push
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} push
+
+streamlit-docker-run-migrations:
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build migrations
 
 #* Streamlit
 streamlit-start:
-	{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=.env{% endif %} \
+	{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=${ENV_FILE}{% endif %} \
 		streamlit run streamlit/app.py \
 			--server.runOnSave true \
 			--server.address 0.0.0.0 \
@@ -159,8 +167,23 @@ migrations-check-env:
 	    echo "MIGRATION_COMMENT must not contain spaces." && exit 1; \
 	fi
 
-migrations-new-revision: migrations-check-env
+migrations-new-revision: migrations-check-env streamlit-docker-run-migrations
 	DATABASE_HOST=localhost \
-		{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=.env{% endif %} \
+		{{ pm_cmd }} run {% if cookiecutter.package_manager == "uv" %}--env-file=${ENV_FILE}{% endif %} \
 		alembic revision --autogenerate -m ${MIGRATION_COMMENT}
+{%- endif %}
+
+{% if cookiecutter.include_airflow == 'y' -%}
+#* Airflow
+AIRFLOW_DOCKER_ENV_FILE_OPTS := --env-file ./${ENV_FILE}
+AIRFLOW_DOCKER_FILE_OPTS := -f airflow/docker-compose.yaml
+
+airflow-docker-start:
+	docker compose ${AIRFLOW_DOCKER_ENV_FILE_OPTS} ${AIRFLOW_DOCKER_FILE_OPTS} up --build
+
+airflow-docker-start-daemon:
+	docker compose ${AIRFLOW_DOCKER_ENV_FILE_OPTS} ${AIRFLOW_DOCKER_FILE_OPTS} up --build -d
+
+airflow-docker-clean:
+	docker compose ${AIRFLOW_DOCKER_ENV_FILE_OPTS} ${AIRFLOW_DOCKER_FILE_OPTS} down -v
 {%- endif %}

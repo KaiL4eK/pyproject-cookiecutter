@@ -7,6 +7,7 @@
 [![Pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/KaiL4eK/pyproject-cookiecutter/blob/main/.pre-commit-config.yaml)
 [![pydantic-settings](https://img.shields.io/badge/settings-pydantic-settings)](https://github.com/pydantic/pydantic-settings)
 [![Streamlit](https://img.shields.io/badge/-Streamlit-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://github.com/streamlit)
+![Apache Airflow](https://img.shields.io/badge/Apache%20Airflow-017CEE?style=for-the-badge&logo=Apache%20Airflow&logoColor=white)
 [![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-306998?logo=python&logoColor=white)](https://github.com/sqlalchemy/sqlalchemy)
 [![Postgres](https://img.shields.io/badge/Postgres-%23316192.svg?logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
@@ -22,7 +23,7 @@
 
 ## Features ##
 
-* Python 3.9, 3.10, 3.11, 3.12 supported
+* Python 3.9, 3.10, 3.11, 3.12, 3.13 supported
 * [Poetry](https://python-poetry.org/) for package/dependency management
   * Version `>= 1.8.0` supported
 * Tests are based on [`pytest`](https://docs.pytest.org/en/stable/)
@@ -48,6 +49,7 @@
   * With multistage build
 * Docker image analyzer - [dive](https://github.com/wagoodman/dive)
 * Project samples generated in [sample-projects](sample-projects) directory
+* Airflow organized project with docker and AF utils
 
 ## How to start ##
 

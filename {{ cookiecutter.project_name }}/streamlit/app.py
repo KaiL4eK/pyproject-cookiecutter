@@ -1,7 +1,7 @@
 import streamlit as st
-from {{cookiecutter.project_slug}}.settings import StreamlitAppSettings
+from config import AppSettings
 
-app_settings = StreamlitAppSettings()
+app_settings = AppSettings()
 
 if app_settings.create_all_tables:
     # Debug mode - just create all models as is

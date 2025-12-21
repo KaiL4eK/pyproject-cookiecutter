@@ -1,0 +1,9 @@
+default_context:
+  project_name: "test-project"
+  minimal_python_version: "3.11"
+  include_docker_sample: "y"
+  python_type_checker: "ty"
+  vcs_remote_type: "github"
+  package_manager: "uv"
+  include_airflow: "y"
+  include_notebooks_sample: "n"

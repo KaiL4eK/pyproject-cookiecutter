@@ -14,8 +14,11 @@ REMOVE_PATHS = [
     '{% if cookiecutter.include_streamlit == "n" %} streamlit {% endif %}',
     '{% if cookiecutter.include_streamlit == "n" %} migrations {% endif %}',
     '{% if cookiecutter.include_streamlit == "n" %} alembic.ini {% endif %}',
-    '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/schemas.py {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/schemas {% endif %}',
+    '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/settings/db.py {% endif %}',
     '{% if cookiecutter.include_streamlit == "n" %} {{ cookiecutter.project_slug }}/db {% endif %}',
+    '{% if cookiecutter.include_airflow == "n" %} airflow {% endif %}',
+    '{% if cookiecutter.include_airflow == "n" %} {{ cookiecutter.project_slug }}/airflow {% endif %}',
 ]
 
 def remove_path(path: str):

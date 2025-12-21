@@ -2,7 +2,7 @@ from alembic import context
 
 from {{cookiecutter.project_slug}}.db.models import Base
 from {{cookiecutter.project_slug}}.db.sync.engine import engine
-from {{cookiecutter.project_slug}}.settings import DatabaseSettings
+from {{cookiecutter.project_slug}}.settings.db import DatabaseSettings
 
 db_settings = DatabaseSettings()
 

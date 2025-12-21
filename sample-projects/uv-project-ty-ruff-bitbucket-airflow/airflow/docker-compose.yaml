@@ -1,0 +1,264 @@
+# Based on https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml
+---
+volumes:
+  postgres-db-volume-uv-project-ty-ruff-bitbucket-airflow:
+
+x-logs-common:
+  &logs-common
+  logging:
+    options:
+      max-size: "10m"
+      max-file: "5"
+
+x-airflow-common:
+  &airflow-common
+  # Build custom image with deps from poetry
+  image: airflow-uv-project-ty-ruff-bitbucket-airflow:latest
+  build:
+    context: ..
+    dockerfile: airflow/Dockerfile
+    args:
+      - AIRFLOW_IMAGE_NAME=${AIRFLOW_IMAGE_NAME}
+  environment:
+    &airflow-common-env
+    # General way to config Airflow
+    # https://airflow.apache.org/docs/apache-airflow/3.1.5/configurations-ref.html
+    # AIRFLOW__<SECTION>__<KEY>
+    AIRFLOW_UID: ${AIRFLOW_UID:-50000}
+    AIRFLOW__CORE__EXECUTOR: CeleryExecutor
+    AIRFLOW__CORE__LOAD_EXAMPLES: False
+    AIRFLOW__CORE__AUTH_MANAGER: airflow.providers.fab.auth_manager.fab_auth_manager.FabAuthManager
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: True
+    AIRFLOW__CORE__EXECUTION_API_SERVER_URL: 'http://airflow-apiserver:8080/execution/'
+    AIRFLOW__CORE__FERNET_KEY: ''
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${POSTGRESQL_USERNAME}:${POSTGRESQL_PASSWORD}@postgres/airflow
+    AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRESQL_USERNAME}:${POSTGRESQL_PASSWORD}@postgres/airflow
+    AIRFLOW__SCHEDULER__ENABLE_HEALTH_CHECK: True
+    AIRFLOW_CONFIG: /opt/airflow/config/airflow.cfg
+    # Update for your environment
+    AIRFLOW__API_AUTH__JWT_SECRET: EWolnmZT88rp8QPgSLQ82g==
+  volumes:
+    # Mount DAGs to update without restart
+    - ./dags:/opt/airflow/dags:ro
+    # Other stuff
+    - ./logs:/opt/airflow/logs
+    - ./plugins:/opt/airflow/plugins:ro
+    - ./config:/opt/airflow/config
+  user: "${AIRFLOW_UID:-50000}:0"
+  depends_on:
+    &airflow-common-depends-on
+    redis:
+      condition: service_healthy
+    postgres:
+      condition: service_healthy
+
+services:
+  airflow-check-resources:
+    <<:
+      - *airflow-common
+      - *logs-common
+    entrypoint: /bin/bash
+    command:
+      - ./scripts/check_resources.sh
+    environment:
+      <<: *airflow-common-env
+    user: "0:0"
+
+  airflow-variables:
+    <<:
+      - *airflow-common
+      - *logs-common
+    entrypoint: python
+    command:
+      - /opt/airflow/scripts/create_variables.py
+    environment:
+      <<: *airflow-common-env
+      # Imported only here to import and not use in ENV Airflow
+      AIRFLOW_SAMPLE_VARIABLE: ${AIRFLOW_SAMPLE_VARIABLE}
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-connections:
+    <<:
+      - *airflow-common
+      - *logs-common
+    entrypoint: python
+    command:
+      - /opt/airflow/scripts/create_connections.py
+    environment:
+      <<: *airflow-common-env
+      # Imported only here to import and not use in ENV Airflow
+      AIRFLOW_SAMPLE_POSTGRES_CONNECTION: ${AIRFLOW_SAMPLE_POSTGRES_CONNECTION}
+    depends_on:
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-init:
+    <<:
+      - *airflow-common
+      - *logs-common
+    entrypoint: /bin/bash
+    command:
+      - ./scripts/airflow_docker_init.sh
+    environment:
+      <<: *airflow-common-env
+      _AIRFLOW_DB_MIGRATE: 'true'
+      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
+      _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+    user: "0:0"
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-check-resources:
+        condition: service_completed_successfully
+
+  airflow-apiserver:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: api-server
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8080/api/v2/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-scheduler:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: scheduler
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+      airflow-connections:
+        condition: service_completed_successfully
+      airflow-variables:
+        condition: service_completed_successfully
+
+  airflow-dag-processor:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: dag-processor
+    healthcheck:
+      test: ["CMD-SHELL", 'airflow jobs check --job-type DagProcessorJob --hostname "$${HOSTNAME}"']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-triggerer:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: triggerer
+    healthcheck:
+      test: ["CMD-SHELL", 'airflow jobs check --job-type TriggererJob --hostname "$${HOSTNAME}"']
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  airflow-worker:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: celery worker
+    healthcheck:
+      test:
+        - "CMD-SHELL"
+        - 'celery --app airflow.providers.celery.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}" || celery --app airflow.executors.celery_executor.app inspect ping -d "celery@$${HOSTNAME}"'
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    environment:
+      <<: *airflow-common-env
+      # Required to handle warm shutdown of the celery workers properly
+      # See https://airflow.apache.org/docs/docker-stack/entrypoint.html#signal-propagation
+      DUMB_INIT_SETSID: "0"
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-apiserver:
+        condition: service_healthy
+      airflow-init:
+        condition: service_completed_successfully
+
+  flower:
+    <<:
+      - *airflow-common
+      - *logs-common
+    command: celery flower
+    ports:
+      - "5555:5555"
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:5555/"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    restart: always
+    depends_on:
+      <<: *airflow-common-depends-on
+      airflow-init:
+        condition: service_completed_successfully
+
+  postgres:
+    <<: *logs-common
+    image: postgres:17.7
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRES_DB: airflow
+    volumes:
+      - postgres-db-volume-uv-project-ty-ruff-bitbucket-airflow:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRESQL_USERNAME}"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped
+
+  redis:
+    # Redis is limited to 7.2-bookworm due to licencing change
+    # https://redis.io/blog/redis-adopts-dual-source-available-licensing/
+    image: redis:7.2-bookworm
+    expose:
+      - 6379
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 30s
+      retries: 50
+      start_period: 30s
+    restart: always

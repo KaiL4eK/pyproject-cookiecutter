@@ -8,10 +8,11 @@ services:
     restart: unless-stopped
     ports:
       - "8503:8501"
-    env_file:
-      - ../.env
     environment:
       DATABASE_HOST: postgres
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
     logging:
       options:
         max-file: "2"
@@ -23,14 +24,18 @@ services:
   migrations:
     # Not used build section as already built for main app
     image: streamlit-uv-project-ty-ruff-bitbucket-streamlit:latest
+    build:
+      context: ..
+      dockerfile: streamlit/Dockerfile
     command:
       - alembic
       - upgrade
       - head
-    env_file:
-      - ../.env
     environment:
       DATABASE_HOST: postgres
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
     logging:
       options:
         max-file: "2"
@@ -40,16 +45,18 @@ services:
         condition: service_healthy
 
   postgres:
-    image: bitnami/postgresql:17.6.0-debian-12-r4
+    image: postgres:17.7
     restart: unless-stopped
-    env_file:
-      - ../.env
+    environment:
+      POSTGRES_USER: ${POSTGRESQL_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRES_DB: ${POSTGRESQL_DATABASE}
     volumes:
-      - postgresql_data:/bitnami/postgresql
+      - postgres-db-volume-uv-project-ty-ruff-bitbucket-streamlit:/bitnami/postgresql
     ports:
       - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRESQL_USERNAME} -d $${POSTGRESQL_DATABASE}"]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRESQL_USERNAME}", "-d", "${POSTGRESQL_DATABASE}"]
       interval: 10s
       retries: 5
       start_period: 30s
@@ -60,4 +67,4 @@ services:
         max-size: "20m"
 
 volumes:
-  postgresql_data:
+  postgres-db-volume-uv-project-ty-ruff-bitbucket-streamlit:

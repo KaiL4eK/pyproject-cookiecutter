@@ -1,6 +1,7 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
+ENV_FILE := .env
 
 #* Docker variables
 IMAGE := uv_project_ty_ruff_bitbucket_streamlit
@@ -90,33 +91,40 @@ grep-todos:
 	git grep -EIn "TODO|FIXME|XXX"
 
 #* Streamlit Docker
+STREAMLIT_DOCKER_FILES_OPTS := -f streamlit/docker-compose.yml
+STREAMLIT_DOCKER_DEBUG_FILES_OPTS := ${STREAMLIT_DOCKER_FILES_OPTS} -f streamlit/docker-compose.yml
+STREAMLIT_DOCKER_ENV_FILE_OPTS := --env-file ./${ENV_FILE}
+
 streamlit-docker-build:
-	docker compose -f streamlit/docker-compose.yml build
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} build
 
 streamlit-docker-start:
-	docker compose -f streamlit/docker-compose.yml up --build
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build
 
 streamlit-docker-start-daemon:
-	docker compose -f streamlit/docker-compose.yml up --build -d
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build -d
 
 streamlit-docker-start-debug:
-	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml up --build --watch app
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_DEBUG_FILES_OPTS} up --build --watch app
 
 streamlit-docker-down:
-	docker compose -f streamlit/docker-compose.yml down
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} down
 
 streamlit-docker-clean:
-	docker compose -f streamlit/docker-compose.yml down -v
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} down -v
 
 streamlit-docker-clean-debug:
-	docker compose -f streamlit/docker-compose.yml -f streamlit/docker-compose.debug.yml down -v
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_DEBUG_FILES_OPTS} down -v
 
 streamlit-docker-push: streamlit-docker-build
-	docker compose -f streamlit/docker-compose.yml push
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} push
+
+streamlit-docker-run-migrations:
+	docker compose ${STREAMLIT_DOCKER_ENV_FILE_OPTS} ${STREAMLIT_DOCKER_FILES_OPTS} up --build migrations
 
 #* Streamlit
 streamlit-start:
-	uv run --env-file=.env \
+	uv run --env-file=${ENV_FILE} \
 		streamlit run streamlit/app.py \
 			--server.runOnSave true \
 			--server.address 0.0.0.0 \
@@ -131,7 +139,7 @@ migrations-check-env:
 	    echo "MIGRATION_COMMENT must not contain spaces." && exit 1; \
 	fi
 
-migrations-new-revision: migrations-check-env
+migrations-new-revision: migrations-check-env streamlit-docker-run-migrations
 	DATABASE_HOST=localhost \
-		uv run --env-file=.env \
+		uv run --env-file=${ENV_FILE} \
 		alembic revision --autogenerate -m ${MIGRATION_COMMENT}

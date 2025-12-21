@@ -48,6 +48,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 # App
 COPY streamlit/app.py ./
+COPY streamlit/config.py ./
 COPY streamlit/pages ./pages/
 
 # Expose Streamlit port

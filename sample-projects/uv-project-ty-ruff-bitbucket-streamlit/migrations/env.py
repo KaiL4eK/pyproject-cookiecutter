@@ -2,7 +2,7 @@ from alembic import context
 
 from uv_project_ty_ruff_bitbucket_streamlit.db.models import Base
 from uv_project_ty_ruff_bitbucket_streamlit.db.sync.engine import engine
-from uv_project_ty_ruff_bitbucket_streamlit.settings import DatabaseSettings
+from uv_project_ty_ruff_bitbucket_streamlit.settings.db import DatabaseSettings
 
 db_settings = DatabaseSettings()
 

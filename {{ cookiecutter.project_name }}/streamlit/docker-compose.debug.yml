@@ -1,7 +1,6 @@
 services:
   app:
     environment:
-      DATABASE_HOST: postgres
       DATABASE_ECHO: true
       STREAMLIT_APP_CREATE_ALL_TABLES: true
       STREAMLIT_SERVER_RUN_ON_SAVE: true
@@ -16,7 +15,7 @@ services:
 
   postgres:
     volumes:
-      - postgresql_debug_data:/bitnami/postgresql
+      - postgres-db-volume-{{cookiecutter.project_name}}-debug:/bitnami/postgresql
 
 volumes:
-  postgresql_debug_data:
+  postgres-db-volume-{{cookiecutter.project_name}}-debug:

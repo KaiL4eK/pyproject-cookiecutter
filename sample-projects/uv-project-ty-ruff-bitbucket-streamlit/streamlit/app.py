@@ -1,7 +1,7 @@
 import streamlit as st
-from uv_project_ty_ruff_bitbucket_streamlit.settings import StreamlitAppSettings
+from config import AppSettings
 
-app_settings = StreamlitAppSettings()
+app_settings = AppSettings()
 
 if app_settings.create_all_tables:
     # Debug mode - just create all models as is

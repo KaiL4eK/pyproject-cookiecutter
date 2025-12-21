@@ -10,16 +10,18 @@
     "none"
   ],
   "_all_python_minor_version": [
-    "9",
-    "10",
+    "13",
+    "12",
     "11",
-    "12"
+    "10",
+    "9"
   ],
   "minimal_python_version": [
-    "3.9",
-    "3.10",
+    "3.13",
+    "3.12",
     "3.11",
-    "3.12"
+    "3.10",
+    "3.9"
   ],
   "version": "0.1.0",
   "line_length": 120,
@@ -43,5 +45,6 @@
   "include_cli_example": "n",
   "include_docker_sample": "n",
   "include_notebooks_sample": "y",
-  "include_streamlit": "n"
+  "include_streamlit": "n",
+  "include_airflow": "n"
 }

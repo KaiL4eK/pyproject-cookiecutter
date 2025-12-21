@@ -1,6 +1,7 @@
 #* Variables
 SHELL := /usr/bin/env bash
 PYTHON ?= python3
+ENV_FILE := .env
 
 #* Docker variables
 IMAGE := uv_project_ty_ruff_github
