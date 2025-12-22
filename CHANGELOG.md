@@ -6,7 +6,7 @@
 
 - Added `.env.example` as default file to keep samples of required ENVs
 - Added `sqlalchemy` Data Access Object pattern
-- Added `streamlit` application sample with Database migrations using `alembic`
+- Added `streamlit` application sample with Database migrations using `alembic`, check [this sample project](https://github.com/KaiL4eK/pyproject-cookiecutter/tree/main/sample-projects/uv-project-ty-ruff-bitbucket-streamlit)
 - Added `pydantic-settings` to be used as main ENVs parser
     - `python-dotenv` better used for notebooks and other development scripts
 - CHANGELOG.md to template and base project
@@ -15,6 +15,7 @@
 - New python version - `3.12` [#48](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/48)
 - Added `ty` type checker [#51](https://github.com/KaiL4eK/pyproject-cookiecutter/issues/51)
 - Samples of packages to see results of generation
+- Added `airflow` to be used in your project, check [this sample project](https://github.com/KaiL4eK/pyproject-cookiecutter/tree/main/sample-projects/uv-project-ty-ruff-bitbucket-airflow)
 
 ### Changed
 
