@@ -7,7 +7,8 @@ if app_settings.create_all_tables:
     # Debug mode - just create all models as is
     # If you need to update models - wipe down your DB
     st.write("Creating DB tables explicitly")
-    from {{cookiecutter.project_slug}}.db.sync.engine import Base, engine
+    from {{cookiecutter.project_slug}}.db.models import Base
+    from {{cookiecutter.project_slug}}.db.sync.engine import engine
 
     Base.metadata.create_all(engine)
 
