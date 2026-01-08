@@ -120,7 +120,7 @@ grep-todos:
 {% if cookiecutter.include_streamlit == 'y' -%}
 #* Streamlit Docker
 STREAMLIT_DOCKER_FILES_OPTS := -f streamlit/docker-compose.yml
-STREAMLIT_DOCKER_DEBUG_FILES_OPTS := ${STREAMLIT_DOCKER_FILES_OPTS} -f streamlit/docker-compose.yml
+STREAMLIT_DOCKER_DEBUG_FILES_OPTS := ${STREAMLIT_DOCKER_FILES_OPTS} -f streamlit/docker-compose.debug.yml
 STREAMLIT_DOCKER_ENV_FILE_OPTS := --env-file ./${ENV_FILE}
 
 streamlit-docker-build:
